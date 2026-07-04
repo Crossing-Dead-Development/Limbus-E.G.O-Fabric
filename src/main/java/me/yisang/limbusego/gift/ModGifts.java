@@ -3,11 +3,16 @@ package me.yisang.limbusego.gift;
 import io.wispforest.accessories.api.AccessoryRegistry;
 import me.yisang.limbusego.LimbusEGOMod;
 import me.yisang.limbusego.gift.gifts.*;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.LoreComponent;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.text.Style;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Rarity;
 
 import java.util.ArrayList;
@@ -138,10 +143,13 @@ public final class ModGifts {
     }
 
     private static Item reg(String name, BaseGift gift) {
+        Text desc = Text.translatable("item.limbusego." + name + ".desc")
+                .setStyle(Style.EMPTY.withColor(Formatting.GRAY).withItalic(false));
         Item item = new Item(new Item.Settings()
                 .registryKey(RegistryKey.of(RegistryKeys.ITEM, LimbusEGOMod.id(name)))
                 .maxCount(1)
-                .rarity(Rarity.EPIC));
+                .rarity(Rarity.EPIC)
+                .component(DataComponentTypes.LORE, new LoreComponent(java.util.List.of(desc))));
         Registry.register(Registries.ITEM, LimbusEGOMod.id(name), item);
         AccessoryRegistry.register(item, gift);
         GiftRegistry.register(gift, item);
