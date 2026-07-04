@@ -1,5 +1,7 @@
 # Limbus-E.G.O-Fabric — Limbus E.G.O 統一模組（Fabric）
 
+繁體中文 | [English](README.en.md)
+
 將邊獄公司（Limbus Company）的 E.G.O 武器與 E.G.O 飾品帶進 Minecraft 的 Fabric 模組，
 由 Paper 插件 [Limbus-E.G.O](https://github.com/Crossing-Dead-Development/Limbus-E.G.O) v1.3.0 完整移植而來。
 
