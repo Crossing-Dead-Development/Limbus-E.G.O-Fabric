@@ -43,6 +43,18 @@ public final class ModGifts {
         reg("millarca", new Millarca());
         reg("sanguine_blossom_bolus", new SanguineBlossomBolus());
 
+        // ── 沉淪組（sinking，10）──────────────────────────────────────
+        reg("artistic_sense", new ArtisticSense());
+        reg("black_sheet_music", new BlackSheetMusic());
+        reg("broken_compass", new BrokenCompass());
+        reg("cold_illusion", new ColdIllusion());
+        reg("distant_star", new DistantStar());
+        reg("frozen_cries", new FrozenCries());
+        reg("mental_corruption_boosting_gas", new MentalCorruptionBoostingGas());
+        reg("rags", new Rags());
+        reg("rest", new Rest());
+        reg("tangled_bones", new TangledBones());
+
         // ── 輔助組（support）── ※先前試水的鮮血裝飾屬此組，其餘待補
         reg("bloody_gadget", new BloodyGadget());
     }
