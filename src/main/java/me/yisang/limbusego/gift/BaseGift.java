@@ -80,6 +80,9 @@ public abstract class BaseGift implements Accessory {
     /** 擊殺：killer 擊殺 victim 後。 */
     protected void onKill(LivingEntity victim, ServerPlayerEntity killer, ItemStack self) {}
 
+    /** 佩戴者死亡：owner 死亡後，killer 可能為 null（環境死亡）。對映插件 onDeath。 */
+    protected void onOwnerDeath(LivingEntity killer, ServerPlayerEntity owner, ItemStack self) {}
+
     /** 右鍵互動。 */
     protected void onInteract(ServerPlayerEntity player, ItemStack self) {}
 
@@ -107,6 +110,10 @@ public abstract class BaseGift implements Accessory {
 
     void dispatchKill(LivingEntity victim, ServerPlayerEntity killer, ItemStack self) {
         onKill(victim, killer, self);
+    }
+
+    void dispatchOwnerDeath(LivingEntity killer, ServerPlayerEntity owner, ItemStack self) {
+        onOwnerDeath(killer, owner, self);
     }
 
     void dispatchInteract(ServerPlayerEntity player, ItemStack self) {

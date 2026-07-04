@@ -40,10 +40,14 @@ public final class GiftDispatcher {
     public static void register() {
         instance = new GiftDispatcher();
 
-        // onKill：擊殺者身上飾品
+        // onKill：擊殺者身上飾品；onOwnerDeath：死者自身飾品
         ServerLivingEntityEvents.AFTER_DEATH.register((entity, source) -> {
             if (source.getAttacker() instanceof ServerPlayerEntity killer) {
                 forEachGift(killer, (gift, stack) -> gift.dispatchKill(entity, killer, stack));
+            }
+            if (entity instanceof ServerPlayerEntity deceased) {
+                LivingEntity killerLE = source.getAttacker() instanceof LivingEntity la ? la : null;
+                forEachGift(deceased, (gift, stack) -> gift.dispatchOwnerDeath(killerLE, deceased, stack));
             }
         });
 

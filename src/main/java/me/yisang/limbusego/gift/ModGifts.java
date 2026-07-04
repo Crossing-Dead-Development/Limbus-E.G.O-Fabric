@@ -68,6 +68,14 @@ public final class ModGifts {
         reg("thunderbranch", new Thunderbranch());
         reg("chief_butlers_secret_arts", new ChiefButlersSecretArts());
 
+        // ── 震顫組(tremor，6)──────────────────────────────────────────
+        reg("green_spirit", new GreenSpirit());
+        reg("nixie_divergence", new NixieDivergence());
+        reg("sour_liquor_aroma", new SourLiquorAroma());
+        reg("sownpour", new Sownpour());
+        reg("piece_of_crumbled_egg", new PieceOfCrumbledEgg());
+        reg("handheld_mirror", new HandheldMirror());
+
         // ── 輔助組（support）── ※先前試水的鮮血裝飾屬此組，其餘待補
         reg("bloody_gadget", new BloodyGadget());
     }
