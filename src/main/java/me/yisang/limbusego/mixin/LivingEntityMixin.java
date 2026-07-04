@@ -1,5 +1,6 @@
 package me.yisang.limbusego.mixin;
 
+import me.yisang.limbusego.gift.GiftDispatcher;
 import me.yisang.limbusego.status.StatusManager;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -27,6 +28,10 @@ public abstract class LivingEntityMixin {
         if (mgr == null) return amount;
         LivingEntity self = (LivingEntity) (Object) this;
         if (!self.isAlive() || self.isInvulnerableTo(world, source)) return amount;
-        return mgr.onDamage(self, world, source, amount);
+        // 先飾品（對映插件 NORMAL 優先度），再屬性乘區（插件 HIGH），順序一致
+        float dmg = amount;
+        GiftDispatcher gifts = GiftDispatcher.get();
+        if (gifts != null) dmg = gifts.onDamage(self, world, source, dmg);
+        return mgr.onDamage(self, world, source, dmg);
     }
 }

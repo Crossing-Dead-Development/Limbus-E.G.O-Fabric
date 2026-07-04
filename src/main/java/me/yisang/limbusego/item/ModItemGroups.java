@@ -50,7 +50,10 @@ public class ModItemGroups {
                         .icon(() -> new ItemStack(ModItems.MOD_ICON))
                         .displayName(Text.translatable("itemGroup.limbusego.gifts"))
                         .entries((context, entries) -> {
-                            // Phase 2：80 件飾品與殘影材料在此加入
+                            // Phase 2 框架期：3 件試水飾品；80 件與殘影材料後續補齊
+                            entries.add(me.yisang.limbusego.gift.ModGifts.BLOODY_GADGET);
+                            entries.add(me.yisang.limbusego.gift.ModGifts.ARDENT_FLOWER);
+                            entries.add(me.yisang.limbusego.gift.ModGifts.GLIMPSE_OF_FLAMES);
                         })
                         .build());
     }

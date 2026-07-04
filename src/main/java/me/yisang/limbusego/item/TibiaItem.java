@@ -12,7 +12,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 
 /**
- * 鴻璐·脛骨 Tibia。近戰疊流血 + Melody 增傷（在 WeaponEvents.onAttack）。
+ * 提比婭 Tibia。近戰疊流血 + Melody 增傷（在 WeaponEvents.onAttack）。
  * 潛行右鍵：蓄力 2 秒 → 解剖斬（前方 5 格扇形，重疊流血並強制引爆），8 秒冷卻。
  * 數值對照插件 TibiaWeapon.java（v1.3.0）。
  */

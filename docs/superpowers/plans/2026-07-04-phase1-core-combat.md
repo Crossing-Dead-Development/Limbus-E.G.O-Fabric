@@ -105,7 +105,7 @@
 
 - [ ] 逐武器移植＋實測 → build 綠 → commit（可一武器一 commit）
 
-### Task 7: 武器第三批 — 天推星（TiantuiStar）、暮暉（Twilight）、提比婭（Tibia/ShadowBladesinger）
+### Task 7: 武器第三批 — 天退星（TiantuiStar）、薄暝（Twilight）、提比婭（Tibia/ShadowBladesinger）
 
 參考：插件 `TiantuiStar.java`（396 行，含蓄力/衝刺/音效）、`TwilightWeapon.java`、`TibiaWeapon.java`＋`ShadowBladesinger.java`。這批最複雜，允許拆多個 commit。
 

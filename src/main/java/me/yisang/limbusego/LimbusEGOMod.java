@@ -31,7 +31,9 @@ public class LimbusEGOMod implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        me.yisang.limbusego.gift.ModComponents.register();
         ModItems.register();
+        me.yisang.limbusego.gift.ModGifts.register();
         ModItemGroups.register();
         ModSounds.register();
 
@@ -44,6 +46,7 @@ public class LimbusEGOMod implements ModInitializer {
         status.start();
 
         me.yisang.limbusego.event.WeaponEvents.register();
+        me.yisang.limbusego.gift.GiftDispatcher.register();
         me.yisang.limbusego.command.LimbusCommand.register();
 
         LOGGER.info("Limbus E.G.O Fabric 初始化完成");

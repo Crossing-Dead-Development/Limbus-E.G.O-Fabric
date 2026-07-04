@@ -96,12 +96,12 @@ public class WeaponEvents {
     private static final int WCORP_CHARGE_CAP = 10;
     private static final int BLADESINGER_POISE_CAP = 10;
 
-    // 天推星蓄力/衝刺
+    // 天退星蓄力/衝刺
     private static final Map<UUID, Boolean> tiantuiSavage = new HashMap<>();
     private record DashData(UUID ownerId, Vec3d vel, boolean savage, java.util.Set<UUID> hit, int[] ticks, boolean[] firstSlash) {}
     private static final List<DashData> activeDashes = Collections.synchronizedList(new ArrayList<>());
 
-    // 暮暉/提比婭特殊冷卻與著影揮刀連斬冷卻（wall-clock ms）
+    // 薄暝/提比婭特殊冷卻與著影揮刀連斬冷卻（wall-clock ms）
     private static final Map<UUID, Long> twilightCd = new HashMap<>();
     private static final Map<UUID, Long> tibiaCd = new HashMap<>();
     private static final Map<UUID, Long> bladesingerCd = new HashMap<>();
@@ -460,7 +460,7 @@ public class WeaponEvents {
         }
     }
 
-    // ── 暮暉 ──────────────────────────────────────────────────────────────────
+    // ── 薄暝 ──────────────────────────────────────────────────────────────────
 
     public static boolean twilightSpecialReady(PlayerEntity p) {
         return System.currentTimeMillis() >= twilightCd.getOrDefault(p.getUuid(), 0L);
@@ -599,7 +599,7 @@ public class WeaponEvents {
         }
     }
 
-    // ── 天推星 ────────────────────────────────────────────────────────────────
+    // ── 天退星 ────────────────────────────────────────────────────────────────
 
     public static boolean hasTigerMark(PlayerEntity p) { return findItem(p, ModItems.TIGER_MARK) != null; }
     public static boolean hasSavageTigerMark(PlayerEntity p) { return findItem(p, ModItems.SAVAGE_TIGER_MARK) != null; }
