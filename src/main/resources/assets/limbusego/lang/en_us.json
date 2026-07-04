@@ -1,4 +1,9 @@
 {
   "itemGroup.limbusego.weapons": "E.G.O Weapons",
-  "itemGroup.limbusego.gifts": "E.G.O Gifts"
+  "itemGroup.limbusego.gifts": "E.G.O Gifts",
+
+  "item.limbusego.mod_icon": "Limbus E.G.O",
+  "item.limbusego.butterfly_quartz": "Butterfly Quartz",
+  "item.limbusego.tiger_mark": "Tiger Mark",
+  "item.limbusego.savage_tiger_mark": "Savage Tiger Mark"
 }

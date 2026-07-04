@@ -1,5 +1,8 @@
 package me.yisang.limbusego;
 
+import me.yisang.limbusego.item.ModItemGroups;
+import me.yisang.limbusego.item.ModItems;
+import me.yisang.limbusego.item.ModSounds;
 import me.yisang.limbusego.status.SanityManager;
 import me.yisang.limbusego.status.StatusManager;
 import net.fabricmc.api.ModInitializer;
@@ -28,6 +31,10 @@ public class LimbusEGOMod implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        ModItems.register();
+        ModItemGroups.register();
+        ModSounds.register();
+
         ServerScheduler.init();
 
         sanity = new SanityManager();

@@ -1,4 +1,9 @@
 {
   "itemGroup.limbusego.weapons": "E.G.O 武器",
-  "itemGroup.limbusego.gifts": "E.G.O 飾品"
+  "itemGroup.limbusego.gifts": "E.G.O 飾品",
+
+  "item.limbusego.mod_icon": "Limbus E.G.O",
+  "item.limbusego.butterfly_quartz": "生蝶、亡蝶",
+  "item.limbusego.tiger_mark": "虎標彈",
+  "item.limbusego.savage_tiger_mark": "猛虎標彈"
 }
