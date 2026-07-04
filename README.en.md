@@ -17,7 +17,7 @@ fully ported from the Paper plugin [Limbus-E.G.O](https://github.com/Crossing-De
 | Phase | Content | Status |
 |-------|---------|--------|
 | Phase 1 (v0.1.x) | 12-status system, Sanity (SAN), 9 E.G.O weapons, `/limbusego weapon` commands & catalog | ✅ Done |
-| Phase 2 (v0.2.x) | Accessories gift slots, Vestige upgrades, 80 E.G.O gifts, `/limbusego gift` commands | ⬜ Not started |
+| Phase 2 (v0.2.x) | Accessories gift slots, Vestige anvil upgrades, **80 E.G.O gifts (all done)**; `/limbusego gift` commands & real textures in progress | 🚧 In progress |
 | Phase 3 (v1.0.0) | Gacha chest / Thread lottery chest / Shop chest, gift catalog, language switching | ⬜ Not started |
 
 ## Weapons
@@ -39,6 +39,24 @@ Items live in the "E.G.O Weapons" custom creative tab. Textures are built in —
 | Shadow-Vested Bladesinger | +9 / −2.6 | Stacks Poise to raise crit chance; low HP (<3 hearts) sneak-right-click a target → 5-slash |
 
 Ammo: **Butterfly Quartz** (Solemn Lament), **Tiger Mark / Savage Tiger Mark** (Tiantui Star Blade).
+
+## E.G.O Gifts Overview
+
+**80 gifts** total, worn in the 5 universal [Accessories](https://modrinth.com/mod/accessories) slots (`limbusego:ego_gift`), listed in the "E.G.O Gifts" custom creative tab with built-in textures (no resource pack). Gifts span 9 systems, all mirroring Paper plugin v1.3.0:
+
+| System | Count | Representative mechanics |
+|---|---|---|
+| Burn | 8 | Apply/extend Burn, fire-based damage bonuses |
+| Bleed | 6 | Apply Bleed, lifesteal, on-kill spread |
+| Sinking | 10 | Apply Sinking, bonus vs. sinking/depressed targets |
+| Rupture | 11 | Apply/extend Rupture, Bind riders, on-kill spread |
+| Tremor | 6 | Apply Tremor, chain strikes, on-death lightning retaliation |
+| Poise | 7 | Self-stack Poise on attack, group buffs, SAN restore |
+| Support | 15 | Power/Protection/Haste buffs, teleport backstab, cheat death |
+| QoL | 12 | Pull drops & XP, cheat-death heal, duplicate loot, weather buffs |
+| Original | 5 | Immunity to hunger/fire, on-kill Sinking spread, passive regen & SAN |
+
+**Vestige anvil upgrades**: use the four Vestige tiers (Dark / Faint / Twinkling / Brilliant → tiers 1-4) on an anvil to upgrade a same-tier gift; levels 1→3 progressively raise the effect multiplier (1.25 / 1.50 / 2.00).
 
 ## The 12-Status System
 
