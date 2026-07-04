@@ -55,6 +55,19 @@ public final class ModGifts {
         reg("rest", new Rest());
         reg("tangled_bones", new TangledBones());
 
+        // ── 破裂組（rupture，含束縛掛靠，11）──────────────────────────
+        reg("dry_to_the_bone_breast", new DryToTheBoneBreast());
+        reg("ebony_brooch", new EbonyBrooch());
+        reg("flower_in_the_mirror", new FlowerInTheMirror());
+        reg("harestride", new Harestride());
+        reg("moon_in_the_water", new MoonInTheWater());
+        reg("ruin", new Ruin());
+        reg("smoking_gunpowder", new SmokingGunpowder());
+        reg("strange_glyph_inscriptions", new StrangeGlyphInscriptions());
+        reg("strange_glyph_talisman", new StrangeGlyphTalisman());
+        reg("thunderbranch", new Thunderbranch());
+        reg("chief_butlers_secret_arts", new ChiefButlersSecretArts());
+
         // ── 輔助組（support）── ※先前試水的鮮血裝飾屬此組，其餘待補
         reg("bloody_gadget", new BloodyGadget());
     }
