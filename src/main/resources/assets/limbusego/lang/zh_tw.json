@@ -20,5 +20,12 @@
 
   "item.limbusego.bloody_gadget": "鮮血裝飾",
   "item.limbusego.ardent_flower": "火光花",
-  "item.limbusego.glimpse_of_flames": "炎鱗"
+  "item.limbusego.glimpse_of_flames": "炎鱗",
+
+  "item.limbusego.dark_vestige": "漆黑殘影",
+  "item.limbusego.faint_vestige": "微光殘影",
+  "item.limbusego.twinkling_vestige": "閃爍殘影",
+  "item.limbusego.brilliant_vestige": "璀璨殘影",
+
+  "item.limbusego.gift.upgrade_lore": "殘影升級 Lv.%s"
 }

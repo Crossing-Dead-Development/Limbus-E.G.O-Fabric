@@ -14,7 +14,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 public class GlimpseOfFlames extends BaseGift {
 
     public GlimpseOfFlames() {
-        super("glimpse_of_flames");
+        super("glimpse_of_flames", 4); // Tier IV → brilliant_vestige
     }
 
     @Override

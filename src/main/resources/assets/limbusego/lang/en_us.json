@@ -20,5 +20,12 @@
 
   "item.limbusego.bloody_gadget": "Bloody Gadget",
   "item.limbusego.ardent_flower": "Ardent Flower",
-  "item.limbusego.glimpse_of_flames": "Glimpse of Flames"
+  "item.limbusego.glimpse_of_flames": "Glimpse of Flames",
+
+  "item.limbusego.dark_vestige": "Dark Vestige",
+  "item.limbusego.faint_vestige": "Faint Vestige",
+  "item.limbusego.twinkling_vestige": "Twinkling Vestige",
+  "item.limbusego.brilliant_vestige": "Brilliant Vestige",
+
+  "item.limbusego.gift.upgrade_lore": "Vestige Upgrade Lv.%s"
 }

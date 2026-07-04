@@ -15,7 +15,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 public class ArdentFlower extends BaseGift {
 
     public ArdentFlower() {
-        super("ardent_flower");
+        super("ardent_flower", 3); // Tier III → twinkling_vestige
     }
 
     @Override

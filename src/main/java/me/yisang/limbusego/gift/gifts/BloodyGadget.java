@@ -9,7 +9,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 public class BloodyGadget extends BaseGift {
 
     public BloodyGadget() {
-        super("bloody_gadget");
+        super("bloody_gadget", 1); // Tier I → dark_vestige
     }
 
     @Override

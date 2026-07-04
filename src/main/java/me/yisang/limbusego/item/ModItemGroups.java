@@ -54,6 +54,11 @@ public class ModItemGroups {
                             entries.add(me.yisang.limbusego.gift.ModGifts.BLOODY_GADGET);
                             entries.add(me.yisang.limbusego.gift.ModGifts.ARDENT_FLOWER);
                             entries.add(me.yisang.limbusego.gift.ModGifts.GLIMPSE_OF_FLAMES);
+                            // 殘影升級材料
+                            entries.add(me.yisang.limbusego.gift.Vestiges.DARK_VESTIGE);
+                            entries.add(me.yisang.limbusego.gift.Vestiges.FAINT_VESTIGE);
+                            entries.add(me.yisang.limbusego.gift.Vestiges.TWINKLING_VESTIGE);
+                            entries.add(me.yisang.limbusego.gift.Vestiges.BRILLIANT_VESTIGE);
                         })
                         .build());
     }

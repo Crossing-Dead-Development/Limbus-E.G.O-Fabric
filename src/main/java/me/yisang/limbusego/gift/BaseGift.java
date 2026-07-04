@@ -26,15 +26,22 @@ import java.util.UUID;
 public abstract class BaseGift implements Accessory {
 
     private final String id;
+    /** 飾品階級 1~4（對映插件 TIER_MAP），決定可用哪一階殘影升級。 */
+    private final int tier;
     /** 每玩家冷卻閘（對映插件 gateMap）。 */
     private final Map<UUID, Long> gateMap = new HashMap<>();
 
-    protected BaseGift(String id) {
+    protected BaseGift(String id, int tier) {
         this.id = id;
+        this.tier = tier;
     }
 
     public String id() {
         return id;
+    }
+
+    public int tier() {
+        return tier;
     }
 
     // ── Accessories Accessory 介面 ───────────────────────────────────────
@@ -96,15 +103,9 @@ public abstract class BaseGift implements Accessory {
         return StatusManager.get();
     }
 
-    /** 佩戴物品等級 → 升級倍率（0→1.0、1→1.25、2→1.50、3→2.00）。 */
+    /** 佩戴物品等級 → 升級倍率（見 {@link GiftUpgradeLogic#multiplier}）。 */
     protected double multiplier(ItemStack self) {
-        int level = self.getOrDefault(ModComponents.GIFT_LEVEL, 0);
-        return switch (level) {
-            case 1 -> 1.25;
-            case 2 -> 1.50;
-            case 3 -> 2.00;
-            default -> 1.0;
-        };
+        return GiftUpgradeLogic.multiplier(self.getOrDefault(ModComponents.GIFT_LEVEL, 0));
     }
 
     /** 施加屬性，potency 依佩戴物品升級倍率取整放大。 */
