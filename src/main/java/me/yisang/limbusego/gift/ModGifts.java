@@ -76,6 +76,15 @@ public final class ModGifts {
         reg("piece_of_crumbled_egg", new PieceOfCrumbledEgg());
         reg("handheld_mirror", new HandheldMirror());
 
+        // ── 呼吸法組（poise，7）────────────────────────────────────────
+        reg("cask_spirits", new CaskSpirits());
+        reg("clear_mirror_calm_water", new ClearMirrorCalmWater());
+        reg("emerald_elytra", new EmeraldElytra());
+        reg("finifugality", new Finifugality());
+        reg("keenbranch", new Keenbranch());
+        reg("nebulizer", new Nebulizer());
+        reg("cqc_manual", new CQCManual());
+
         // ── 輔助組（support）── ※先前試水的鮮血裝飾屬此組，其餘待補
         reg("bloody_gadget", new BloodyGadget());
     }
