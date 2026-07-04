@@ -2,9 +2,7 @@ package me.yisang.limbusego.gift;
 
 import io.wispforest.accessories.api.AccessoryRegistry;
 import me.yisang.limbusego.LimbusEGOMod;
-import me.yisang.limbusego.gift.gifts.ArdentFlower;
-import me.yisang.limbusego.gift.gifts.BloodyGadget;
-import me.yisang.limbusego.gift.gifts.GlimpseOfFlames;
+import me.yisang.limbusego.gift.gifts.*;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -12,24 +10,37 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Rarity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * E.G.O 飾品物品註冊。
- *
- * <p>Phase 2 框架期先收 3 件試水（燒傷／強壯／引爆），驗證
- * 佩戴 → 效果 → 升級全鏈路後，再依 9 體系批次補齊 80 件。
+ * E.G.O 飾品物品註冊。依插件 9 體系分組批次補齊 80 件，每組一批。
+ * 註冊順序即創造頁籤顯示順序（{@link #ordered()}）。
  */
 public final class ModGifts {
 
-    public static Item BLOODY_GADGET;
-    public static Item ARDENT_FLOWER;
-    public static Item GLIMPSE_OF_FLAMES;
+    /** 依註冊順序保存所有飾品物品，供創造頁籤列舉。 */
+    private static final List<Item> ORDERED = new ArrayList<>();
 
     private ModGifts() {}
 
     public static void register() {
-        BLOODY_GADGET = reg("bloody_gadget", new BloodyGadget());
-        ARDENT_FLOWER = reg("ardent_flower", new ArdentFlower());
-        GLIMPSE_OF_FLAMES = reg("glimpse_of_flames", new GlimpseOfFlames());
+        // ── 燒傷組（burn，8）──────────────────────────────────────────
+        reg("ardent_flower", new ArdentFlower());
+        reg("ashes_to_ashes", new AshesToAshes());
+        reg("bloodflame_sword", new BloodflameSword());
+        reg("dust_to_dust", new DustToDust());
+        reg("glimpse_of_flames", new GlimpseOfFlames());
+        reg("hot_n_juicy_drumstick", new HotNJuicyDrumstick());
+        reg("pain_of_stifled_rage", new PainOfStifledRage());
+        reg("royal_jelly_perfume", new RoyalJellyPerfume());
+
+        // ── 輔助組（support）── ※先前試水的鮮血裝飾屬此組，其餘待補
+        reg("bloody_gadget", new BloodyGadget());
+    }
+
+    public static List<Item> ordered() {
+        return ORDERED;
     }
 
     private static Item reg(String name, BaseGift gift) {
@@ -40,6 +51,7 @@ public final class ModGifts {
         Registry.register(Registries.ITEM, LimbusEGOMod.id(name), item);
         AccessoryRegistry.register(item, gift);
         GiftRegistry.register(gift, item);
+        ORDERED.add(item);
         return item;
     }
 }

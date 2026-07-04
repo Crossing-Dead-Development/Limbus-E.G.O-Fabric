@@ -103,6 +103,10 @@ public abstract class BaseGift implements Accessory {
         return StatusManager.get();
     }
 
+    protected me.yisang.limbusego.status.SanityManager sanity() {
+        return me.yisang.limbusego.LimbusEGOMod.getSanity();
+    }
+
     /** 佩戴物品等級 → 升級倍率（見 {@link GiftUpgradeLogic#multiplier}）。 */
     protected double multiplier(ItemStack self) {
         return GiftUpgradeLogic.multiplier(self.getOrDefault(ModComponents.GIFT_LEVEL, 0));
