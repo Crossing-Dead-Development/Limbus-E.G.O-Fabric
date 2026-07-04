@@ -41,6 +41,7 @@
 - 80 件飾品各自實作 Accessories `Accessory` 介面（tick、裝備/卸下回呼）；攻擊/受擊/擊殺鉤子走 Fabric 事件層，查詢佩戴中飾品改用 Accessories capability API
 - 殘影升級語意不變：升級屬於「玩家對該飾品的熟練度」，存 Data Attachment，與佩戴中的物品堆疊無關
 - `/limbusego gift menu` 與 `/accessories` 保留，行為改為打開 Accessories 佩戴介面
+- **不移植「飾品欄開啟工具」道具**（插件版 `gift give menu` 給的選單物品）——佩戴介面由 Accessories 原生分頁取代，該道具無存在必要
 
 ## 4. 分階段計畫
 
@@ -59,8 +60,15 @@
 - 每個武器/飾品移植時逐項核對插件原始碼數值（傷害、機率、冷卻、殘影放大係數）
 - 純邏輯（屬性運算、SAN 增減規則）拆為不依賴 MC 的類別，附 JUnit 測試
 
-## 6. 明確不做（YAGNI）
+## 6. 創造模式頁籤
+
+- **不把任何物品加進原版創造模式頁籤**
+- 新增兩個自訂 `ItemGroup`：`limbusego:weapons`（E.G.O 武器＋彈藥/材料）與 `limbusego:gifts`（E.G.O 飾品＋殘影升級材料）
+
+## 7. 明確不做（YAGNI）
 
 - 不做 Paper ↔ Fabric 存檔互轉（各自獨立）
 - 不支援 1.21.4 以外的 Minecraft 版本
 - 不做飾品 3D 身上渲染
+- 不移植「飾品欄開啟工具」道具（見第 3 節）
+- **不移植「插翅虎」與「終末鳥」組合包物品**（插件版的 Chatuhu／Apocalypse Bird 組合包）；對應武器本體是否受影響以插件武器清單為準，僅組合包道具不做

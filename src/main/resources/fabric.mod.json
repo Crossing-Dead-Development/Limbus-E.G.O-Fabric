@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "limbusego",
+  "version": "${version}",
+  "name": "Limbus E.G.O",
+  "description": "Limbus Company E.G.O weapons & gifts — Fabric port of the LimbusEGO Paper plugin.",
+  "authors": ["yisang"],
+  "contact": {
+    "sources": "https://github.com/Crossing-Dead-Development/Limbus-E.G.O-Fabric"
+  },
+  "license": "MIT",
+  "icon": "assets/limbusego/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["me.yisang.limbusego.LimbusEGOMod"],
+    "client": ["me.yisang.limbusego.client.LimbusEGOClient"]
+  },
+  "mixins": [
+    "limbusego.mixins.json",
+    {
+      "config": "limbusego.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric-api": "*",
+    "accessories": "*",
+    "minecraft": "~1.21.4"
+  }
+}
