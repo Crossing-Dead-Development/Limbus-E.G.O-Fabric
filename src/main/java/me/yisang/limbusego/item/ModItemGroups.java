@@ -36,6 +36,10 @@ public class ModItemGroups {
                             entries.add(ModItems.DACAPO);
                             entries.add(ModItems.RING_BRUSH);
                             entries.add(ModItems.W_CORP_KNIFE);
+                            entries.add(ModItems.TIANTUI_STAR);
+                            entries.add(ModItems.TWILIGHT);
+                            entries.add(ModItems.TIBIA);
+                            entries.add(ModItems.BLADESINGER);
                             entries.add(ModItems.TIGER_MARK);
                             entries.add(ModItems.SAVAGE_TIGER_MARK);
                         })

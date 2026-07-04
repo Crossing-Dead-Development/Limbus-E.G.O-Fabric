@@ -30,6 +30,10 @@ public class ModItems {
     public static Item DACAPO;
     public static Item RING_BRUSH;
     public static Item W_CORP_KNIFE;
+    public static Item TIANTUI_STAR;
+    public static Item TWILIGHT;
+    public static Item TIBIA;
+    public static Item BLADESINGER;
 
     public static void register() {
         MOD_ICON = reg("mod_icon", new Item(key("mod_icon")));
@@ -71,6 +75,49 @@ public class ModItems {
                 new WCorpKnifeItem(key("w_corp_knife").maxCount(1).rarity(Rarity.RARE)
                         .component(DataComponentTypes.ATTRIBUTE_MODIFIERS,
                                 weaponModifiers("w_corp_knife", 4.0, -1.6))));
+
+        TIANTUI_STAR = reg("tiantui_star",
+                new TiantuiStarItem(key("tiantui_star").maxCount(1).rarity(Rarity.EPIC)
+                        .component(DataComponentTypes.ATTRIBUTE_MODIFIERS,
+                                weaponModifiers("tiantui_star", 8.0, -2.4))));
+
+        TWILIGHT = reg("twilight",
+                new TwilightItem(key("twilight").maxCount(1).rarity(Rarity.EPIC)
+                        .component(DataComponentTypes.ATTRIBUTE_MODIFIERS,
+                                twilightModifiers())));
+
+        TIBIA = reg("tibia",
+                new TibiaItem(key("tibia").maxCount(1).rarity(Rarity.EPIC)
+                        .component(DataComponentTypes.ATTRIBUTE_MODIFIERS,
+                                reachModifiers("tibia", 10.0, -2.8, 1.0))));
+
+        BLADESINGER = reg("bladesinger",
+                new BladesingerItem(key("bladesinger").maxCount(1).rarity(Rarity.EPIC)
+                        .component(DataComponentTypes.ATTRIBUTE_MODIFIERS,
+                                weaponModifiers("bladesinger", 9.0, -2.6))));
+    }
+
+    /** 薄暝：攻擊/攻速 + 互動距離 +1.5。 */
+    private static AttributeModifiersComponent twilightModifiers() {
+        return reachModifiers("twilight", 9.0, -2.4, 1.5);
+    }
+
+    /** 近戰武器 + 互動距離 modifier。 */
+    static AttributeModifiersComponent reachModifiers(String id, double damage, double speed, double reach) {
+        return AttributeModifiersComponent.builder()
+                .add(EntityAttributes.ATTACK_DAMAGE,
+                        new EntityAttributeModifier(LimbusEGOMod.id(id + "_damage"), damage,
+                                EntityAttributeModifier.Operation.ADD_VALUE),
+                        AttributeModifierSlot.MAINHAND)
+                .add(EntityAttributes.ATTACK_SPEED,
+                        new EntityAttributeModifier(LimbusEGOMod.id(id + "_speed"), speed,
+                                EntityAttributeModifier.Operation.ADD_VALUE),
+                        AttributeModifierSlot.MAINHAND)
+                .add(EntityAttributes.ENTITY_INTERACTION_RANGE,
+                        new EntityAttributeModifier(LimbusEGOMod.id(id + "_reach"), reach,
+                                EntityAttributeModifier.Operation.ADD_VALUE),
+                        AttributeModifierSlot.MAINHAND)
+                .build();
     }
 
     static Item.Settings key(String name) {
