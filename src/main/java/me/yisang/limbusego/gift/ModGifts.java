@@ -115,6 +115,13 @@ public final class ModGifts {
         reg("someones_device", new SomeonesDevice());
         reg("sunshower", new Sunshower());
         reg("trial_plan_guide", new TrialPlanGuide());
+
+        // ── 原創組（original，5）──────────────────────────────────────
+        reg("endless_hunger", new EndlessHunger());
+        reg("flower_mound", new FlowerMound());
+        reg("jin_gang_bolus", new JinGangBolus());
+        reg("piece_of_a_torn_summer", new PieceOfATornSummer());
+        reg("tranquil_lotus_bolus", new TranquilLotusBolus());
     }
 
     public static List<Item> ordered() {
