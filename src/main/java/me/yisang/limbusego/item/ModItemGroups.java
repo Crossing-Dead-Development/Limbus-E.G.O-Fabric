@@ -28,7 +28,10 @@ public class ModItemGroups {
                         .icon(() -> new ItemStack(ModItems.BUTTERFLY_QUARTZ))
                         .displayName(Text.translatable("itemGroup.limbusego.weapons"))
                         .entries((context, entries) -> {
+                            entries.add(ModItems.SOLEMN_LAMENT_BLACK);
+                            entries.add(ModItems.SOLEMN_LAMENT_WHITE);
                             entries.add(ModItems.BUTTERFLY_QUARTZ);
+                            entries.add(ModItems.SOLEMN_SHIELD);
                             entries.add(ModItems.TIGER_MARK);
                             entries.add(ModItems.SAVAGE_TIGER_MARK);
                         })

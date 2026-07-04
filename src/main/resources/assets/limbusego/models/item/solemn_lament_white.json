@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "limbusego:item/solemn_lament_white"
+  }
+}

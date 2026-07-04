@@ -23,12 +23,24 @@ public class ModItems {
     public static Item BUTTERFLY_QUARTZ;
     public static Item TIGER_MARK;
     public static Item SAVAGE_TIGER_MARK;
+    public static Item SOLEMN_LAMENT_BLACK;
+    public static Item SOLEMN_LAMENT_WHITE;
+    public static Item SOLEMN_SHIELD;
 
     public static void register() {
         MOD_ICON = reg("mod_icon", new Item(key("mod_icon")));
 
         BUTTERFLY_QUARTZ = reg("butterfly_quartz",
                 new Item(key("butterfly_quartz").maxCount(64).rarity(Rarity.UNCOMMON)));
+
+        SOLEMN_LAMENT_BLACK = reg("solemn_lament_black",
+                new SolemnLamentItem(true, key("solemn_lament_black").maxCount(1).rarity(Rarity.EPIC)));
+
+        SOLEMN_LAMENT_WHITE = reg("solemn_lament_white",
+                new SolemnLamentItem(false, key("solemn_lament_white").maxCount(1).rarity(Rarity.EPIC)));
+
+        SOLEMN_SHIELD = reg("solemn_shield",
+                new SolemnShieldItem(key("solemn_shield").maxCount(1).rarity(Rarity.RARE)));
 
         TIGER_MARK = reg("tiger_mark",
                 new Item(key("tiger_mark").maxCount(64).rarity(Rarity.UNCOMMON)));

@@ -43,6 +43,8 @@ public class LimbusEGOMod implements ModInitializer {
         status = new StatusManager(sanity);
         status.start();
 
+        me.yisang.limbusego.event.WeaponEvents.register();
+
         LOGGER.info("Limbus E.G.O Fabric 初始化完成");
     }
 }

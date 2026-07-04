@@ -1,0 +1,55 @@
+{
+  "solemn.load": {
+    "category": "player",
+    "sounds": [
+      "solemnlament:item/crossbow/loading_start",
+      "solemnlament:item/crossbow/loading_middle1",
+      "solemnlament:item/crossbow/loading_middle2",
+      "solemnlament:item/crossbow/loading_middle3",
+      "solemnlament:item/crossbow/loading_middle4",
+      "solemnlament:item/crossbow/loading_end"
+    ]
+  },
+  "solemn.quick_load.1": {
+    "category": "player",
+    "sounds": [
+      "solemnlament:item/crossbow/quick_charge/quick1_1",
+      "solemnlament:item/crossbow/quick_charge/quick1_2",
+      "solemnlament:item/crossbow/quick_charge/quick1_3"
+    ]
+  },
+  "solemn.quick_load.2": {
+    "category": "player",
+    "sounds": [
+      "solemnlament:item/crossbow/quick_charge/quick2_1",
+      "solemnlament:item/crossbow/quick_charge/quick2_2",
+      "solemnlament:item/crossbow/quick_charge/quick2_3"
+    ]
+  },
+  "solemn.quick_load.3": {
+    "category": "player",
+    "sounds": [
+      "solemnlament:item/crossbow/quick_charge/quick3_1",
+      "solemnlament:item/crossbow/quick_charge/quick3_2",
+      "solemnlament:item/crossbow/quick_charge/quick3_3"
+    ]
+  },
+  "solemn.shoot": {
+    "category": "player",
+    "sounds": [
+      "solemnlament:item/crossbow/shoot1",
+      "solemnlament:item/crossbow/shoot2",
+      "solemnlament:item/crossbow/shoot3",
+      "solemnlament:item/crossbow/shoot4"
+    ]
+  },
+  "solemn.hit": {
+    "category": "player",
+    "sounds": [
+      "solemnlament:random/bowhit1",
+      "solemnlament:random/bowhit2",
+      "solemnlament:random/bowhit3",
+      "solemnlament:random/bowhit4"
+    ]
+  }
+}
