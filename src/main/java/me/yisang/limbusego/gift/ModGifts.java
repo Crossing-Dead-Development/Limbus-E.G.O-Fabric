@@ -35,6 +35,14 @@ public final class ModGifts {
         reg("pain_of_stifled_rage", new PainOfStifledRage());
         reg("royal_jelly_perfume", new RoyalJellyPerfume());
 
+        // ── 流血組（bleed，6）─────────────────────────────────────────
+        reg("crystallized_blood", new CrystallizedBlood());
+        reg("la_manchaland_all_day_pass", new LaManchalandAllDayPass());
+        reg("la_manchaland_standard_pass", new LaManchalandStandardPass());
+        reg("mask_of_the_parade", new MaskOfTheParade());
+        reg("millarca", new Millarca());
+        reg("sanguine_blossom_bolus", new SanguineBlossomBolus());
+
         // ── 輔助組（support）── ※先前試水的鮮血裝飾屬此組，其餘待補
         reg("bloody_gadget", new BloodyGadget());
     }

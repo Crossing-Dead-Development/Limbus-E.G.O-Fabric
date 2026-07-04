@@ -55,10 +55,10 @@ public final class GiftDispatcher {
             return ActionResult.PASS;
         });
 
-        // onQuit：清每玩家冷卻閘
+        // onQuit：清每玩家冷卻閘與飾品自訂 map
         ServerPlayConnectionEvents.DISCONNECT.register((handler, server) -> {
             UUID id = handler.getPlayer().getUuid();
-            for (BaseGift gift : GiftRegistry.all()) gift.clearGate(id);
+            for (BaseGift gift : GiftRegistry.all()) gift.onDisconnect(id);
         });
     }
 
@@ -68,11 +68,23 @@ public final class GiftDispatcher {
      * 回傳修改後的傷害值。
      */
     public float onDamage(LivingEntity victim, ServerWorld world, DamageSource source, float amount) {
-        // 忽略無實體來源（環境傷害、系統真傷），與 StatusManager 觸發範圍一致
-        if (source.getAttacker() == null && source.getSource() == null) return amount;
-
         float dmg = amount;
         LivingEntity attackerLE = source.getAttacker() instanceof LivingEntity la ? la : null;
+
+        // onAnyDamage：victim 飾品，任何傷害來源（含環境／DoT）
+        if (victim instanceof ServerPlayerEntity vpAny) {
+            AccessoriesCapability cap = AccessoriesCapability.get(vpAny);
+            if (cap != null) {
+                for (SlotEntryReference ref : cap.getAllEquipped()) {
+                    if (asGift(ref) instanceof BaseGift g) {
+                        dmg = g.dispatchAnyDamage(attackerLE, vpAny, ref.stack(), dmg);
+                    }
+                }
+            }
+        }
+
+        // 以下僅實體來源傷害（近戰/彈幕），對齊插件 EntityDamageByEntityEvent
+        if (source.getAttacker() == null && source.getSource() == null) return dmg;
 
         // 攻擊者飾品 onAttack
         if (attackerLE instanceof ServerPlayerEntity attacker) {

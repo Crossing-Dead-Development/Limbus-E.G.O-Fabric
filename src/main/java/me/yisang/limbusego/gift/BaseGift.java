@@ -64,8 +64,16 @@ public abstract class BaseGift implements Accessory {
         return amount;
     }
 
-    /** 受擊：回傳（可修改的）傷害值。attacker 可能為 null（環境傷害）。 */
+    /** 受擊：回傳（可修改的）傷害值。attacker 可能為 null（環境傷害）。僅實體來源傷害觸發。 */
     protected float onDamaged(LivingEntity attacker, ServerPlayerEntity victim, ItemStack self, float amount) {
+        return amount;
+    }
+
+    /**
+     * 任何傷害：victim 承受任何來源傷害時（含環境／DoT）觸發，回傳（可修改的）傷害值。
+     * 對映插件 onAnyDamage（EntityDamageEvent）。
+     */
+    protected float onAnyDamage(LivingEntity attacker, ServerPlayerEntity victim, ItemStack self, float amount) {
         return amount;
     }
 
@@ -75,9 +83,13 @@ public abstract class BaseGift implements Accessory {
     /** 右鍵互動。 */
     protected void onInteract(ServerPlayerEntity player, ItemStack self) {}
 
-    /** 玩家退出：清冷卻 map。由 GiftDispatcher 統一呼叫。 */
-    void clearGate(UUID playerId) {
+    /** 玩家退出時的子類清理（清自訂 per-player map）。 */
+    protected void onQuit(UUID playerId) {}
+
+    /** 玩家退出：清冷卻 map 並呼叫子類清理。由 GiftDispatcher 統一呼叫。 */
+    void onDisconnect(UUID playerId) {
         gateMap.remove(playerId);
+        onQuit(playerId);
     }
 
     // GiftDispatcher 用的橋接（同包可見）
@@ -87,6 +99,10 @@ public abstract class BaseGift implements Accessory {
 
     float dispatchDamaged(LivingEntity attacker, ServerPlayerEntity victim, ItemStack self, float amount) {
         return onDamaged(attacker, victim, self, amount);
+    }
+
+    float dispatchAnyDamage(LivingEntity attacker, ServerPlayerEntity victim, ItemStack self, float amount) {
+        return onAnyDamage(attacker, victim, self, amount);
     }
 
     void dispatchKill(LivingEntity victim, ServerPlayerEntity killer, ItemStack self) {
@@ -132,9 +148,14 @@ public abstract class BaseGift implements Accessory {
         return s == null ? 0 : s.potency(eff);
     }
 
+    /** 單調時間（毫秒），以伺服 tick 換算，避免 wall-clock。供冷卻/計時用。 */
+    protected long nowMs(ServerPlayerEntity p) {
+        return p.getServer().getTicks() * 50L;
+    }
+
     /** 每玩家冷卻閘：距上次觸發超過 ms 才回 true 並記錄本次。 */
     protected boolean gate(ServerPlayerEntity p, long ms) {
-        long now = p.getServer().getTicks() * 50L; // 以伺服 tick 換算毫秒（單調），避免 wall-clock
+        long now = nowMs(p);
         Long last = gateMap.get(p.getUuid());
         if (last != null && now - last < ms) return false;
         gateMap.put(p.getUuid(), now);
