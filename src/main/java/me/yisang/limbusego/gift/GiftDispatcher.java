@@ -81,7 +81,7 @@ public final class GiftDispatcher {
             if (cap != null) {
                 for (SlotEntryReference ref : cap.getAllEquipped()) {
                     if (asGift(ref) instanceof BaseGift g) {
-                        dmg = g.dispatchAnyDamage(attackerLE, vpAny, ref.stack(), dmg);
+                        dmg = g.dispatchAnyDamage(attackerLE, vpAny, ref.stack(), dmg, source);
                     }
                 }
             }

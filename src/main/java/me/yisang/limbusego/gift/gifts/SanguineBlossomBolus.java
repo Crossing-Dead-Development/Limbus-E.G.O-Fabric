@@ -22,7 +22,8 @@ public class SanguineBlossomBolus extends BaseGift {
     }
 
     @Override
-    protected float onAnyDamage(LivingEntity attacker, ServerPlayerEntity victim, ItemStack self, float amount) {
+    protected float onAnyDamage(LivingEntity attacker, ServerPlayerEntity victim, ItemStack self, float amount,
+                                net.minecraft.entity.damage.DamageSource source) {
         lastDamaged.put(victim.getUuid(), nowMs(victim));
         return amount;
     }

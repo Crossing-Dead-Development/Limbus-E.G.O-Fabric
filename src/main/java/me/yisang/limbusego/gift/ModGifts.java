@@ -101,6 +101,20 @@ public final class ModGifts {
         reg("carmilla", new Carmilla());
         reg("e_type_dimensional_dagger", new ETypeDimensionalDagger());
         reg("trauma_shield", new TraumaShield());
+
+        // ── 便利組（qol，12）──────────────────────────────────────────
+        reg("blue_zippo_lighter", new BlueZippoLighter());
+        reg("child_within_a_flask", new ChildWithinAFlask());
+        reg("golden_urn", new GoldenUrn());
+        reg("homeward", new Homeward());
+        reg("lithograph", new Lithograph());
+        reg("oracle", new Oracle());
+        reg("prejudice", new Prejudice());
+        reg("piece_of_relationship", new PieceOfRelationship());
+        reg("rusty_commemorative_coin", new RustyCommemorativeCoin());
+        reg("someones_device", new SomeonesDevice());
+        reg("sunshower", new Sunshower());
+        reg("trial_plan_guide", new TrialPlanGuide());
     }
 
     public static List<Item> ordered() {

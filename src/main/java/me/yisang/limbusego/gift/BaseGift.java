@@ -71,9 +71,10 @@ public abstract class BaseGift implements Accessory {
 
     /**
      * 任何傷害：victim 承受任何來源傷害時（含環境／DoT）觸發，回傳（可修改的）傷害值。
-     * 對映插件 onAnyDamage（EntityDamageEvent）。
+     * 對映插件 onAnyDamage（EntityDamageEvent）。{@code source} 供判斷傷害類型（如落雷）。
      */
-    protected float onAnyDamage(LivingEntity attacker, ServerPlayerEntity victim, ItemStack self, float amount) {
+    protected float onAnyDamage(LivingEntity attacker, ServerPlayerEntity victim, ItemStack self, float amount,
+                                net.minecraft.entity.damage.DamageSource source) {
         return amount;
     }
 
@@ -104,8 +105,9 @@ public abstract class BaseGift implements Accessory {
         return onDamaged(attacker, victim, self, amount);
     }
 
-    float dispatchAnyDamage(LivingEntity attacker, ServerPlayerEntity victim, ItemStack self, float amount) {
-        return onAnyDamage(attacker, victim, self, amount);
+    float dispatchAnyDamage(LivingEntity attacker, ServerPlayerEntity victim, ItemStack self, float amount,
+                            net.minecraft.entity.damage.DamageSource source) {
+        return onAnyDamage(attacker, victim, self, amount, source);
     }
 
     void dispatchKill(LivingEntity victim, ServerPlayerEntity killer, ItemStack self) {
