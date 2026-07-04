@@ -32,6 +32,10 @@ public class ModItemGroups {
                             entries.add(ModItems.SOLEMN_LAMENT_WHITE);
                             entries.add(ModItems.BUTTERFLY_QUARTZ);
                             entries.add(ModItems.SOLEMN_SHIELD);
+                            entries.add(ModItems.MIMICRY);
+                            entries.add(ModItems.DACAPO);
+                            entries.add(ModItems.RING_BRUSH);
+                            entries.add(ModItems.W_CORP_KNIFE);
                             entries.add(ModItems.TIGER_MARK);
                             entries.add(ModItems.SAVAGE_TIGER_MARK);
                         })

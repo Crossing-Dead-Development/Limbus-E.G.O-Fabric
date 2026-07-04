@@ -26,6 +26,10 @@ public class ModItems {
     public static Item SOLEMN_LAMENT_BLACK;
     public static Item SOLEMN_LAMENT_WHITE;
     public static Item SOLEMN_SHIELD;
+    public static Item MIMICRY;
+    public static Item DACAPO;
+    public static Item RING_BRUSH;
+    public static Item W_CORP_KNIFE;
 
     public static void register() {
         MOD_ICON = reg("mod_icon", new Item(key("mod_icon")));
@@ -47,6 +51,26 @@ public class ModItems {
 
         SAVAGE_TIGER_MARK = reg("savage_tiger_mark",
                 new Item(key("savage_tiger_mark").maxCount(64).rarity(Rarity.RARE)));
+
+        MIMICRY = reg("mimicry",
+                new MimicryItem(key("mimicry").maxCount(1).rarity(Rarity.EPIC)
+                        .component(DataComponentTypes.ATTRIBUTE_MODIFIERS,
+                                weaponModifiers("mimicry", 12.0, -3.2))));
+
+        DACAPO = reg("dacapo",
+                new DaCapoItem(key("dacapo").maxCount(1).rarity(Rarity.EPIC)
+                        .component(DataComponentTypes.ATTRIBUTE_MODIFIERS,
+                                weaponModifiers("dacapo", 7.0, -2.4))));
+
+        RING_BRUSH = reg("ring_brush",
+                new RingBrushItem(key("ring_brush").maxCount(1).rarity(Rarity.EPIC)
+                        .component(DataComponentTypes.ATTRIBUTE_MODIFIERS,
+                                weaponModifiers("ring_brush", 7.0, -2.4))));
+
+        W_CORP_KNIFE = reg("w_corp_knife",
+                new WCorpKnifeItem(key("w_corp_knife").maxCount(1).rarity(Rarity.RARE)
+                        .component(DataComponentTypes.ATTRIBUTE_MODIFIERS,
+                                weaponModifiers("w_corp_knife", 4.0, -1.6))));
     }
 
     static Item.Settings key(String name) {
