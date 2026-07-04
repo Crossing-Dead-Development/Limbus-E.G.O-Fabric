@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "limbusego:item/tiger_mark"
+    "layer0": "limbusego:item/green_spirit"
   }
 }

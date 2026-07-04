@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "limbusego:item/butterfly_quartz"
+    "layer0": "limbusego:item/brilliant_vestige"
   }
 }

@@ -11,7 +11,9 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Rarity;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * E.G.O 飾品物品註冊。依插件 9 體系分組批次補齊 80 件，每組一批。
@@ -21,6 +23,8 @@ public final class ModGifts {
 
     /** 依註冊順序保存所有飾品物品，供創造頁籤列舉。 */
     private static final List<Item> ORDERED = new ArrayList<>();
+    /** id → 飾品物品（註冊順序），供指令補完與 GUI。 */
+    private static final Map<String, Item> BY_ID = new LinkedHashMap<>();
 
     private ModGifts() {}
 
@@ -128,6 +132,11 @@ public final class ModGifts {
         return ORDERED;
     }
 
+    /** id → 飾品物品（註冊順序）。 */
+    public static Map<String, Item> byId() {
+        return BY_ID;
+    }
+
     private static Item reg(String name, BaseGift gift) {
         Item item = new Item(new Item.Settings()
                 .registryKey(RegistryKey.of(RegistryKeys.ITEM, LimbusEGOMod.id(name)))
@@ -137,6 +146,7 @@ public final class ModGifts {
         AccessoryRegistry.register(item, gift);
         GiftRegistry.register(gift, item);
         ORDERED.add(item);
+        BY_ID.put(name, item);
         return item;
     }
 }

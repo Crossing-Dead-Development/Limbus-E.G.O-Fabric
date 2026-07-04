@@ -4,6 +4,8 @@ import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
+import me.yisang.limbusego.gift.ModGifts;
+import me.yisang.limbusego.gui.GiftGui;
 import me.yisang.limbusego.gui.WeaponAdminGui;
 import me.yisang.limbusego.gui.WeaponCatalogGui;
 import me.yisang.limbusego.item.ModItems;
@@ -92,7 +94,59 @@ public class LimbusCommand {
                     }));
         }
 
-        return CommandManager.literal("limbusego").then(weapon);
+        return CommandManager.literal("limbusego").then(weapon).then(buildGift());
+    }
+
+    private static com.mojang.brigadier.builder.LiteralArgumentBuilder<ServerCommandSource> buildGift() {
+        var gift = CommandManager.literal("gift");
+
+        gift.then(CommandManager.literal("catalog")
+                .executes(ctx -> {
+                    ctx.getSource().getPlayerOrThrow().openHandledScreen(GiftGui.catalog());
+                    return 1;
+                }));
+
+        gift.then(CommandManager.literal("admin")
+                .requires(src -> src.hasPermissionLevel(2))
+                .executes(ctx -> {
+                    ctx.getSource().getPlayerOrThrow().openHandledScreen(GiftGui.admin());
+                    return 1;
+                }));
+
+        gift.then(CommandManager.literal("give")
+                .requires(src -> src.hasPermissionLevel(2))
+                .then(CommandManager.argument("target", EntityArgumentType.player())
+                        .then(CommandManager.argument("id", StringArgumentType.word())
+                                .suggests((ctx, b) -> { ModGifts.byId().keySet().forEach(b::suggest); return b.buildFuture(); })
+                                .executes(ctx -> giveGift(ctx, 1))
+                                .then(CommandManager.argument("count", IntegerArgumentType.integer(1, 64))
+                                        .executes(ctx -> giveGift(ctx, IntegerArgumentType.getInteger(ctx, "count")))))));
+
+        // gift <id> —— 直接給自己
+        for (String id : ModGifts.byId().keySet()) {
+            gift.then(CommandManager.literal(id)
+                    .requires(src -> src.hasPermissionLevel(2))
+                    .executes(ctx -> {
+                        ServerPlayerEntity self = ctx.getSource().getPlayerOrThrow();
+                        self.getInventory().offerOrDrop(new ItemStack(ModGifts.byId().get(id), 1));
+                        return 1;
+                    }));
+        }
+
+        return gift;
+    }
+
+    private static int giveGift(CommandContext<ServerCommandSource> ctx, int count) throws com.mojang.brigadier.exceptions.CommandSyntaxException {
+        ServerPlayerEntity target = EntityArgumentType.getPlayer(ctx, "target");
+        String id = StringArgumentType.getString(ctx, "id").toLowerCase();
+        Item item = ModGifts.byId().get(id);
+        if (item == null) {
+            ctx.getSource().sendError(Text.literal("未知飾品：" + id));
+            return 0;
+        }
+        target.getInventory().offerOrDrop(new ItemStack(item, count));
+        ctx.getSource().sendFeedback(() -> Text.literal("§a已給予 " + target.getName().getString() + " × " + count + " " + id), true);
+        return 1;
     }
 
     private static int giveTo(CommandContext<ServerCommandSource> ctx, int count) throws com.mojang.brigadier.exceptions.CommandSyntaxException {
