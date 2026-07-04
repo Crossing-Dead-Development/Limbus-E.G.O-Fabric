@@ -85,8 +85,22 @@ public final class ModGifts {
         reg("nebulizer", new Nebulizer());
         reg("cqc_manual", new CQCManual());
 
-        // ── 輔助組（support）── ※先前試水的鮮血裝飾屬此組，其餘待補
+        // ── 輔助組（support，15）── ※鮮血裝飾為先前試水件
         reg("bloody_gadget", new BloodyGadget());
+        reg("dreaming_electric_sheep", new DreamingElectricSheep());
+        reg("dueling_manual_book_3", new DuelingManualBook3());
+        reg("illusory_hunt", new IllusoryHunt());
+        reg("late_bloomers_tattoo", new LateBloomersTattoo());
+        reg("hardship", new Hardship());
+        reg("phantom_pain", new PhantomPain());
+        reg("tenacity_bolus", new TenacityBolus());
+        reg("the_book_of_vengeance", new TheBookOfVengeance());
+        reg("special_contract", new SpecialContract());
+        reg("plume_of_proof", new PlumeOfProof());
+        reg("spicebush_branch", new SpicebushBranch());
+        reg("carmilla", new Carmilla());
+        reg("e_type_dimensional_dagger", new ETypeDimensionalDagger());
+        reg("trauma_shield", new TraumaShield());
     }
 
     public static List<Item> ordered() {
