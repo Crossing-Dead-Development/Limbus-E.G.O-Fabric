@@ -3,7 +3,7 @@
   "itemGroup.limbusego.gifts": "E.G.O Gifts",
 
   "item.limbusego.mod_icon": "Limbus E.G.O",
-  "item.limbusego.butterfly_quartz": "Butterfly Quartz",
+  "item.limbusego.butterfly_quartz": "Butterflies of Life and Death",
   "item.limbusego.tiger_mark": "Tiger Round",
   "item.limbusego.savage_tiger_mark": "Savage Tiger Round",
   "item.limbusego.solemn_lament_black": "Solemn Lament",
@@ -196,6 +196,7 @@
   "item.limbusego.solemn_lament_black.lore.0": "Where do the dead go?",
   "item.limbusego.solemn_lament_white.lore.0": "Where do the dead go?",
   "item.limbusego.solemn_shield.lore.0": "Where do the dead go?",
+  "item.limbusego.butterfly_quartz.lore.0": "Where do the dead go?",
   "item.limbusego.mimicry.lore.0": "And there, many voices cried the same word in unison — \"Manager\"",
   "item.limbusego.dacapo.lore.0": "From the ruins, the most magnificent performance is about to begin!",
   "item.limbusego.ring_brush.lore.0": "Failing grade.",

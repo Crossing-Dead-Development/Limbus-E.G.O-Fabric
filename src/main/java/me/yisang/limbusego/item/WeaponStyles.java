@@ -30,6 +30,7 @@ public final class WeaponStyles {
         Map.entry("solemn_lament_black", new Spec(0x333333, true,  new int[]{0xD8D8D8})),
         Map.entry("solemn_lament_white", new Spec(0xFFFFFF, true,  new int[]{0xD8D8D8})),
         Map.entry("solemn_shield",       new Spec(0xFFFFFF, true,  new int[]{0xD8D8D8})),
+        Map.entry("butterfly_quartz",    new Spec(0xB1B1B1, false, new int[]{0xD8D8D8})),
         Map.entry("mimicry",             new Spec(0xFF0000, false, new int[]{0xFF0000})),
         Map.entry("dacapo",              new Spec(0xFFFFFF, false, new int[]{0xFFFFFF})),
         Map.entry("ring_brush",          new Spec(0xFFFFFF, false, new int[]{0xFF9500})),

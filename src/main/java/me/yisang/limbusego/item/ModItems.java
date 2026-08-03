@@ -39,7 +39,8 @@ public class ModItems {
         MOD_ICON = reg("mod_icon", new Item(key("mod_icon")));
 
         BUTTERFLY_QUARTZ = reg("butterfly_quartz",
-                new Item(key("butterfly_quartz").maxCount(64).rarity(Rarity.UNCOMMON)));
+                new Item(WeaponStyles.apply(key("butterfly_quartz"), "butterfly_quartz")
+                        .maxCount(64).rarity(Rarity.UNCOMMON)));
 
         SOLEMN_LAMENT_BLACK = reg("solemn_lament_black",
                 new SolemnLamentItem(true, WeaponStyles.apply(key("solemn_lament_black"), "solemn_lament_black")
