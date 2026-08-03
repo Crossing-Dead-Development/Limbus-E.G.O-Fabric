@@ -12,8 +12,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 武器名稱／lore 樣式集中對照。文字走翻譯鍵（雙語），顏色與粗體由此掛上 component。
+ * 武器名稱／lore 樣式集中對照。文字走翻譯鍵（雙語），顏色與粗體在此套用。
  * 對照來源：Limbus-E.G.O 插件 lang/weapons。漸層項以代表色近似。
+ *
+ * 註：名稱樣式**不能**經 {@code Item.Settings.component(ITEM_NAME, …)} 設定——1.21.4 的
+ * Settings 會在建置時用翻譯鍵的預設無樣式 item_name 無條件蓋掉。改由 {@code ItemNameMixin}
+ * 攔截 {@code Item.getName(ItemStack)} 回傳 {@link #styledName(String)}。Lore 元件不受此限，仍走 {@link #apply}。
  */
 public final class WeaponStyles {
 
@@ -38,17 +42,10 @@ public final class WeaponStyles {
         Map.entry("bladesinger",         new Spec(0xAEDBFF, false, new int[]{0xD0E7FF}))
     );
 
-    /** 對已知武器 id 掛上 ITEM_NAME 與 LORE component。未知 id 原樣返回。 */
+    /** 對已知武器 id 掛上 LORE component。未知 id 原樣返回。名稱樣式改由 mixin 處理（見類別註解）。 */
     public static Item.Settings apply(Item.Settings s, String id) {
         Spec spec = SPECS.get(id);
         if (spec == null) return s;
-
-        Style nameStyle = Style.EMPTY
-                .withColor(TextColor.fromRgb(spec.nameColor))
-                .withBold(spec.bold)
-                .withItalic(false);
-        Text name = Text.translatable("item.limbusego." + id).setStyle(nameStyle);
-        s.component(DataComponentTypes.ITEM_NAME, name);
 
         int[] colors = spec.loreColors;
         if (colors.length > 0) {
@@ -60,5 +57,17 @@ public final class WeaponStyles {
             s.component(DataComponentTypes.LORE, new LoreComponent(lore));
         }
         return s;
+    }
+
+    /** 已知武器 id 的樣式化顯示名稱（翻譯鍵＋顏色/粗體，無斜體）；未知 id 回傳 {@code null}。 */
+    public static Text styledName(String id) {
+        if (id == null) return null;
+        Spec spec = SPECS.get(id);
+        if (spec == null) return null;
+        Style nameStyle = Style.EMPTY
+                .withColor(TextColor.fromRgb(spec.nameColor))
+                .withBold(spec.bold)
+                .withItalic(false);
+        return Text.translatable("item.limbusego." + id).setStyle(nameStyle);
     }
 }
