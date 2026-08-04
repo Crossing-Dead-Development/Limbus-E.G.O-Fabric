@@ -55,18 +55,16 @@ import java.util.UUID;
  */
 public class WeaponEvents {
 
-    // 插件冷卻公式：quickLevel>0 ? max(400ms, 1200ms - quickLevel*300ms) : 1200ms。
-    // 隱藏附魔固定為 QUICK_CHARGE 5 → max(400, 1200-1500) = 400ms = 8 tick。
-    private static final int SOLEMN_COOLDOWN_TICKS = 8; // 400ms（QUICK_CHARGE V 換算後的實際冷卻）
+    // 弩式兩段式：上弦所需 tick 見 SolemnLamentItem.CHARGE_TICKS（插件 QUICK_CHARGE V 換算約 8 tick）。
     private static final float SOLEMN_PROJECTILE_SPEED = 3.0f;
     private static final int SOLEMN_PROJECTILE_LIFETIME = 100; // 5 秒
 
     private record ProjectileData(ItemEntity entity, UUID ownerId, boolean isBlack, Vec3d vel, int[] ticksAlive) {}
     private static final List<ProjectileData> activeProjectiles = Collections.synchronizedList(new ArrayList<>());
 
-    // 莊嚴哀悼每手獨立冷卻：key=玩家 UUID，值 [主手上次擊發 tick, 副手上次擊發 tick]。
-    // 某手冷卻中時 use() 回 PASS 讓另一手接手 → 雙手交替擊發。
-    private static final Map<UUID, long[]> solemnHandCd = new HashMap<>();
+    // 莊嚴哀悼弩式兩段式「已裝填」狀態：key=玩家 UUID，值 [主手, 副手]。
+    // 第一次右鍵按住上弦→充能完成設 true（維持已裝填）；第二次右鍵擊發後設 false。每手獨立。
+    private static final Map<UUID, boolean[]> solemnCharged = new HashMap<>();
 
     private static int shieldTick = 0;
 
@@ -316,23 +314,20 @@ public class WeaponEvents {
 
     // ── 莊嚴哀悼 ──────────────────────────────────────────────────────────────
 
-    /** 某手是否冷卻中（world tick 為單位）。冷卻中回 true → SolemnLamentItem.use 回 PASS 讓另一手接手。 */
-    public static boolean isSolemnHandCooling(PlayerEntity player, Hand hand) {
-        long[] last = solemnHandCd.get(player.getUuid());
-        if (last == null) return false;
-        long now = player.getWorld().getTime();
-        return now - last[hand == Hand.OFF_HAND ? 1 : 0] < SOLEMN_COOLDOWN_TICKS;
+    /** 某手是否已裝填（弩式兩段式的第二段：已裝填→再按一次擊發）。 */
+    public static boolean isSolemnCharged(PlayerEntity player, Hand hand) {
+        boolean[] c = solemnCharged.get(player.getUuid());
+        return c != null && c[hand == Hand.OFF_HAND ? 1 : 0];
     }
 
+    /** 設定某手的已裝填狀態（充能完成設 true；擊發後設 false）。 */
+    public static void setSolemnCharged(PlayerEntity player, Hand hand, boolean value) {
+        solemnCharged.computeIfAbsent(player.getUuid(), k -> new boolean[2])
+                [hand == Hand.OFF_HAND ? 1 : 0] = value;
+    }
+
+    /** 擊發已裝填的彈幕（彈藥已於上弦完成時消耗）。 */
     public static void fireSolemnLament(PlayerEntity player, ServerWorld world, boolean isBlack, Hand hand) {
-        ItemStack ammo = findButterfly(player);
-        if (!player.getAbilities().creativeMode && ammo == null) return;
-        if (ammo != null) ammo.decrement(1);
-
-        // 每手獨立冷卻（取代原本的全物品 ItemCooldownManager）
-        solemnHandCd.computeIfAbsent(player.getUuid(), k -> new long[]{Long.MIN_VALUE, Long.MIN_VALUE})
-                [hand == Hand.OFF_HAND ? 1 : 0] = world.getTime();
-
         Vec3d vel = player.getRotationVector().multiply(SOLEMN_PROJECTILE_SPEED);
         ItemStack visual = new ItemStack(ModItems.BUTTERFLY_QUARTZ);
         ItemEntity proj = new ItemEntity(world, player.getX(), player.getEyeY(), player.getZ(), visual);
@@ -344,10 +339,7 @@ public class WeaponEvents {
 
         activeProjectiles.add(new ProjectileData(proj, player.getUuid(), isBlack, vel, new int[]{0}));
 
-        // 插件在右鍵上弦當下播放裝填音；隱藏附魔固定 QUICK_CHARGE 5 → min(5,3) 恆為
-        // quick_load.3。Fabric 版無獨立上弦階段，故與射擊音同時播放。
-        world.playSound(null, player.getBlockPos(), ModSounds.SOLEMN_QUICK_LOAD_3,
-                SoundCategory.PLAYERS, 0.6f, 1.0f);
+        // 裝填音已於上弦完成時播放（SolemnLamentItem）；此處僅播擊發音。
         world.playSound(null, player.getBlockPos(), ModSounds.SOLEMN_SHOOT,
                 SoundCategory.PLAYERS, 0.8f, 1.0f);
     }
