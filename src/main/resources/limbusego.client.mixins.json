@@ -2,7 +2,9 @@
   "required": true,
   "package": "me.yisang.limbusego.mixin.client",
   "compatibilityLevel": "JAVA_21",
-  "client": [],
+  "client": [
+    "PlayerEntityRendererMixin"
+  ],
   "injectors": {
     "defaultRequire": 1
   }
