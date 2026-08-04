@@ -55,7 +55,9 @@ import java.util.UUID;
  */
 public class WeaponEvents {
 
-    private static final int SOLEMN_COOLDOWN_TICKS = 24; // 1.2 秒
+    // 插件冷卻公式：quickLevel>0 ? max(400ms, 1200ms - quickLevel*300ms) : 1200ms。
+    // 隱藏附魔固定為 QUICK_CHARGE 5 → max(400, 1200-1500) = 400ms = 8 tick。
+    private static final int SOLEMN_COOLDOWN_TICKS = 8; // 400ms（QUICK_CHARGE V 換算後的實際冷卻）
     private static final float SOLEMN_PROJECTILE_SPEED = 3.0f;
     private static final int SOLEMN_PROJECTILE_LIFETIME = 100; // 5 秒
 
@@ -326,6 +328,10 @@ public class WeaponEvents {
 
         activeProjectiles.add(new ProjectileData(proj, player.getUuid(), isBlack, new int[]{0}));
 
+        // 插件在右鍵上弦當下播放裝填音；隱藏附魔固定 QUICK_CHARGE 5 → min(5,3) 恆為
+        // quick_load.3。Fabric 版無獨立上弦階段，故與射擊音同時播放。
+        world.playSound(null, player.getBlockPos(), ModSounds.SOLEMN_QUICK_LOAD_3,
+                SoundCategory.PLAYERS, 0.6f, 1.0f);
         world.playSound(null, player.getBlockPos(), ModSounds.SOLEMN_SHOOT,
                 SoundCategory.PLAYERS, 0.8f, 1.0f);
     }
