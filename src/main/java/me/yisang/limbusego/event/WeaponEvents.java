@@ -62,9 +62,6 @@ public class WeaponEvents {
     private record ProjectileData(ItemEntity entity, UUID ownerId, boolean isBlack, Vec3d vel, int[] ticksAlive) {}
     private static final List<ProjectileData> activeProjectiles = Collections.synchronizedList(new ArrayList<>());
 
-    // 莊嚴哀悼弩式兩段式「已裝填」狀態：key=玩家 UUID，值 [主手, 副手]。
-    // 第一次右鍵按住上弦→充能完成設 true（維持已裝填）；第二次右鍵擊發後設 false。每手獨立。
-    private static final Map<UUID, boolean[]> solemnCharged = new HashMap<>();
 
     private static int shieldTick = 0;
 
@@ -314,19 +311,7 @@ public class WeaponEvents {
 
     // ── 莊嚴哀悼 ──────────────────────────────────────────────────────────────
 
-    /** 某手是否已裝填（弩式兩段式的第二段：已裝填→再按一次擊發）。 */
-    public static boolean isSolemnCharged(PlayerEntity player, Hand hand) {
-        boolean[] c = solemnCharged.get(player.getUuid());
-        return c != null && c[hand == Hand.OFF_HAND ? 1 : 0];
-    }
-
-    /** 設定某手的已裝填狀態（充能完成設 true；擊發後設 false）。 */
-    public static void setSolemnCharged(PlayerEntity player, Hand hand, boolean value) {
-        solemnCharged.computeIfAbsent(player.getUuid(), k -> new boolean[2])
-                [hand == Hand.OFF_HAND ? 1 : 0] = value;
-    }
-
-    /** 擊發已裝填的彈幕（彈藥已於上弦完成時消耗）。 */
+    /** 擊發已裝填的彈幕（彈藥已於弩上弦時消耗）。 */
     public static void fireSolemnLament(PlayerEntity player, ServerWorld world, boolean isBlack, Hand hand) {
         Vec3d vel = player.getRotationVector().multiply(SOLEMN_PROJECTILE_SPEED);
         ItemStack visual = new ItemStack(ModItems.BUTTERFLY_QUARTZ);
