@@ -1,0 +1,52 @@
+{
+  "tiantui.slash": {
+    "category": "player",
+    "sounds": [
+      "tiantui_star:item/tiantui/attack/sweep1",
+      "tiantui_star:item/tiantui/attack/sweep2",
+      "tiantui_star:item/tiantui/attack/sweep3",
+      "tiantui_star:item/tiantui/attack/sweep4",
+      "tiantui_star:item/tiantui/attack/sweep5",
+      "tiantui_star:item/tiantui/attack/sweep6",
+      "tiantui_star:item/tiantui/attack/sweep7",
+      "tiantui_star:item/tiantui/attack/sweep8",
+      "tiantui_star:item/tiantui/attack/strong1",
+      "tiantui_star:item/tiantui/attack/strong2",
+      "tiantui_star:item/tiantui/attack/strong3",
+      "tiantui_star:item/tiantui/attack/strong4",
+      "tiantui_star:item/tiantui/attack/strong5",
+      "tiantui_star:item/tiantui/attack/strong6",
+      "tiantui_star:item/tiantui/attack/strong7"
+    ]
+  },
+  "tiantui.charge_tiger": {
+    "category": "player",
+    "sounds": [
+      "tiantui_star:item/tiantui/charge_tiger"
+    ]
+  },
+  "tiantui.charge_savage_1": {
+    "category": "player",
+    "sounds": [
+      "tiantui_star:item/tiantui/charge_savage_1"
+    ]
+  },
+  "tiantui.charge_savage_2": {
+    "category": "player",
+    "sounds": [
+      "tiantui_star:item/tiantui/charge_savage_2"
+    ]
+  },
+  "tiantui.charge_savage_3": {
+    "category": "player",
+    "sounds": [
+      "tiantui_star:item/tiantui/charge_savage_3"
+    ]
+  },
+  "tiantui.dash": {
+    "category": "player",
+    "sounds": [
+      "tiantui_star:item/tiantui/dash"
+    ]
+  }
+}

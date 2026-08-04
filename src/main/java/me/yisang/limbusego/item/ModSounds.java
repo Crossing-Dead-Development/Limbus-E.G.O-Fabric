@@ -15,6 +15,11 @@ public class ModSounds {
     public static final SoundEvent SOLEMN_SHOOT = reg("solemnlament", "solemn.shoot");
     public static final SoundEvent SOLEMN_HIT   = reg("solemnlament", "solemn.hit");
 
+    // 快速上弦（QUICK_CHARGE I~III，插件依附魔等級擇一播放）
+    public static final SoundEvent SOLEMN_QUICK_LOAD_1 = reg("solemnlament", "solemn.quick_load.1");
+    public static final SoundEvent SOLEMN_QUICK_LOAD_2 = reg("solemnlament", "solemn.quick_load.2");
+    public static final SoundEvent SOLEMN_QUICK_LOAD_3 = reg("solemnlament", "solemn.quick_load.3");
+
     public static final SoundEvent TIANTUI_SLASH         = reg("tiantui_star", "tiantui.slash");
     public static final SoundEvent TIANTUI_CHARGE_TIGER  = reg("tiantui_star", "tiantui.charge_tiger");
     public static final SoundEvent TIANTUI_CHARGE_SAV_1  = reg("tiantui_star", "tiantui.charge_savage_1");
