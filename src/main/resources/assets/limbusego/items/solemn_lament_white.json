@@ -1,6 +1,8 @@
 {
   "model": {
-    "type": "minecraft:model",
-    "model": "limbusego:item/solemn_lament_white"
+    "type": "minecraft:condition",
+    "property": "minecraft:using_item",
+    "on_true":  { "type": "minecraft:model", "model": "limbusego:item/solemn_lament_white" },
+    "on_false": { "type": "minecraft:model", "model": "limbusego:item/solemn_lament_white" }
   }
 }
