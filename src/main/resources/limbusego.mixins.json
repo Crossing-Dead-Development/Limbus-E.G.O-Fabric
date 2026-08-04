@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "AnvilScreenHandlerMixin",
+    "CrossbowItemMixin",
     "ItemNameMixin",
     "LivingEntityMixin"
   ],
