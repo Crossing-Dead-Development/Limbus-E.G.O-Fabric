@@ -61,8 +61,12 @@ public class WeaponEvents {
     private static final float SOLEMN_PROJECTILE_SPEED = 3.0f;
     private static final int SOLEMN_PROJECTILE_LIFETIME = 100; // 5 秒
 
-    private record ProjectileData(ItemEntity entity, UUID ownerId, boolean isBlack, int[] ticksAlive) {}
+    private record ProjectileData(ItemEntity entity, UUID ownerId, boolean isBlack, Vec3d vel, int[] ticksAlive) {}
     private static final List<ProjectileData> activeProjectiles = Collections.synchronizedList(new ArrayList<>());
+
+    // 莊嚴哀悼每手獨立冷卻：key=玩家 UUID，值 [主手上次擊發 tick, 副手上次擊發 tick]。
+    // 某手冷卻中時 use() 回 PASS 讓另一手接手 → 雙手交替擊發。
+    private static final Map<UUID, long[]> solemnHandCd = new HashMap<>();
 
     private static int shieldTick = 0;
 
@@ -312,21 +316,33 @@ public class WeaponEvents {
 
     // ── 莊嚴哀悼 ──────────────────────────────────────────────────────────────
 
-    public static void fireSolemnLament(PlayerEntity player, ServerWorld world, boolean isBlack) {
+    /** 某手是否冷卻中（world tick 為單位）。冷卻中回 true → SolemnLamentItem.use 回 PASS 讓另一手接手。 */
+    public static boolean isSolemnHandCooling(PlayerEntity player, Hand hand) {
+        long[] last = solemnHandCd.get(player.getUuid());
+        if (last == null) return false;
+        long now = player.getWorld().getTime();
+        return now - last[hand == Hand.OFF_HAND ? 1 : 0] < SOLEMN_COOLDOWN_TICKS;
+    }
+
+    public static void fireSolemnLament(PlayerEntity player, ServerWorld world, boolean isBlack, Hand hand) {
         ItemStack ammo = findButterfly(player);
         if (!player.getAbilities().creativeMode && ammo == null) return;
         if (ammo != null) ammo.decrement(1);
 
-        player.getItemCooldownManager().set(player.getMainHandStack(), SOLEMN_COOLDOWN_TICKS);
+        // 每手獨立冷卻（取代原本的全物品 ItemCooldownManager）
+        solemnHandCd.computeIfAbsent(player.getUuid(), k -> new long[]{Long.MIN_VALUE, Long.MIN_VALUE})
+                [hand == Hand.OFF_HAND ? 1 : 0] = world.getTime();
 
+        Vec3d vel = player.getRotationVector().multiply(SOLEMN_PROJECTILE_SPEED);
         ItemStack visual = new ItemStack(ModItems.BUTTERFLY_QUARTZ);
         ItemEntity proj = new ItemEntity(world, player.getX(), player.getEyeY(), player.getZ(), visual);
         proj.setPickupDelay(32767);
-        proj.setVelocity(player.getRotationVector().multiply(SOLEMN_PROJECTILE_SPEED));
+        proj.setVelocity(vel);
+        proj.setNoGravity(true); // 插件投射物為無重力等速直線；每 tick 重設速度以抵銷空氣阻力
         proj.setNeverDespawn();
         world.spawnEntity(proj);
 
-        activeProjectiles.add(new ProjectileData(proj, player.getUuid(), isBlack, new int[]{0}));
+        activeProjectiles.add(new ProjectileData(proj, player.getUuid(), isBlack, vel, new int[]{0}));
 
         // 插件在右鍵上弦當下播放裝填音；隱藏附魔固定 QUICK_CHARGE 5 → min(5,3) 恆為
         // quick_load.3。Fabric 版無獨立上弦階段，故與射擊音同時播放。
@@ -346,6 +362,8 @@ public class WeaponEvents {
                 proj.discard();
                 return true;
             }
+
+            proj.setVelocity(data.vel()); // 維持等速直線（抵銷 ItemEntity 空氣阻力）
 
             ServerWorld sw = (ServerWorld) proj.getWorld();
             sw.spawnParticles(ParticleTypes.SQUID_INK, proj.getX(), proj.getY(), proj.getZ(), 2, 0.02, 0.02, 0.02, 0.01);
