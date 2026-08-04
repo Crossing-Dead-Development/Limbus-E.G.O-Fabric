@@ -471,9 +471,10 @@ public class WeaponEvents {
         twilightCd.put(player.getUuid(), System.currentTimeMillis() + 6000L + 30 * 50L);
     }
 
-    public static void twilightChargeTick(PlayerEntity player, ServerWorld sw) {
+    public static void twilightChargeTick(PlayerEntity player, ServerWorld sw, int drawTicks, int maxTicks) {
         sw.spawnParticles(ParticleTypes.WHITE_ASH, player.getX(), player.getY() + 1.0, player.getZ(), 6, 0.5, 0.5, 0.5, 0.01);
         sw.spawnParticles(new DustParticleEffect(0x6C5B9E, 1.2f), player.getX(), player.getY() + 1.0, player.getZ(), 4, 0.4, 0.4, 0.4, 0);
+        sendChargeBar(player, "msg.limbusego.twilight.charging", 0x6C5B9E, drawTicks, maxTicks, '▰', '▱');
     }
 
     private static double lowHpMult(PlayerEntity p) {
@@ -564,9 +565,25 @@ public class WeaponEvents {
                 SoundCategory.PLAYERS, 0.8f, 0.8f);
     }
 
-    public static void tibiaChargeTick(PlayerEntity player, ServerWorld sw) {
+    public static void tibiaChargeTick(PlayerEntity player, ServerWorld sw, int drawTicks, int maxTicks) {
         sw.spawnParticles(new DustParticleEffect(0x8B0000, 1.3f), player.getX(), player.getY() + 1.0, player.getZ(), 6, 0.5, 0.5, 0.5, 0);
         sw.spawnParticles(ParticleTypes.CRIMSON_SPORE, player.getX(), player.getY() + 1.0, player.getZ(), 3, 0.4, 0.4, 0.4, 0.01);
+        sendChargeBar(player, "msg.limbusego.tibia.charging", 0x8B0000, drawTicks, maxTicks, '▰', '▱');
+    }
+
+    /** 動作列蓄力進度條：彩色前綴（翻譯鍵）＋10 段方塊＋百分比。對齊插件 sendActionBar 蓄力提示。 */
+    private static void sendChargeBar(PlayerEntity player, String prefixKey, int prefixColor,
+                                      int cur, int max, char filled, char empty) {
+        int f = Math.min(10, (int) Math.round((double) cur / Math.max(1, max) * 10));
+        net.minecraft.text.MutableText bar = Text.empty();
+        for (int i = 0; i < 10; i++) {
+            bar.append(Text.literal(String.valueOf(i < f ? filled : empty))
+                    .withColor(i < f ? 0xFFFFFF : 0x555555));
+        }
+        int pct = Math.min(100, cur * 100 / Math.max(1, max));
+        net.minecraft.text.MutableText msg = Text.translatable(prefixKey).withColor(prefixColor)
+                .append(bar).append(Text.literal(" " + pct + "%").withColor(0xFFFFFF));
+        player.sendMessage(msg, true);
     }
 
     public static void tibiaAnatomize(PlayerEntity player, ServerWorld sw) {
@@ -624,6 +641,9 @@ public class WeaponEvents {
         }
         sw.spawnParticles(savage ? ParticleTypes.FLAME : ParticleTypes.CRIT,
                 player.getX(), player.getY() + 1.0, player.getZ(), savage ? 6 : 3, 0.4, 0.4, 0.4, 0.01);
+        sendChargeBar(player,
+                savage ? "msg.limbusego.tiantui.charge_savage" : "msg.limbusego.tiantui.charge_tiger",
+                savage ? 0xC0392B : 0xE67E22, drawTicks, savage ? 60 : 20, '▮', '▯');
     }
 
     public static void fireTiantuiDash(PlayerEntity player, ServerWorld sw, boolean savage) {

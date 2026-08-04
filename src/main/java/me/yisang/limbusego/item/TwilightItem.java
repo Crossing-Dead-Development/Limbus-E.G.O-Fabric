@@ -43,7 +43,7 @@ public class TwilightItem extends Item {
         if (!(user instanceof PlayerEntity player)) return;
         int drawTicks = getMaxUseTime(stack, user) - remainingUseTicks;
         if (!world.isClient && world instanceof ServerWorld sw) {
-            WeaponEvents.twilightChargeTick(player, sw);
+            WeaponEvents.twilightChargeTick(player, sw, drawTicks, CHARGE_TICKS);
             if (drawTicks >= CHARGE_TICKS) {
                 WeaponEvents.twilightSlash(player, sw);
                 player.stopUsingItem();

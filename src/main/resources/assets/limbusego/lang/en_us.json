@@ -1,7 +1,6 @@
 {
   "itemGroup.limbusego.weapons": "E.G.O Weapons",
   "itemGroup.limbusego.gifts": "E.G.O Gifts",
-
   "item.limbusego.mod_icon": "Limbus E.G.O",
   "item.limbusego.butterfly_quartz": "Butterflies of Life and Death",
   "item.limbusego.tiger_mark": "Tiger Round",
@@ -17,7 +16,6 @@
   "item.limbusego.twilight": "Twilight",
   "item.limbusego.tibia": "Tibia",
   "item.limbusego.bladesinger": "Shadow-Vested Bladesinger",
-
   "item.limbusego.bloody_gadget": "Bloody Gadget",
   "item.limbusego.ardent_flower": "Ardent Flower",
   "item.limbusego.glimpse_of_flames": "Glimpse of Flames",
@@ -43,7 +41,6 @@
   "item.limbusego.rags": "Rags",
   "item.limbusego.rest": "Rest",
   "item.limbusego.tangled_bones": "Tangled Bones",
-
   "item.limbusego.dry_to_the_bone_breast": "Dry-to-the-Bone Breast",
   "item.limbusego.ebony_brooch": "Ebony Brooch",
   "item.limbusego.flower_in_the_mirror": "Flower in the Mirror",
@@ -55,14 +52,12 @@
   "item.limbusego.strange_glyph_talisman": "Strange Glyph Talisman",
   "item.limbusego.thunderbranch": "Thunderbranch",
   "item.limbusego.chief_butlers_secret_arts": "Chief Butler's Secret Arts",
-
   "item.limbusego.green_spirit": "Green Spirit",
   "item.limbusego.nixie_divergence": "Nixie Divergence",
   "item.limbusego.sour_liquor_aroma": "Sour Liquor Aroma",
   "item.limbusego.sownpour": "Sownpour",
   "item.limbusego.piece_of_crumbled_egg": "Piece of Crumbled Egg",
   "item.limbusego.handheld_mirror": "Handheld Mirror",
-
   "item.limbusego.cask_spirits": "Cask Spirits",
   "item.limbusego.clear_mirror_calm_water": "Clear Mirror, Calm Water",
   "item.limbusego.emerald_elytra": "Emerald Elytra",
@@ -70,7 +65,6 @@
   "item.limbusego.keenbranch": "Keenbranch",
   "item.limbusego.nebulizer": "Nebulizer",
   "item.limbusego.cqc_manual": "CQC Manual",
-
   "item.limbusego.dreaming_electric_sheep": "Dreaming Electric Sheep",
   "item.limbusego.dueling_manual_book_3": "Dueling Manual Book 3",
   "item.limbusego.illusory_hunt": "Illusory Hunt",
@@ -85,7 +79,6 @@
   "item.limbusego.carmilla": "Carmilla",
   "item.limbusego.e_type_dimensional_dagger": "E-Type Dimensional Dagger",
   "item.limbusego.trauma_shield": "Trauma Shield",
-
   "item.limbusego.blue_zippo_lighter": "Blue Zippo Lighter",
   "item.limbusego.child_within_a_flask": "Child Within a Flask",
   "item.limbusego.golden_urn": "Golden Urn",
@@ -98,13 +91,11 @@
   "item.limbusego.someones_device": "Someone's Device",
   "item.limbusego.sunshower": "Sunshower",
   "item.limbusego.trial_plan_guide": "Trial Plan Guide",
-
   "item.limbusego.endless_hunger": "Endless Hunger",
   "item.limbusego.flower_mound": "Flower Mound",
   "item.limbusego.jin_gang_bolus": "Jin Gang Bolus",
   "item.limbusego.piece_of_a_torn_summer": "Piece of a Torn Summer",
   "item.limbusego.tranquil_lotus_bolus": "Tranquil Lotus Bolus",
-
   "item.limbusego.ardent_flower.desc": "Passive: fire immunity | On attack: apply Burn 2·2 | Vs. burning targets below 30% HP: +30% damage",
   "item.limbusego.ashes_to_ashes.desc": "Attacking a burning target: stack Burn 2·1",
   "item.limbusego.bloodflame_sword.desc": "On attack: apply Burn 3·2 | gain 1 SAN",
@@ -185,14 +176,11 @@
   "item.limbusego.jin_gang_bolus.desc": "Passive: Absorption I | every 5s gain Protection 2·3",
   "item.limbusego.piece_of_a_torn_summer.desc": "When taking fire or lava damage: gain Power 2·2",
   "item.limbusego.tranquil_lotus_bolus.desc": "Passive: every 5s gain Protection 2·2, every 10s restore 1 SAN",
-
   "item.limbusego.dark_vestige": "Dark Vestige",
   "item.limbusego.faint_vestige": "Faint Vestige",
   "item.limbusego.twinkling_vestige": "Twinkling Vestige",
   "item.limbusego.brilliant_vestige": "Brilliant Vestige",
-
   "item.limbusego.gift.upgrade_lore": "Vestige Upgrade Lv.%s",
-
   "item.limbusego.solemn_lament_black.lore.0": "Where do the dead go?",
   "item.limbusego.solemn_lament_white.lore.0": "Where do the dead go?",
   "item.limbusego.solemn_shield.lore.0": "Where do the dead go?",
@@ -209,5 +197,9 @@
   "item.limbusego.twilight.lore.2": "Sneak + right-click: charge the Twilight Slash (fan-shaped wave)",
   "item.limbusego.tibia.lore.0": "Can you hear it? The melody played by Tibia's pair of humeri and twenty-four ribs!",
   "item.limbusego.w_corp_knife.lore.0": "In the end, this is the path.",
-  "item.limbusego.bladesinger.lore.0": "Moon-gazing decapitation — expire, here and now."
+  "item.limbusego.bladesinger.lore.0": "Moon-gazing decapitation — expire, here and now.",
+  "msg.limbusego.tibia.charging": "◆ Anatomize ",
+  "msg.limbusego.twilight.charging": "Twilight Slash ",
+  "msg.limbusego.tiantui.charge_tiger": "Tiger Round ",
+  "msg.limbusego.tiantui.charge_savage": "Savage Round "
 }

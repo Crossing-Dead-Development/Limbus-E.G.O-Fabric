@@ -43,7 +43,7 @@ public class TibiaItem extends Item {
         if (!(user instanceof PlayerEntity player)) return;
         int drawTicks = getMaxUseTime(stack, user) - remainingUseTicks;
         if (!world.isClient && world instanceof ServerWorld sw) {
-            WeaponEvents.tibiaChargeTick(player, sw);
+            WeaponEvents.tibiaChargeTick(player, sw, drawTicks, CHARGE_TICKS);
             if (drawTicks >= CHARGE_TICKS) {
                 WeaponEvents.tibiaAnatomize(player, sw);
                 player.stopUsingItem();

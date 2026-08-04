@@ -1,7 +1,6 @@
 {
   "itemGroup.limbusego.weapons": "E.G.O 武器",
   "itemGroup.limbusego.gifts": "E.G.O 飾品",
-
   "item.limbusego.mod_icon": "Limbus E.G.O",
   "item.limbusego.butterfly_quartz": "生蝶、亡蝶",
   "item.limbusego.tiger_mark": "虎標彈",
@@ -17,7 +16,6 @@
   "item.limbusego.twilight": "薄暝",
   "item.limbusego.tibia": "提比婭",
   "item.limbusego.bladesinger": "著影揮刀",
-
   "item.limbusego.bloody_gadget": "鮮血裝飾",
   "item.limbusego.ardent_flower": "火光花",
   "item.limbusego.glimpse_of_flames": "炎鱗",
@@ -43,7 +41,6 @@
   "item.limbusego.rags": "破布",
   "item.limbusego.rest": "安息",
   "item.limbusego.tangled_bones": "破碎的骨片",
-
   "item.limbusego.dry_to_the_bone_breast": "乾巴柴澀雞胸肉",
   "item.limbusego.ebony_brooch": "黑檀胸針",
   "item.limbusego.flower_in_the_mirror": "鏡中花",
@@ -55,14 +52,12 @@
   "item.limbusego.strange_glyph_talisman": "異文符咒",
   "item.limbusego.thunderbranch": "雷擊木",
   "item.limbusego.chief_butlers_secret_arts": "首席管家的秘籍",
-
   "item.limbusego.green_spirit": "綠光果實",
   "item.limbusego.nixie_divergence": "輝光變動儀",
   "item.limbusego.sour_liquor_aroma": "酸味的酒香",
   "item.limbusego.sownpour": "暴雨",
   "item.limbusego.piece_of_crumbled_egg": "破碎之卵的殘片",
   "item.limbusego.handheld_mirror": "手鏡",
-
   "item.limbusego.cask_spirits": "桶裝烈酒",
   "item.limbusego.clear_mirror_calm_water": "明鏡止水",
   "item.limbusego.emerald_elytra": "綠色鞘翅",
@@ -70,7 +65,6 @@
   "item.limbusego.keenbranch": "磨尖的樹枝",
   "item.limbusego.nebulizer": "霧化吸入器",
   "item.limbusego.cqc_manual": "近身格鬥手冊",
-
   "item.limbusego.dreaming_electric_sheep": "夢中的電子羊",
   "item.limbusego.dueling_manual_book_3": "決鬥教材第3冊",
   "item.limbusego.illusory_hunt": "異想狩獵",
@@ -85,7 +79,6 @@
   "item.limbusego.carmilla": "卡蜜拉",
   "item.limbusego.e_type_dimensional_dagger": "E型次元短劍",
   "item.limbusego.trauma_shield": "精神屏蔽力場",
-
   "item.limbusego.blue_zippo_lighter": "藍色Zippo牌打火機",
   "item.limbusego.child_within_a_flask": "瓶中嬰孩",
   "item.limbusego.golden_urn": "金甕",
@@ -98,13 +91,11 @@
   "item.limbusego.someones_device": "某人的裝置",
   "item.limbusego.sunshower": "狐雨",
   "item.limbusego.trial_plan_guide": "試用規劃指南",
-
   "item.limbusego.endless_hunger": "無盡的飢餓",
   "item.limbusego.flower_mound": "花塚",
   "item.limbusego.jin_gang_bolus": "金剛丸",
   "item.limbusego.piece_of_a_torn_summer": "破碎之夏的殘片",
   "item.limbusego.tranquil_lotus_bolus": "靜蓮丸",
-
   "item.limbusego.ardent_flower.desc": "被動：免疫火焰傷害｜攻擊：施加燒傷 2·2｜攻擊燒傷中且生命低於 30% 的目標：+30% 傷害",
   "item.limbusego.ashes_to_ashes.desc": "攻擊燒傷中目標：疊加燒傷 2·1",
   "item.limbusego.bloodflame_sword.desc": "攻擊：施加燒傷 3·2｜獲得 1 點 SAN",
@@ -185,14 +176,11 @@
   "item.limbusego.jin_gang_bolus.desc": "被動：吸收 I｜每 5 秒獲得守護 2·3",
   "item.limbusego.piece_of_a_torn_summer.desc": "受火焰或熔岩傷害時：獲得強壯 2·2",
   "item.limbusego.tranquil_lotus_bolus.desc": "被動：每 5 秒獲得守護 2·2，每 10 秒回復 1 SAN",
-
   "item.limbusego.dark_vestige": "漆黑殘影",
   "item.limbusego.faint_vestige": "微光殘影",
   "item.limbusego.twinkling_vestige": "閃爍殘影",
   "item.limbusego.brilliant_vestige": "璀璨殘影",
-
   "item.limbusego.gift.upgrade_lore": "殘影升級 Lv.%s",
-
   "item.limbusego.solemn_lament_black.lore.0": "人死後會去往何方？",
   "item.limbusego.solemn_lament_white.lore.0": "人死後會去往何方？",
   "item.limbusego.solemn_shield.lore.0": "人死後會去往何方？",
@@ -209,5 +197,9 @@
   "item.limbusego.twilight.lore.2": "潛行右鍵：蓄力暮光斬（前方扇形波）",
   "item.limbusego.tibia.lore.0": "聽見了嗎？那由提比婭的一對肱骨與二十四根肋骨奏響的旋律！",
   "item.limbusego.w_corp_knife.lore.0": "至終，此為通路。",
-  "item.limbusego.bladesinger.lore.0": "望月斬首──就此，氣絕吧。"
+  "item.limbusego.bladesinger.lore.0": "望月斬首──就此，氣絕吧。",
+  "msg.limbusego.tibia.charging": "◆ 解剖斬蓄力 ",
+  "msg.limbusego.twilight.charging": "暮光斬蓄力 ",
+  "msg.limbusego.tiantui.charge_tiger": "虎標彈 ",
+  "msg.limbusego.tiantui.charge_savage": "猛虎標彈 "
 }
