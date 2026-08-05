@@ -430,8 +430,15 @@ public class WeaponEvents {
 
     private static void bladesingerSlash(PlayerEntity player, ServerWorld world, LivingEntity target) {
         long now = System.currentTimeMillis();
-        if (now < bladesingerCd.getOrDefault(player.getUuid(), 0L)) return;
+        long until = bladesingerCd.getOrDefault(player.getUuid(), 0L);
+        if (now < until) {
+            long sec = (until - now) / 1000 + 1;
+            player.sendMessage(Text.translatable("msg.limbusego.bladesinger.cooldown", sec)
+                    .styled(st -> st.withColor(0xFF5555)), true);
+            return;
+        }
         bladesingerCd.put(player.getUuid(), now + 12_000L);
+        player.getItemCooldownManager().set(player.getMainHandStack(), 240); // 12s 灰色冷卻覆蓋
 
         player.sendMessage(Text.translatable("msg.limbusego.bladesinger.trigger")
                 .styled(st -> st.withColor(0xFF0000).withBold(true)), true);

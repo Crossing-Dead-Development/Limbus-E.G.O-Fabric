@@ -202,5 +202,6 @@
   "msg.limbusego.twilight.charging": "暮光斬蓄力 ",
   "msg.limbusego.tiantui.charge_tiger": "虎標彈 ",
   "msg.limbusego.tiantui.charge_savage": "猛虎標彈 ",
-  "msg.limbusego.bladesinger.trigger": "肉斬骨斷"
+  "msg.limbusego.bladesinger.trigger": "肉斬骨斷",
+  "msg.limbusego.bladesinger.cooldown": "肉斬骨斷冷卻中…%ss"
 }
