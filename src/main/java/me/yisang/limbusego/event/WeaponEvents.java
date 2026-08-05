@@ -434,7 +434,7 @@ public class WeaponEvents {
         bladesingerCd.put(player.getUuid(), now + 12_000L);
 
         player.sendMessage(Text.translatable("msg.limbusego.bladesinger.trigger")
-                .styled(st -> st.withColor(0xAEDBFF).withBold(true)), true);
+                .styled(st -> st.withColor(0xFF0000).withBold(true)), true);
 
         world.playSound(null, player.getBlockPos(), net.minecraft.sound.SoundEvents.ITEM_TRIDENT_THUNDER.value(),
                 SoundCategory.PLAYERS, 0.6f, 1.6f);
