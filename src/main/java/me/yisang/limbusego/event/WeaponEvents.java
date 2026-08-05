@@ -103,8 +103,7 @@ public class WeaponEvents {
     private static final List<DashData> activeDashes = Collections.synchronizedList(new ArrayList<>());
 
     // 薄暝/提比婭特殊冷卻與著影揮刀連斬冷卻（wall-clock ms）
-    private static final Map<UUID, Long> twilightCd = new HashMap<>();
-    private static final Map<UUID, Long> tibiaCd = new HashMap<>();
+    // 提比婭/薄暝特殊技冷卻改用 vanilla ItemCooldownManager（見 tibiaAnatomize/twilightSlash）
     private static final Map<UUID, Long> bladesingerCd = new HashMap<>();
 
     private static final double TWILIGHT_TRUE_FRACTION = 0.30;
@@ -464,11 +463,11 @@ public class WeaponEvents {
     // ── 薄暝 ──────────────────────────────────────────────────────────────────
 
     public static boolean twilightSpecialReady(PlayerEntity p) {
-        return System.currentTimeMillis() >= twilightCd.getOrDefault(p.getUuid(), 0L);
+        return !p.getItemCooldownManager().isCoolingDown(p.getStackInHand(Hand.MAIN_HAND));
     }
 
     public static void twilightChargeStart(PlayerEntity player, ServerWorld sw) {
-        twilightCd.put(player.getUuid(), System.currentTimeMillis() + 6000L + 30 * 50L);
+        // 冷卻改於成功施放時設（見 twilightSlash），中斷蓄力不進冷卻
     }
 
     public static void twilightChargeTick(PlayerEntity player, ServerWorld sw, int drawTicks, int maxTicks) {
@@ -521,6 +520,8 @@ public class WeaponEvents {
             target.addStatusEffect(new StatusEffectInstance(StatusEffects.WITHER, 80, 1));
             if (sm != null) sm.apply(target, StatusEffect.RUPTURE, 5, 2, src);
         }
+        // 成功施放才進冷卻（6 秒）；物品冷卻同時讓客戶端立即結束使用動畫（放下手）
+        player.getItemCooldownManager().set(player.getMainHandStack(), 120);
     }
 
     // ── 提比婭 ────────────────────────────────────────────────────────────────
@@ -556,11 +557,11 @@ public class WeaponEvents {
     }
 
     public static boolean tibiaSpecialReady(PlayerEntity p) {
-        return System.currentTimeMillis() >= tibiaCd.getOrDefault(p.getUuid(), 0L);
+        return !p.getItemCooldownManager().isCoolingDown(p.getStackInHand(Hand.MAIN_HAND));
     }
 
     public static void tibiaChargeStart(PlayerEntity player, ServerWorld sw) {
-        tibiaCd.put(player.getUuid(), System.currentTimeMillis() + 8000L + 40 * 50L);
+        // 冷卻改於成功施放時設（見 tibiaAnatomize），中斷蓄力不進冷卻
         sw.playSound(null, player.getBlockPos(), net.minecraft.sound.SoundEvents.ENTITY_WARDEN_HEARTBEAT,
                 SoundCategory.PLAYERS, 0.8f, 0.8f);
     }
@@ -615,6 +616,8 @@ public class WeaponEvents {
                 sm.triggerBleed(target, src, TIBIA_SLASH_FORCE);
             }
         }
+        // 成功施放才進冷卻（8 秒）；物品冷卻同時讓客戶端立即結束使用動畫（放下手）
+        player.getItemCooldownManager().set(player.getMainHandStack(), 160);
     }
 
     // ── 天退星 ────────────────────────────────────────────────────────────────
