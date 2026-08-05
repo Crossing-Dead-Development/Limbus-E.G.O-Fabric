@@ -3,6 +3,8 @@
   "package": "me.yisang.limbusego.mixin.client",
   "compatibilityLevel": "JAVA_21",
   "client": [
+    "CreativeInventoryScreenMixin",
+    "ItemGroupButtonWidgetAccessor",
     "PlayerEntityRendererMixin"
   ],
   "injectors": {
