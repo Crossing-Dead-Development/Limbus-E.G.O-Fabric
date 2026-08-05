@@ -30,6 +30,7 @@ public class TiantuiStarItem extends Item {
     @Override
     public ActionResult use(World world, PlayerEntity user, Hand hand) {
         if (hand != Hand.MAIN_HAND) return ActionResult.PASS;
+        if (user.getItemCooldownManager().isCoolingDown(user.getStackInHand(Hand.MAIN_HAND))) return ActionResult.FAIL;
         boolean savage = user.isSneaking();
         boolean hasAmmo = savage
                 ? WeaponEvents.hasSavageTigerMark(user)

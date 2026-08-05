@@ -659,6 +659,8 @@ public class WeaponEvents {
         activeDashes.add(new DashData(player.getUuid(), dir, savage,
                 Collections.synchronizedSet(new java.util.HashSet<>()), new int[]{ savage ? 10 : 8 }, new boolean[]{false}));
         sw.playSound(null, player.getBlockPos(), ModSounds.TIANTUI_DASH, SoundCategory.PLAYERS, 1.0f, savage ? 0.85f : 1.0f);
+        // 極短冷卻（0.5s）：施放後立即結束使用動畫並防連續觸發
+        player.getItemCooldownManager().set(player.getMainHandStack(), 10);
     }
 
     private static void tickTiantuiDashes(MinecraftServer server) {
