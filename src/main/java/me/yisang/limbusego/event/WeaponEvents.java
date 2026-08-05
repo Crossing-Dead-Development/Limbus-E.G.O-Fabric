@@ -173,7 +173,7 @@ public class WeaponEvents {
             return ActionResult.SUCCESS;
         }
         if (stack.getItem() instanceof BladesingerItem) {
-            if (player.isSneaking() && player.getHealth() < 6.0f) {
+            if (player.isSneaking() && player.getHealth() <= player.getMaxHealth() * 0.5f) {
                 bladesingerSlash(player, (ServerWorld) world, target);
                 return ActionResult.SUCCESS;
             }
@@ -432,6 +432,9 @@ public class WeaponEvents {
         long now = System.currentTimeMillis();
         if (now < bladesingerCd.getOrDefault(player.getUuid(), 0L)) return;
         bladesingerCd.put(player.getUuid(), now + 12_000L);
+
+        player.sendMessage(Text.translatable("msg.limbusego.bladesinger.trigger")
+                .styled(st -> st.withColor(0xAEDBFF).withBold(true)), true);
 
         world.playSound(null, player.getBlockPos(), net.minecraft.sound.SoundEvents.ITEM_TRIDENT_THUNDER.value(),
                 SoundCategory.PLAYERS, 0.6f, 1.6f);
