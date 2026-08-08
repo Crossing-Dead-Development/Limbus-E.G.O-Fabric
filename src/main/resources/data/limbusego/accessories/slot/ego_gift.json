@@ -1,5 +1,6 @@
 {
   "amount": 5,
   "operation": "set",
-  "order": 0
+  "order": 0,
+  "icon": "limbusego:container/slot/ego_gift"
 }
