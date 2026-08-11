@@ -58,6 +58,8 @@ public class SanityManager {
     private final Map<UUID, ServerBossBar> bars = new ConcurrentHashMap<>();
     /** 上一 tick 的飽食度，用來偵測進食（上升量 → 等量回復 SAN）。 */
     private final Map<UUID, Integer> lastFood = new ConcurrentHashMap<>();
+    /** 環境曝光累計值：正=明亮累積、負=黑暗累積。不持久化，重登重置無害。 */
+    private final Map<UUID, Integer> exposure = new ConcurrentHashMap<>();
 
     public void start() {
         // 每 2s 檢查脫戰恢復
@@ -87,11 +89,24 @@ public class SanityManager {
         // 低理智 debuff 定期補刷（讓玩家離開閾值後自然消退）
         if (getSan(p) <= DEBUFF_THRESHOLD) applyLowSanDebuffs(p);
 
+        // 創造／旁觀模式不受環境影響（建築時不該掉 SAN）
+        if (p.isCreative() || p.isSpectator()) return;
+
+        // 從未戰鬥亦視為脫戰。環境扣 SAN 刻意不更新 lastCombat（見下方註解），
+        // 若此處沿用舊的 `lc == null → return`，從未戰鬥的玩家在洞穴掉 SAN 後將永遠無法回復。
         Long lc = lastCombat.get(p.getUuid());
-        if (lc == null) return;
-        if (System.currentTimeMillis() - lc < OUT_COMBAT_MS) return;
+        boolean outOfCombat = lc == null || System.currentTimeMillis() - lc >= OUT_COMBAT_MS;
+
+        int light = p.getWorld().getLightLevel(p.getBlockPos());
         int cur = getSan(p);
-        if (cur < 0) setSan(p, cur + 1);
+        EnvironmentSanityLogic.Result r = EnvironmentSanityLogic.step(
+                light, exposure.getOrDefault(p.getUuid(), 0), cur, outOfCombat);
+
+        exposure.put(p.getUuid(), r.exposure());
+
+        // 刻意直接走 setSan 而非 dropSan()：dropSan 會更新 lastCombat，
+        // 會讓待在洞穴的玩家被永久判定為「戰鬥中」，脫戰回復再也不會觸發。
+        if (r.sanDelta() != 0) setSan(p, cur + r.sanDelta());
     }
 
     public int getSan(ServerPlayerEntity p) {
@@ -227,6 +242,7 @@ public class SanityManager {
         counters.remove(p.getUuid());
         lastCombat.remove(p.getUuid());
         lastFood.remove(p.getUuid());
+        exposure.remove(p.getUuid());
         san.remove(p.getUuid());
         clearAttributeModifiers(p);
     }
