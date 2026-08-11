@@ -117,6 +117,7 @@ public class SanityManager {
         v = Math.max(SAN_MIN, Math.min(SAN_MAX, v));
         int old = getSan(p);
         san.put(p.getUuid(), v);
+        p.setAttached(SanityAttachments.SAN, v);   // 同步寫入玩家 NBT，存檔即持久
         updateBossBar(p, v);
         applyAttributeModifiers(p, v);
         if (v <= DEBUFF_THRESHOLD) applyLowSanDebuffs(p);
@@ -226,7 +227,7 @@ public class SanityManager {
     }
 
     public void onJoin(ServerPlayerEntity p) {
-        san.putIfAbsent(p.getUuid(), 0);
+        san.putIfAbsent(p.getUuid(), p.getAttachedOrElse(SanityAttachments.SAN, 0));
         ServerBossBar bar = new ServerBossBar(
                 Text.literal(Messages.fmt(Messages.SANITY_BAR_TITLE, "§b", 0, SAN_MAX)),
                 BossBar.Color.BLUE, BossBar.Style.NOTCHED_10);

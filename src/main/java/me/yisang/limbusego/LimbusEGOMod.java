@@ -40,6 +40,7 @@ public class LimbusEGOMod implements ModInitializer {
 
         ServerScheduler.init();
 
+        me.yisang.limbusego.status.SanityAttachments.register();
         sanity = new SanityManager();
         sanity.start();
 
