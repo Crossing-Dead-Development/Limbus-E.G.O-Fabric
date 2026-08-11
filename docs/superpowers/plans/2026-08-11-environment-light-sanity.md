@@ -63,7 +63,7 @@ Spec §8 寫純函式回傳三個值 `(新曝光值, SAN 變化量, 是否抑制
   - `public record EnvironmentSanityLogic.Result(int exposure, int sanDelta)`
   - `public static Result EnvironmentSanityLogic.step(int light, int exposure, int san, boolean outOfCombat)`
 
-- [ ] **Step 1: 寫失敗的測試**
+- [x] **Step 1: 寫失敗的測試**
 
 建立 `src/test/java/me/yisang/limbusego/status/EnvironmentSanityLogicTest.java`：
 
@@ -200,12 +200,12 @@ class EnvironmentSanityLogicTest {
 }
 ```
 
-- [ ] **Step 2: 執行測試確認失敗**
+- [x] **Step 2: 執行測試確認失敗**
 
 Run: `./gradlew.bat test --tests "me.yisang.limbusego.status.EnvironmentSanityLogicTest"`
 Expected: 編譯失敗，訊息包含 `cannot find symbol: class EnvironmentSanityLogic`
 
-- [ ] **Step 3: 寫最小實作**
+- [x] **Step 3: 寫最小實作**
 
 建立 `src/main/java/me/yisang/limbusego/status/EnvironmentSanityLogic.java`：
 
@@ -286,17 +286,17 @@ public final class EnvironmentSanityLogic {
 }
 ```
 
-- [ ] **Step 4: 執行測試確認通過**
+- [x] **Step 4: 執行測試確認通過**
 
 Run: `./gradlew.bat test --tests "me.yisang.limbusego.status.EnvironmentSanityLogicTest"`
 Expected: PASS，14 個測試全綠
 
-- [ ] **Step 5: 確認既有測試未被破壞**
+- [x] **Step 5: 確認既有測試未被破壞**
 
 Run: `./gradlew.bat test`
 Expected: PASS（含既有的 `GiftUpgradeLogicTest`、`StatusStateTest`）
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add src/main/java/me/yisang/limbusego/status/EnvironmentSanityLogic.java src/test/java/me/yisang/limbusego/status/EnvironmentSanityLogicTest.java
@@ -314,7 +314,7 @@ git commit -m "feat: 環境光照 SAN 判定純邏輯 / Environment light sanity
 - Consumes: `EnvironmentSanityLogic.step(int, int, int, boolean)` → `Result(int exposure, int sanDelta)`（Task 1）
 - Produces: 無新公開 API。`SanityManager` 行為改變：`recoveryTick` 現在同時處理環境判定與脫戰回復。
 
-- [ ] **Step 1: 新增 exposure 欄位**
+- [x] **Step 1: 新增 exposure 欄位**
 
 在 `SanityManager` 既有的 map 欄位區（`lastFood` 之後）加入：
 
@@ -323,7 +323,7 @@ git commit -m "feat: 環境光照 SAN 判定純邏輯 / Environment light sanity
     private final Map<UUID, Integer> exposure = new ConcurrentHashMap<>();
 ```
 
-- [ ] **Step 2: 改寫 recoveryTick**
+- [x] **Step 2: 改寫 recoveryTick**
 
 把既有的：
 
@@ -368,7 +368,7 @@ git commit -m "feat: 環境光照 SAN 判定純邏輯 / Environment light sanity
     }
 ```
 
-- [ ] **Step 3: onQuit 清掉 exposure**
+- [x] **Step 3: onQuit 清掉 exposure**
 
 在 `onQuit` 既有的 `lastFood.remove(p.getUuid());` 之後加入：
 
@@ -376,17 +376,17 @@ git commit -m "feat: 環境光照 SAN 判定純邏輯 / Environment light sanity
         exposure.remove(p.getUuid());
 ```
 
-- [ ] **Step 4: 編譯**
+- [x] **Step 4: 編譯**
 
 Run: `./gradlew.bat build -q`
 Expected: exit 0，無編譯錯誤
 
-- [ ] **Step 5: 確認既有測試未被破壞**
+- [x] **Step 5: 確認既有測試未被破壞**
 
 Run: `./gradlew.bat test`
 Expected: PASS
 
-- [ ] **Step 6: 遊戲內驗證**
+- [x] **Step 6: 遊戲內驗證**
 
 啟動 `./gradlew.bat runClient`，建立創造模式測試世界後：
 
@@ -395,7 +395,7 @@ Expected: PASS
 3. `/gamemode creative` 後在黑暗處待 1 分鐘，SAN 不變。
 4. 白天在地面站著，SAN 從負值回升至 0 後停住。
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add src/main/java/me/yisang/limbusego/status/SanityManager.java
@@ -417,7 +417,7 @@ git commit -m "feat: SAN 隨環境光照升降 / SAN responds to ambient light"
   - `public static AttachmentType<Integer> SanityAttachments.SAN`
   - `public static void SanityAttachments.register()`
 
-- [ ] **Step 1: 建立 attachment 註冊類別**
+- [x] **Step 1: 建立 attachment 註冊類別**
 
 建立 `src/main/java/me/yisang/limbusego/status/SanityAttachments.java`：
 
@@ -451,7 +451,7 @@ public final class SanityAttachments {
 }
 ```
 
-- [ ] **Step 2: 在 mod 初始化時註冊**
+- [x] **Step 2: 在 mod 初始化時註冊**
 
 修改 `LimbusEGOMod.onInitialize()`，把：
 
@@ -468,7 +468,7 @@ public final class SanityAttachments {
         sanity.start();
 ```
 
-- [ ] **Step 3: setSan 寫入 attachment**
+- [x] **Step 3: setSan 寫入 attachment**
 
 在 `SanityManager.setSan` 中，把既有的：
 
@@ -485,7 +485,7 @@ public final class SanityAttachments {
 
 每次 `setSan` 都寫入（而非只在 `onQuit` 寫），可讓伺服器異常關閉時 SAN 仍隨最近一次存檔保留。
 
-- [ ] **Step 4: onJoin 讀取 attachment**
+- [x] **Step 4: onJoin 讀取 attachment**
 
 在 `SanityManager.onJoin` 中，把既有的：
 
@@ -501,17 +501,17 @@ public final class SanityAttachments {
 
 `onJoin` 後續已呼叫 `updateBossBar(p, getSan(p))`，因此讀回的值會立刻反映在 BossBar 上，不需額外處理。
 
-- [ ] **Step 5: 編譯**
+- [x] **Step 5: 編譯**
 
 Run: `./gradlew.bat build -q`
 Expected: exit 0
 
-- [ ] **Step 6: 確認既有測試未被破壞**
+- [x] **Step 6: 確認既有測試未被破壞**
 
 Run: `./gradlew.bat test`
 Expected: PASS
 
-- [ ] **Step 7: 遊戲內驗證**
+- [x] **Step 7: 遊戲內驗證**
 
 啟動 `./gradlew.bat runClient`：
 
@@ -520,7 +520,7 @@ Expected: PASS
 3. 讓角色死亡並重生。SAN 應歸 0（既有行為不變）。
 4. 走地獄門到地獄再回來。SAN 應保持不變。
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit**
 
 ```bash
 git add src/main/java/me/yisang/limbusego/status/SanityAttachments.java src/main/java/me/yisang/limbusego/status/SanityManager.java src/main/java/me/yisang/limbusego/LimbusEGOMod.java
@@ -533,13 +533,13 @@ git commit -m "feat: SAN 跨登出持久化 / Persist SAN across sessions"
 
 三個 Task 完成後，逐條確認：
 
-- [ ] 玩家在點了火把的住宅內待著，SAN 不會下降 → Task 2 Step 6 (2)
-- [ ] 無光源洞穴挖礦約 10 分鐘，SAN 掉到約 -20 並收到既有警告提示 → Task 2 Step 6 (1)
-- [ ] 回到地面白天，SAN 從負值緩慢回升並**停在 0** → Task 2 Step 6 (4)
-- [ ] 短暫穿過陰影（數秒）SAN 完全不變 → Task 1 `darkDropsOneSanOnlyAfterThresholdSteps`
-- [ ] 在洞穴登出再登入，SAN 維持登出時的值 → Task 3 Step 7 (2)
-- [ ] 死亡重生 SAN 歸 0 → Task 3 Step 7 (3)
-- [ ] 創造模式玩家不受環境影響 → Task 2 Step 6 (3)
+- [x] 玩家在點了火把的住宅內待著，SAN 不會下降 → Task 2 Step 6 (2)
+- [x] 無光源洞穴挖礦約 10 分鐘，SAN 掉到約 -20 並收到既有警告提示 → Task 2 Step 6 (1)
+- [x] 回到地面白天，SAN 從負值緩慢回升並**停在 0** → Task 2 Step 6 (4)
+- [x] 短暫穿過陰影（數秒）SAN 完全不變 → Task 1 `darkDropsOneSanOnlyAfterThresholdSteps`
+- [x] 在洞穴登出再登入，SAN 維持登出時的值 → Task 3 Step 7 (2)
+- [x] 死亡重生 SAN 歸 0 → Task 3 Step 7 (3)
+- [x] 創造模式玩家不受環境影響 → Task 2 Step 6 (3)
 
 ## 不在本計畫範圍
 
