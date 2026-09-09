@@ -536,5 +536,6 @@
   "tooltip.limbusego.piece_of_a_torn_summer.burned.power": "自身獲得 %s %s",
   "tooltip.limbusego.tranquil_lotus_bolus.passive": "被動",
   "tooltip.limbusego.tranquil_lotus_bolus.passive.protection": "每 5 秒獲得 %s %s",
-  "tooltip.limbusego.tranquil_lotus_bolus.passive.san": "每 %s 秒回復 %s 點 SAN"
+  "tooltip.limbusego.tranquil_lotus_bolus.passive.san": "每 %s 秒回復 %s 點 SAN",
+  "msg.limbusego.solemn_lament.need_pair": "需雙持莊嚴哀悼（黑與白）"
 }

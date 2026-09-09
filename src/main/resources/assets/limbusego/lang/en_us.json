@@ -536,5 +536,6 @@
   "tooltip.limbusego.piece_of_a_torn_summer.burned.power": "Grants yourself %s %s",
   "tooltip.limbusego.tranquil_lotus_bolus.passive": "Passive",
   "tooltip.limbusego.tranquil_lotus_bolus.passive.protection": "Grants %s %s every 5 seconds",
-  "tooltip.limbusego.tranquil_lotus_bolus.passive.san": "Restores %2$s SAN every %1$s seconds"
+  "tooltip.limbusego.tranquil_lotus_bolus.passive.san": "Restores %2$s SAN every %1$s seconds",
+  "msg.limbusego.solemn_lament.need_pair": "Requires dual-wielding Solemn Lament (black and white)"
 }
