@@ -8,6 +8,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.Box;
+import me.yisang.limbusego.tooltip.TooltipFormat;
+import net.minecraft.text.Text;
+import java.util.List;
+import me.yisang.limbusego.gift.GiftUpgradeLogic;
 
 /** 暴雨：攻擊施加震顫 3·2；30% 機率（隨升級）連鎖打擊 3 格內敵人（50% 傷害）並追加震顫 2·1。 */
 public class Sownpour extends BaseGift {
@@ -30,5 +34,19 @@ public class Sownpour extends BaseGift {
             apply(le, StatusEffect.TREMOR, 2, 1, attacker);
         }
         return amount;
+    }
+
+    @Override
+    public List<Text> describe(int level) {
+        double m = GiftUpgradeLogic.multiplier(level);
+        return List.of(
+            TooltipFormat.section("tooltip.limbusego.sownpour.attack"),
+            TooltipFormat.body("tooltip.limbusego.sownpour.attack.tremor",
+                    TooltipFormat.status(StatusEffect.TREMOR), TooltipFormat.potency(scaled(3, level), 2)),
+            TooltipFormat.section("tooltip.limbusego.sownpour.chain",
+                    TooltipFormat.num(Math.min(1.0, 0.30 * m) * 100)),
+            TooltipFormat.body("tooltip.limbusego.sownpour.chain.damage", 3, TooltipFormat.num(50 * m)),
+            TooltipFormat.body("tooltip.limbusego.sownpour.chain.tremor",
+                    TooltipFormat.status(StatusEffect.TREMOR), TooltipFormat.potency(2, 1)));
     }
 }

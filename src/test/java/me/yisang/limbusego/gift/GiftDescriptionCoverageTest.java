@@ -43,7 +43,10 @@ class GiftDescriptionCoverageTest {
             // 破裂 rupture（11，含束縛掛靠）
             "dry_to_the_bone_breast", "ebony_brooch", "flower_in_the_mirror", "harestride",
             "moon_in_the_water", "ruin", "smoking_gunpowder", "strange_glyph_inscriptions",
-            "strange_glyph_talisman", "thunderbranch", "chief_butlers_secret_arts");
+            "strange_glyph_talisman", "thunderbranch", "chief_butlers_secret_arts",
+            // 震顫 tremor（6）
+            "green_spirit", "nixie_divergence", "sour_liquor_aroma", "sownpour",
+            "piece_of_crumbled_egg", "handheld_mirror");
 
     private static final Path MOD_GIFTS =
             Path.of("src/main/java/me/yisang/limbusego/gift/ModGifts.java");
