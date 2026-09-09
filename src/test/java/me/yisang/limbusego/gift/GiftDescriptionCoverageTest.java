@@ -39,7 +39,11 @@ class GiftDescriptionCoverageTest {
             "mask_of_the_parade", "millarca", "sanguine_blossom_bolus",
             // 沉淪 sinking（10）
             "artistic_sense", "black_sheet_music", "broken_compass", "cold_illusion", "distant_star",
-            "frozen_cries", "mental_corruption_boosting_gas", "rags", "rest", "tangled_bones");
+            "frozen_cries", "mental_corruption_boosting_gas", "rags", "rest", "tangled_bones",
+            // 破裂 rupture（11，含束縛掛靠）
+            "dry_to_the_bone_breast", "ebony_brooch", "flower_in_the_mirror", "harestride",
+            "moon_in_the_water", "ruin", "smoking_gunpowder", "strange_glyph_inscriptions",
+            "strange_glyph_talisman", "thunderbranch", "chief_butlers_secret_arts");
 
     private static final Path MOD_GIFTS =
             Path.of("src/main/java/me/yisang/limbusego/gift/ModGifts.java");

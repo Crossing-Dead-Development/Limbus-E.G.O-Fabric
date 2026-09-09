@@ -8,6 +8,10 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import me.yisang.limbusego.tooltip.TooltipFormat;
+import net.minecraft.text.Text;
+import java.util.List;
+import me.yisang.limbusego.gift.GiftUpgradeLogic;
 
 /** 雷擊木：攻擊施加破裂 2·2；10% 機率（隨升級）召喚閃電並追加破裂 2·1。 */
 public class Thunderbranch extends BaseGift {
@@ -29,5 +33,16 @@ public class Thunderbranch extends BaseGift {
             apply(target, StatusEffect.RUPTURE, 2, 1, attacker);
         }
         return amount;
+    }
+
+    @Override
+    public List<Text> describe(int level) {
+        return List.of(
+            TooltipFormat.section("tooltip.limbusego.thunderbranch.attack"),
+            TooltipFormat.body("tooltip.limbusego.thunderbranch.attack.rupture",
+                    TooltipFormat.status(StatusEffect.RUPTURE), TooltipFormat.potency(2, 2)),
+            TooltipFormat.body("tooltip.limbusego.thunderbranch.attack.lightning",
+                    TooltipFormat.num(Math.min(1.0, 0.10 * GiftUpgradeLogic.multiplier(level)) * 100),
+                    TooltipFormat.status(StatusEffect.RUPTURE), TooltipFormat.potency(2, 1)));
     }
 }

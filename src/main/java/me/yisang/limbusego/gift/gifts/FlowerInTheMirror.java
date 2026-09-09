@@ -7,6 +7,10 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.Box;
+import me.yisang.limbusego.tooltip.TooltipFormat;
+import net.minecraft.text.Text;
+import java.util.List;
+import me.yisang.limbusego.gift.GiftUpgradeLogic;
 
 /** 鏡中花：攻擊施加破裂 2·2；被動每 5 秒對 5 格內敵人施加破裂 2·1。 */
 public class FlowerInTheMirror extends BaseGift {
@@ -30,5 +34,17 @@ public class FlowerInTheMirror extends BaseGift {
     protected float onAttack(LivingEntity target, ServerPlayerEntity attacker, ItemStack self, float amount) {
         applyScaled(target, StatusEffect.RUPTURE, 2, 2, attacker, self);
         return amount;
+    }
+
+    @Override
+    public List<Text> describe(int level) {
+        return List.of(
+            TooltipFormat.section("tooltip.limbusego.flower_in_the_mirror.passive"),
+            TooltipFormat.body("tooltip.limbusego.flower_in_the_mirror.passive.aura",
+                    TooltipFormat.num(5 * GiftUpgradeLogic.multiplier(level)),
+                    TooltipFormat.status(StatusEffect.RUPTURE), TooltipFormat.potency(2, 1)),
+            TooltipFormat.section("tooltip.limbusego.flower_in_the_mirror.attack"),
+            TooltipFormat.body("tooltip.limbusego.flower_in_the_mirror.attack.rupture",
+                    TooltipFormat.status(StatusEffect.RUPTURE), TooltipFormat.potency(scaled(2, level), 2)));
     }
 }

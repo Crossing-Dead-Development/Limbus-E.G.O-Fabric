@@ -7,6 +7,9 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
+import me.yisang.limbusego.tooltip.TooltipFormat;
+import net.minecraft.text.Text;
+import java.util.List;
 
 /** 水中月：被動夜視；攻擊破裂≥3 目標時自身獲得呼吸法 2·1。 */
 public class MoonInTheWater extends BaseGift {
@@ -26,5 +29,16 @@ public class MoonInTheWater extends BaseGift {
             applyScaled(attacker, StatusEffect.POISE, 2, 1, attacker, self);
         }
         return amount;
+    }
+
+    @Override
+    public List<Text> describe(int level) {
+        return List.of(
+            TooltipFormat.section("tooltip.limbusego.moon_in_the_water.passive"),
+            TooltipFormat.body("tooltip.limbusego.moon_in_the_water.passive.nightvision"),
+            TooltipFormat.section("tooltip.limbusego.moon_in_the_water.attack",
+                    TooltipFormat.status(StatusEffect.RUPTURE), 3),
+            TooltipFormat.body("tooltip.limbusego.moon_in_the_water.attack.poise",
+                    TooltipFormat.status(StatusEffect.POISE), TooltipFormat.potency(scaled(2, level), 1)));
     }
 }

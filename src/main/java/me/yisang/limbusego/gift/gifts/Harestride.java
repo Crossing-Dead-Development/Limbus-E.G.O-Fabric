@@ -7,6 +7,9 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
+import me.yisang.limbusego.tooltip.TooltipFormat;
+import net.minecraft.text.Text;
+import java.util.List;
 
 /** 卯足：被動速度 II、跳躍提升 I；速度效果中攻擊施加破裂 2·2。 */
 public class Harestride extends BaseGift {
@@ -27,5 +30,15 @@ public class Harestride extends BaseGift {
             applyScaled(target, StatusEffect.RUPTURE, 2, 2, attacker, self);
         }
         return amount;
+    }
+
+    @Override
+    public List<Text> describe(int level) {
+        return List.of(
+            TooltipFormat.section("tooltip.limbusego.harestride.passive"),
+            TooltipFormat.body("tooltip.limbusego.harestride.passive.buffs"),
+            TooltipFormat.section("tooltip.limbusego.harestride.attack"),
+            TooltipFormat.body("tooltip.limbusego.harestride.attack.rupture",
+                    TooltipFormat.status(StatusEffect.RUPTURE), TooltipFormat.potency(scaled(2, level), 2)));
     }
 }

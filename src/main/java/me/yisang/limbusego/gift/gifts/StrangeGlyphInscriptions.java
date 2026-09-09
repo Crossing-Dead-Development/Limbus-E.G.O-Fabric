@@ -5,6 +5,10 @@ import me.yisang.limbusego.status.StatusEffect;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
+import me.yisang.limbusego.tooltip.TooltipFormat;
+import net.minecraft.text.Text;
+import java.util.List;
+import me.yisang.limbusego.gift.GiftUpgradeLogic;
 
 /** 篆刻的異文：攻擊破裂中目標時 +20% 傷害（隨升級，上限 30%）並延長破裂 1 層。 */
 public class StrangeGlyphInscriptions extends BaseGift {
@@ -21,5 +25,16 @@ public class StrangeGlyphInscriptions extends BaseGift {
             status().refresh(target, StatusEffect.RUPTURE, 1);
         }
         return dmg;
+    }
+
+    @Override
+    public List<Text> describe(int level) {
+        int pct = Math.round((float) Math.min(0.30, 0.20 * GiftUpgradeLogic.multiplier(level)) * 100);
+        return List.of(
+            TooltipFormat.section("tooltip.limbusego.strange_glyph_inscriptions.attack",
+                    TooltipFormat.status(StatusEffect.RUPTURE)),
+            TooltipFormat.body("tooltip.limbusego.strange_glyph_inscriptions.attack.bonus", pct),
+            TooltipFormat.body("tooltip.limbusego.strange_glyph_inscriptions.attack.extend",
+                    TooltipFormat.status(StatusEffect.RUPTURE), 1));
     }
 }
