@@ -11,6 +11,10 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import me.yisang.limbusego.tooltip.TooltipFormat;
+import net.minecraft.text.Text;
+import java.util.List;
+import me.yisang.limbusego.gift.GiftUpgradeLogic;
 
 /** 血花丸：脫離戰鬥（5 秒未受傷）持續緩慢回血；攻擊施加流血 2·2。 */
 public class SanguineBlossomBolus extends BaseGift {
@@ -45,5 +49,16 @@ public class SanguineBlossomBolus extends BaseGift {
     @Override
     protected void onQuit(UUID playerId) {
         lastDamaged.remove(playerId);
+    }
+
+    @Override
+    public List<Text> describe(int level) {
+        return List.of(
+            TooltipFormat.section("tooltip.limbusego.sanguine_blossom_bolus.passive"),
+            TooltipFormat.body("tooltip.limbusego.sanguine_blossom_bolus.passive.regen", 5,
+                    GiftUpgradeLogic.multiplier(level) >= 2.0 ? "II" : "I"),
+            TooltipFormat.section("tooltip.limbusego.sanguine_blossom_bolus.attack"),
+            TooltipFormat.body("tooltip.limbusego.sanguine_blossom_bolus.attack.bleed",
+                    TooltipFormat.status(StatusEffect.BLEED), TooltipFormat.potency(scaled(2, level), 2)));
     }
 }

@@ -33,7 +33,10 @@ class GiftDescriptionCoverageTest {
     static final Set<String> DONE = Set.of(
             // 燒傷 burn（8）
             "ardent_flower", "ashes_to_ashes", "bloodflame_sword", "dust_to_dust",
-            "glimpse_of_flames", "hot_n_juicy_drumstick", "pain_of_stifled_rage", "royal_jelly_perfume");
+            "glimpse_of_flames", "hot_n_juicy_drumstick", "pain_of_stifled_rage", "royal_jelly_perfume",
+            // 流血 bleed（6）
+            "crystallized_blood", "la_manchaland_all_day_pass", "la_manchaland_standard_pass",
+            "mask_of_the_parade", "millarca", "sanguine_blossom_bolus");
 
     private static final Path MOD_GIFTS =
             Path.of("src/main/java/me/yisang/limbusego/gift/ModGifts.java");

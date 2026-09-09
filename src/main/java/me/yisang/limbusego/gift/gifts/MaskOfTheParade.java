@@ -9,6 +9,10 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.Box;
+import me.yisang.limbusego.tooltip.TooltipFormat;
+import net.minecraft.text.Text;
+import java.util.List;
+import me.yisang.limbusego.gift.GiftUpgradeLogic;
 
 /** 遊行的面具：潛行時持續隱身；攻擊施加流血 3·3；擊殺對半徑內敵擴散流血 2·2。 */
 public class MaskOfTheParade extends BaseGift {
@@ -40,5 +44,19 @@ public class MaskOfTheParade extends BaseGift {
                 le -> le != killer && !(le instanceof PlayerEntity) && le.isAlive())) {
             apply(e, StatusEffect.BLEED, 2, 2, killer);
         }
+    }
+
+    @Override
+    public List<Text> describe(int level) {
+        return List.of(
+            TooltipFormat.section("tooltip.limbusego.mask_of_the_parade.passive"),
+            TooltipFormat.body("tooltip.limbusego.mask_of_the_parade.passive.invisible"),
+            TooltipFormat.section("tooltip.limbusego.mask_of_the_parade.attack"),
+            TooltipFormat.body("tooltip.limbusego.mask_of_the_parade.attack.bleed",
+                    TooltipFormat.status(StatusEffect.BLEED), TooltipFormat.potency(scaled(3, level), 3)),
+            TooltipFormat.section("tooltip.limbusego.mask_of_the_parade.kill"),
+            TooltipFormat.body("tooltip.limbusego.mask_of_the_parade.kill.spread",
+                    TooltipFormat.num(5 * GiftUpgradeLogic.multiplier(level)),
+                    TooltipFormat.status(StatusEffect.BLEED), TooltipFormat.potency(2, 2)));
     }
 }
