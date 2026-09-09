@@ -49,7 +49,12 @@ class GiftDescriptionCoverageTest {
             "piece_of_crumbled_egg", "handheld_mirror",
             // 呼吸法 poise（7）
             "cask_spirits", "clear_mirror_calm_water", "emerald_elytra", "finifugality",
-            "keenbranch", "nebulizer", "cqc_manual");
+            "keenbranch", "nebulizer", "cqc_manual",
+            // 輔助 support（15）
+            "bloody_gadget", "dreaming_electric_sheep", "dueling_manual_book_3", "illusory_hunt",
+            "late_bloomers_tattoo", "hardship", "phantom_pain", "tenacity_bolus",
+            "the_book_of_vengeance", "special_contract", "plume_of_proof", "spicebush_branch",
+            "carmilla", "e_type_dimensional_dagger", "trauma_shield");
 
     private static final Path MOD_GIFTS =
             Path.of("src/main/java/me/yisang/limbusego/gift/ModGifts.java");

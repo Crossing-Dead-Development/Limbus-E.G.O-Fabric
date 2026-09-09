@@ -4,6 +4,10 @@ import me.yisang.limbusego.gift.BaseGift;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
+import me.yisang.limbusego.tooltip.TooltipFormat;
+import net.minecraft.text.Text;
+import java.util.List;
+import me.yisang.limbusego.gift.GiftUpgradeLogic;
 
 /** 精神屏蔽力場：受傷時每 60 秒（隨升級縮短）吸收一次傷害並獲得 2 SAN。 */
 public class TraumaShield extends BaseGift {
@@ -19,5 +23,15 @@ public class TraumaShield extends BaseGift {
             return 0f;
         }
         return amount;
+    }
+
+    @Override
+    public List<Text> describe(int level) {
+        return List.of(
+            TooltipFormat.section("tooltip.limbusego.trauma_shield.damaged"),
+            TooltipFormat.body("tooltip.limbusego.trauma_shield.damaged.absorb"),
+            TooltipFormat.body("tooltip.limbusego.trauma_shield.damaged.san", 2),
+            TooltipFormat.body("tooltip.limbusego.trauma_shield.damaged.cooldown",
+                    TooltipFormat.num(60.0 / GiftUpgradeLogic.multiplier(level))));
     }
 }

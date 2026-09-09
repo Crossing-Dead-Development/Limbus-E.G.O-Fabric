@@ -5,6 +5,9 @@ import me.yisang.limbusego.status.StatusEffect;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
+import me.yisang.limbusego.tooltip.TooltipFormat;
+import net.minecraft.text.Text;
+import java.util.List;
 
 /** 刺青：大器晚成：生命低於 50% 時攻擊獲得強壯 2·2 與守護 2·2。 */
 public class LateBloomersTattoo extends BaseGift {
@@ -20,5 +23,15 @@ public class LateBloomersTattoo extends BaseGift {
             apply(attacker, StatusEffect.PROTECTION, 2, 2, attacker);
         }
         return amount;
+    }
+
+    @Override
+    public List<Text> describe(int level) {
+        return List.of(
+            TooltipFormat.section("tooltip.limbusego.late_bloomers_tattoo.attack"),
+            TooltipFormat.body("tooltip.limbusego.late_bloomers_tattoo.attack.power",
+                    TooltipFormat.status(StatusEffect.POWER), TooltipFormat.potency(scaled(2, level), 2)),
+            TooltipFormat.body("tooltip.limbusego.late_bloomers_tattoo.attack.protection",
+                    TooltipFormat.status(StatusEffect.PROTECTION), TooltipFormat.potency(2, 2)));
     }
 }

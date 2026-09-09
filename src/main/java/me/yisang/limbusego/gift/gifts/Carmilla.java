@@ -4,6 +4,10 @@ import me.yisang.limbusego.gift.BaseGift;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
+import me.yisang.limbusego.tooltip.TooltipFormat;
+import net.minecraft.text.Text;
+import java.util.List;
+import me.yisang.limbusego.gift.GiftUpgradeLogic;
 
 /** 卡蜜拉：攻擊滿血目標時 +20% 傷害（隨升級，上限 30%）。 */
 public class Carmilla extends BaseGift {
@@ -18,5 +22,13 @@ public class Carmilla extends BaseGift {
             return amount * (float) (1.0 + Math.min(0.30, 0.20 * multiplier(self)));
         }
         return amount;
+    }
+
+    @Override
+    public List<Text> describe(int level) {
+        int pct = Math.round((float) Math.min(0.30, 0.20 * GiftUpgradeLogic.multiplier(level)) * 100);
+        return List.of(
+            TooltipFormat.section("tooltip.limbusego.carmilla.attack"),
+            TooltipFormat.body("tooltip.limbusego.carmilla.attack.bonus", pct));
     }
 }

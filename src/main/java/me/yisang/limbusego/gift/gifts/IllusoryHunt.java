@@ -5,6 +5,10 @@ import me.yisang.limbusego.status.StatusEffect;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
+import me.yisang.limbusego.tooltip.TooltipFormat;
+import net.minecraft.text.Text;
+import java.util.List;
+import me.yisang.limbusego.gift.GiftUpgradeLogic;
 
 /** 異想狩獵：攻擊 20% 機率（隨升級）獲得強壯 2·2。 */
 public class IllusoryHunt extends BaseGift {
@@ -19,5 +23,14 @@ public class IllusoryHunt extends BaseGift {
             apply(attacker, StatusEffect.POWER, 2, 2, attacker);
         }
         return amount;
+    }
+
+    @Override
+    public List<Text> describe(int level) {
+        return List.of(
+            TooltipFormat.section("tooltip.limbusego.illusory_hunt.attack"),
+            TooltipFormat.body("tooltip.limbusego.illusory_hunt.attack.power",
+                    TooltipFormat.num(Math.min(1.0, 0.20 * GiftUpgradeLogic.multiplier(level)) * 100),
+                    TooltipFormat.status(StatusEffect.POWER), TooltipFormat.potency(2, 2)));
     }
 }

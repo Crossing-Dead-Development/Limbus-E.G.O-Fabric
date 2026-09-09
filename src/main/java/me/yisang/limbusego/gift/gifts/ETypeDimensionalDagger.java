@@ -6,6 +6,10 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.Vec3d;
+import me.yisang.limbusego.tooltip.TooltipFormat;
+import net.minecraft.text.Text;
+import java.util.List;
+import me.yisang.limbusego.gift.GiftUpgradeLogic;
 
 /** E型次元短劍：攻擊獲得充能 2·2；25% 機率瞬移背刺（1.5 倍傷害）並改獲充能 4·2。 */
 public class ETypeDimensionalDagger extends BaseGift {
@@ -27,5 +31,20 @@ public class ETypeDimensionalDagger extends BaseGift {
         }
         apply(attacker, StatusEffect.CHARGE, 2, 2, attacker);
         return amount;
+    }
+
+    @Override
+    public List<Text> describe(int level) {
+        double m = GiftUpgradeLogic.multiplier(level);
+        return List.of(
+            TooltipFormat.section("tooltip.limbusego.e_type_dimensional_dagger.attack"),
+            TooltipFormat.body("tooltip.limbusego.e_type_dimensional_dagger.attack.charge",
+                    TooltipFormat.status(StatusEffect.CHARGE), TooltipFormat.potency(2, 2)),
+            TooltipFormat.section("tooltip.limbusego.e_type_dimensional_dagger.blink",
+                    TooltipFormat.num(Math.min(1.0, 0.25 * m) * 100)),
+            TooltipFormat.body("tooltip.limbusego.e_type_dimensional_dagger.blink.damage",
+                    TooltipFormat.num(150 * m)),
+            TooltipFormat.body("tooltip.limbusego.e_type_dimensional_dagger.blink.charge",
+                    TooltipFormat.status(StatusEffect.CHARGE), TooltipFormat.potency(4, 2)));
     }
 }
