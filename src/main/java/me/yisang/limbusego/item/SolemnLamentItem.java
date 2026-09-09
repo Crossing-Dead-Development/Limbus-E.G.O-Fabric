@@ -69,7 +69,9 @@ public class SolemnLamentItem extends Item {
             sw.playSound(null, user.getBlockPos(), ModSounds.SOLEMN_QUICK_LOAD_3,
                     SoundCategory.PLAYERS, 0.7f, 1.0f);
         }
-        return ActionResult.SUCCESS;
+        // CONSUME 是 Success(SwingSource.NONE)：仍算 isAccepted（維持一次點擊一發，
+        // 且會中止 vanilla 的手部迴圈），但不播第一人稱的揮手動畫——開槍不該像揮劍。
+        return ActionResult.CONSUME;
     }
 
     private static boolean stackIsSolemn(ItemStack stack) {
