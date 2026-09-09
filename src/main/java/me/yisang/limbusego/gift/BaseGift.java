@@ -137,6 +137,28 @@ public abstract class BaseGift implements Accessory {
         return GiftUpgradeLogic.multiplier(self.getOrDefault(ModComponents.GIFT_LEVEL, 0));
     }
 
+    // ── tooltip 說明 ─────────────────────────────────────────────────
+
+    /** 供客戶端 tooltip 呼叫；取出升級等級後轉呼 {@link #describe(int)}。 */
+    public final java.util.List<net.minecraft.text.Text> describe(ItemStack self) {
+        return describe(self.getOrDefault(ModComponents.GIFT_LEVEL, 0));
+    }
+
+    /**
+     * 此飾品在指定升級等級（0~3）的 Shift 展開說明。子類覆寫此方法。
+     *
+     * <p>數值若在邏輯中經過 {@link #multiplier} 或 {@link #applyScaled}，此處必須用
+     * {@link GiftUpgradeLogic#multiplier(int)} 或 {@link #scaled} 算出對應值，不可寫死。
+     */
+    public java.util.List<net.minecraft.text.Text> describe(int level) {
+        return java.util.List.of();
+    }
+
+    /** {@link #applyScaled} 的 potency 放大規則，供 describe() 顯示與邏輯一致的數值。 */
+    protected static int scaled(int potency, int level) {
+        return (int) Math.round(potency * GiftUpgradeLogic.multiplier(level));
+    }
+
     /** 施加屬性，potency 依佩戴物品升級倍率取整放大。 */
     protected void applyScaled(LivingEntity target, StatusEffect eff, int p, int c, ServerPlayerEntity src, ItemStack self) {
         double m = multiplier(self);

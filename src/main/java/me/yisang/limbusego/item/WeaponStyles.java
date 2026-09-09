@@ -34,10 +34,10 @@ public final class WeaponStyles {
         Map.entry("mimicry",             new Spec(0xFF0000, false, new int[]{0xFF0000})),
         Map.entry("dacapo",              new Spec(0xFFFFFF, false, new int[]{0xFFFFFF})),
         Map.entry("ring_brush",          new Spec(0xFFFFFF, false, new int[]{0xFF9500})),
-        Map.entry("tiantui_star",        new Spec(0xE67E22, false, new int[]{0xAAAAAA, 0x555555})),
+        Map.entry("tiantui_star",        new Spec(0xE67E22, false, new int[]{0xAAAAAA})),
         Map.entry("tiger_mark",          new Spec(0xE67E22, false, new int[]{0xAAAAAA})),
         Map.entry("savage_tiger_mark",   new Spec(0xC0392B, false, new int[]{0xAAAAAA})),
-        Map.entry("twilight",            new Spec(0xFFD700, false, new int[]{0xAAAAAA, 0x555555, 0x555555})),
+        Map.entry("twilight",            new Spec(0xFFD700, false, new int[]{0xAAAAAA})),
         Map.entry("tibia",               new Spec(0x8B0000, false, new int[]{0xAAAAAA})),
         Map.entry("w_corp_knife",        new Spec(0x66E1FF, false, new int[]{0xB3F0FF})),
         Map.entry("bladesinger",         new Spec(0xAEDBFF, false, new int[]{0xD0E7FF}))
