@@ -36,9 +36,11 @@ Items live in the "E.G.O Weapons" custom creative tab. Textures are built in —
 | Tiantui Star Blade | +8 / −2.4 | Right-click charge 1s dash (8 dmg + burn 3s + Tremor 5p/6c + Burn 4p/3c); sneak charge 3s savage (18 dmg + Wither II + Tremor 8p/6c + Burn 6p/4c) |
 | Twilight | +9 / −2.4 + reach 1.5 | Low-HP damage scaling (→×2.5) + 30% true damage; sneak charge 1.5s Twilight Slash (fan + Wither + Rupture 5p/2c) |
 | Tibia | +10 / −2.8 + reach 1.0 | Stacks Bleed 3p/2c + Melody bonus (+3% per 3 potency, cap 30%); sneak charge 2s Anatomize (+12p/6c Bleed and force-trigger 3 times) |
-| Shadow-Vested Bladesinger | +9 / −2.6 | Stacks Poise to raise crit chance; low HP (<3 hearts) sneak-right-click a target → 5-slash |
+| Shadow-Vested Bladesinger | +9 / −2.6 | Stacks Poise to raise crit chance; at 50% health or below, sneak-right-click a target → 5-slash |
 
 Ammo: **Butterfly Quartz** (Solemn Lament), **Tiger Mark / Savage Tiger Mark** (Tiantui Star Blade).
+
+Hold **Shift** in game to expand a weapon's full mechanics, including how to trigger it, its numbers and its cooldown.
 
 ## E.G.O Gifts Overview
 
@@ -57,6 +59,8 @@ Ammo: **Butterfly Quartz** (Solemn Lament), **Tiger Mark / Savage Tiger Mark** (
 | Original | 5 | Immunity to hunger/fire, on-kill Sinking spread, passive regen & SAN |
 
 **Vestige anvil upgrades**: use the four Vestige tiers (Dark / Faint / Twinkling / Brilliant → tiers 1-4) on an anvil to upgrade a same-tier gift; levels 1→3 progressively raise the effect multiplier (1.25 / 1.50 / 2.00).
+
+Hold **Shift** in game to expand a gift's full mechanics, and **the numbers reflect its current Vestige upgrade level** — upgrade it and compare directly.
 
 ## The 12-Status System
 
