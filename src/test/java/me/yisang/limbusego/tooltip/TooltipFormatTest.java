@@ -1,4 +1,4 @@
-package me.yisang.limbusego.client;
+package me.yisang.limbusego.tooltip;
 
 import me.yisang.limbusego.LangKeys;
 import me.yisang.limbusego.status.StatusEffect;

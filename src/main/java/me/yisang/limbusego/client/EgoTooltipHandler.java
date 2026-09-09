@@ -3,6 +3,7 @@ package me.yisang.limbusego.client;
 import me.yisang.limbusego.gift.BaseGift;
 import me.yisang.limbusego.gift.GiftRegistry;
 import me.yisang.limbusego.item.WeaponTooltips;
+import me.yisang.limbusego.tooltip.TooltipFormat;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.item.ItemStack;

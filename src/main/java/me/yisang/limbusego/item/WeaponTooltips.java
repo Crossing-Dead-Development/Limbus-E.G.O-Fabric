@@ -1,6 +1,6 @@
 package me.yisang.limbusego.item;
 
-import me.yisang.limbusego.client.TooltipFormat;
+import me.yisang.limbusego.tooltip.TooltipFormat;
 import me.yisang.limbusego.status.StatusEffect;
 import net.minecraft.text.Text;
 
