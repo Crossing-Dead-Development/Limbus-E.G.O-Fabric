@@ -32,7 +32,8 @@
 | 飾品說明掛在 `LORE`，鍵為 `item.limbusego.<id>.desc`，80 筆中英文齊全 | `ModGifts.reg()` |
 | 飾品 `.desc` 是**單行密集格式**，用 `｜` 分隔，永遠展開，數值為 Lv.0 固定值 | 例：`被動：免疫火焰傷害｜攻擊：施加燒傷 2·2｜攻擊燒傷中且生命低於 30% 的目標：+30% 傷害` |
 | 飾品**風味台詞未被移植** | Paper 插件 `BaseAccessory` 建構子第 5 參數，Fabric 版只帶了 effect |
-| 插件英文風味文只有 46 筆（共 80 件） | `Limbus-E.G.O/src/main/resources/lang/gifts/en_US.yml` |
+| 80 件飾品中 **46 件有風味台詞、34 件本來就沒有**（插件的 `BaseAccessory` 有 6 參數與 4 參數兩種建構子） | 掃描 `Limbus-E.G.O/.../gifts/*.java` 統計 |
+| 46 件中英文風味文有 43 筆，缺 3 筆 | `lang/gifts/en_US.yml`：缺 `flower_mound`、`phantom_pain`、`spicebush_branch` |
 | 12 屬性名稱**寫死中文 + legacy 色碼**，無翻譯鍵 | `StatusEffect` enum：`BURN("燒傷", "§6")` |
 | `BaseGift.multiplier(stack)` 只讀元件，**客戶端可算** | `GiftUpgradeLogic.multiplier(stack.getOrDefault(GIFT_LEVEL, 0))` |
 | `GiftRegistry` 提供 `byItem(Item)` 反查 | `GiftRegistry` |
@@ -52,7 +53,7 @@ Shift 判定是純客戶端狀態（`Screen.hasShiftDown()`）。`LORE` 是伺�
 
 ### 3.2 版面
 
-**收合（未按 Shift）**：風味台詞 + 一行灰字提示列。武器與飾品格式一致。
+**收合（未按 Shift）**：風味台詞 + 一行灰字提示列。武器與飾品格式一致；沒有風味台詞的 34 件飾品（見 §3.5）只顯示名稱 + 提示列。
 
 ```
 環指筆刷
@@ -90,11 +91,18 @@ E.G.O
 `BaseGift` 新增鉤子：
 
 ```java
-/** 回傳此飾品的 Shift 展開說明；數值須反映 self 的升級等級。預設空清單。 */
-public List<Text> describe(ItemStack self) { return List.of(); }
+/** 供 tooltip 呼叫；由 stack 取出升級等級後轉呼 describe(int)。 */
+public final List<Text> describe(ItemStack self) {
+    return describe(self.getOrDefault(ModComponents.GIFT_LEVEL, 0));
+}
+
+/** 回傳此飾品在指定升級等級（0~3）的 Shift 展開說明。預設空清單。 */
+public List<Text> describe(int level) { return List.of(); }
 ```
 
-80 個子類各自覆寫。有升級縮放的直接呼叫 `multiplier(self)`，讓 tooltip 顯示這一件飾品此刻的真實數值：
+**子類覆寫的是 `describe(int level)`，不是 `describe(ItemStack)`。** 這個切分讓說明測試完全不需要 `ItemStack`，因而不需要 `Bootstrap.initialize()`——後者會凍結 registry、導致飾品註冊失敗（見 §6）。
+
+有升級縮放的直接用 `GiftUpgradeLogic.multiplier(level)`，讓 tooltip 顯示這一件飾品此刻的真實數值：
 
 ```java
 // Rest.java — 邏輯與說明寫在同一個檔案、相隔數行
@@ -105,8 +113,8 @@ protected float onAttack(...) {
 }
 
 @Override
-public List<Text> describe(ItemStack self) {
-    int pct = Math.round((float) Math.min(0.30, 0.15 * multiplier(self)) * 100);
+public List<Text> describe(int level) {
+    int pct = Math.round((float) Math.min(0.30, 0.15 * GiftUpgradeLogic.multiplier(level)) * 100);
     return List.of(
         TooltipFormat.section("tooltip.limbusego.rest.passive"),
         TooltipFormat.body("tooltip.limbusego.rest.passive.regen"),
@@ -140,7 +148,16 @@ super(plugin, "ashes_to_ashes", "塵歸塵",
         "攻擊燒傷中目標：疊加燒傷 2·1");
 ```
 
-中文 80 筆全在插件原始碼裡；英文 46 筆在 `lang/gifts/en_US.yml`，**其餘約 34 筆需補譯**。這是本 spec 唯一需要原創文案的部分。
+實際盤點（80 件 Fabric 飾品）：
+
+| 類別 | 數量 | 處理 |
+|---|---|---|
+| 有中文風味文 | 46 | 從插件建構子第 5 參數擷取 |
+| 其中有英文風味文 | 43 | 從 `lang/gifts/en_US.yml` 的 `description` 擷取，需去掉 `&#RRGGBB` 前綴 |
+| 缺英文風味文 | 3 | `flower_mound`、`phantom_pain`、`spicebush_branch`，需補譯 |
+| 本來就沒有風味文（插件用 4 參數建構子） | 34 | **不補寫**。收合時只顯示名稱 + 提示列 |
+
+原創文案總量僅 3 行英文。34 件無風味文的飾品維持空白是刻意的：插件當初就沒寫，硬補會是憑空杜撰。
 
 `ModGifts.reg()` 的 `LORE` 元件從 `.desc` 改掛 `.lore.0`，樣式沿用現有的灰色非斜體。
 
@@ -166,14 +183,14 @@ public String translationKey() { return "status.limbusego." + name().toLowerCase
 | `EgoTooltipHandler` | `client/` | 註冊 `ItemTooltipCallback`；判斷 Shift；查表；插行 |
 | `TooltipFormat` | `client/` | 段落／內文／提示列／屬性名稱的樣式與翻譯鍵包裝 |
 | `WeaponTooltips` | `item/` | id → 武器說明行的集中表 |
-| `BaseGift.describe(ItemStack)` | `gift/` | 飾品說明鉤子，80 個子類覆寫 |
+| `BaseGift.describe(int level)` | `gift/` | 飾品說明鉤子，80 個子類覆寫 |
 | `StatusEffect.translationKey()` | `status/` | 屬性名稱在地化 |
 
 資料流：
 
 ```
 ItemTooltipCallback
-  ├─ GiftRegistry.byItem(item) ─→ BaseGift.describe(stack) ─→ List<Text>
+  ├─ GiftRegistry.byItem(item) ─→ BaseGift.describe(stack) ─→ describe(level) ─→ List<Text>
   └─ WeaponTooltips.of(itemId)  ─────────────────────────────→ List<Text>
                                                                   │
                               Screen.hasShiftDown() ? 插入內容 : 插入提示列
@@ -187,15 +204,18 @@ ItemTooltipCallback
 
 ## 6. 測試
 
-**與既有慣例的差異**：`GiftUpgradeLogicTest` 等三個現有測試都不載入 Minecraft，但本節的測試需要 `ItemStack`（`describe()` 的參數）與 `GiftRegistry`（註冊時會碰 `Registries`），無法純邏輯化。
+沿用既有「純邏輯、不載入 Minecraft」慣例，這由兩個設計決定達成：
 
-決定：這三個測試在 `@BeforeAll` 呼叫 `SharedConstants.createGameVersion()` + `Bootstrap.initialize()` 後再跑，並集中在同一個 `TooltipTestBootstrap` 基底類。若實作時發現 bootstrap 在此專案的 Loom 設定下不可行，退而求其次：把 `describe()` 的純計算部分（如 §6 第三項的百分比推導）抽成無參數靜態方法單獨測試，覆蓋率測試則改為建置期腳本。
+1. 子類覆寫 `describe(int level)`（§3.3），測試不需要 `ItemStack`。
+2. 測試**不使用 `GiftRegistry`**（填充它需要註冊物品，會碰 `Registries`）。改為讀取 `ModGifts.java` 原始碼、用正規式抽出 `reg("<id>", new <Class>())` 配對，再以反射實例化。這樣測試涵蓋的正好是實際註冊的那 80 件，新增飾品時自動納入。
+
+**不要呼叫 `Bootstrap.initialize()`**：它會凍結 registry，反而讓飾品註冊失敗。`Text.translatable()` 與 `Style` 不需要 bootstrap。
 
 | 測試 | 斷言 |
 |---|---|
-| `GiftDescriptionCoverageTest` | 走訪 `GiftRegistry.all()`，每件飾品 `describe()` 非空 |
+| `GiftDescriptionCoverageTest` | 反射實例化 `ModGifts.java` 註冊的 80 件，每件 `describe(0)` 非空 |
 | `TooltipLangCoverageTest` | `describe()`／`WeaponTooltips` 引用的每個翻譯鍵，在 `en_us.json` 與 `zh_tw.json` 都存在 |
-| `GiftDescriptionScalingTest` | 抽樣有升級縮放的飾品（如 `rest`），驗證 Lv.0/1/2/3 的 `describe()` 數值與實際邏輯一致，且 30% 上限有生效 |
+| `GiftDescriptionScalingTest` | 抽樣有升級縮放的飾品（如 `rest`），驗證 `describe(0..3)` 數值與實際邏輯一致，且 30% 上限有生效 |
 
 第二項是 80 件 × 中英文這種量級最重要的防線：之後新增飾品忘了寫說明或漏翻譯會直接紅燈。
 
