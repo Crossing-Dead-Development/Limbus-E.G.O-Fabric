@@ -33,6 +33,59 @@ public final class ModGifts {
 
     private ModGifts() {}
 
+    /**
+     * 有風味台詞的飾品 → lore 行數。來源為 Paper 插件 {@code BaseAccessory} 的 6 參數建構子；
+     * 其餘 34 件在插件中本來就沒有台詞，刻意不補寫。
+     */
+    private static final Map<String, Integer> FLAVOR_LINES = Map.ofEntries(
+        Map.entry("ardent_flower", 1),
+        Map.entry("ashes_to_ashes", 1),
+        Map.entry("black_sheet_music", 1),
+        Map.entry("blue_zippo_lighter", 1),
+        Map.entry("broken_compass", 1),
+        Map.entry("cask_spirits", 1),
+        Map.entry("clear_mirror_calm_water", 1),
+        Map.entry("cold_illusion", 1),
+        Map.entry("crystallized_blood", 1),
+        Map.entry("distant_star", 1),
+        Map.entry("dreaming_electric_sheep", 1),
+        Map.entry("dry_to_the_bone_breast", 1),
+        Map.entry("dust_to_dust", 1),
+        Map.entry("ebony_brooch", 1),
+        Map.entry("emerald_elytra", 1),
+        Map.entry("flower_mound", 2),
+        Map.entry("frozen_cries", 1),
+        Map.entry("golden_urn", 1),
+        Map.entry("hardship", 1),
+        Map.entry("harestride", 1),
+        Map.entry("homeward", 1),
+        Map.entry("hot_n_juicy_drumstick", 1),
+        Map.entry("illusory_hunt", 1),
+        Map.entry("jin_gang_bolus", 1),
+        Map.entry("la_manchaland_all_day_pass", 1),
+        Map.entry("la_manchaland_standard_pass", 1),
+        Map.entry("lithograph", 1),
+        Map.entry("mask_of_the_parade", 1),
+        Map.entry("moon_in_the_water", 1),
+        Map.entry("oracle", 1),
+        Map.entry("pain_of_stifled_rage", 1),
+        Map.entry("phantom_pain", 2),
+        Map.entry("piece_of_a_torn_summer", 1),
+        Map.entry("piece_of_crumbled_egg", 1),
+        Map.entry("piece_of_relationship", 1),
+        Map.entry("plume_of_proof", 1),
+        Map.entry("rags", 1),
+        Map.entry("rest", 1),
+        Map.entry("sour_liquor_aroma", 1),
+        Map.entry("spicebush_branch", 2),
+        Map.entry("strange_glyph_talisman", 1),
+        Map.entry("tangled_bones", 1),
+        Map.entry("tenacity_bolus", 1),
+        Map.entry("the_book_of_vengeance", 1),
+        Map.entry("tranquil_lotus_bolus", 1),
+        Map.entry("trauma_shield", 1)
+    );
+
     public static void register() {
         // ── 燒傷組（burn，8）──────────────────────────────────────────
         reg("ardent_flower", new ArdentFlower());
@@ -143,13 +196,24 @@ public final class ModGifts {
     }
 
     private static Item reg(String name, BaseGift gift) {
-        Text desc = Text.translatable("item.limbusego." + name + ".desc")
-                .setStyle(Style.EMPTY.withColor(Formatting.GRAY).withItalic(false));
-        Item item = new Item(new Item.Settings()
+        Item.Settings settings = new Item.Settings()
                 .registryKey(RegistryKey.of(RegistryKeys.ITEM, LimbusEGOMod.id(name)))
                 .maxCount(1)
-                .rarity(Rarity.EPIC)
-                .component(DataComponentTypes.LORE, new LoreComponent(java.util.List.of(desc))));
+                .rarity(Rarity.EPIC);
+
+        // 機制說明改由客戶端 tooltip（BaseGift.describe）呈現；LORE 只留風味台詞。
+        // 沒有風味台詞的飾品不掛 LORE，否則遊戲內會顯示原始翻譯鍵。
+        int flavorLines = FLAVOR_LINES.getOrDefault(name, 0);
+        if (flavorLines > 0) {
+            List<Text> lore = new ArrayList<>(flavorLines);
+            for (int i = 0; i < flavorLines; i++) {
+                lore.add(Text.translatable("item.limbusego." + name + ".lore." + i)
+                        .setStyle(Style.EMPTY.withColor(Formatting.GRAY).withItalic(false)));
+            }
+            settings.component(DataComponentTypes.LORE, new LoreComponent(lore));
+        }
+
+        Item item = new Item(settings);
         Registry.register(Registries.ITEM, LimbusEGOMod.id(name), item);
         AccessoryRegistry.register(item, gift);
         GiftRegistry.register(gift, item);
