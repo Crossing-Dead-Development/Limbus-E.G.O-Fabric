@@ -6,6 +6,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.Box;
+import me.yisang.limbusego.tooltip.TooltipFormat;
+import net.minecraft.text.Text;
+import java.util.List;
 
 /** 霧化吸入器：被動每 5 秒使自身與 5 格內玩家獲得呼吸法 2·2。 */
 public class Nebulizer extends BaseGift {
@@ -23,5 +26,14 @@ public class Nebulizer extends BaseGift {
                 p -> p != player && p.isAlive())) {
             applyScaled(p2, StatusEffect.POISE, 2, 2, player, self);
         }
+    }
+
+    @Override
+    public List<Text> describe(int level) {
+        return List.of(
+            TooltipFormat.section("tooltip.limbusego.nebulizer.passive"),
+            TooltipFormat.body("tooltip.limbusego.nebulizer.passive.self",
+                    TooltipFormat.status(StatusEffect.POISE), TooltipFormat.potency(scaled(2, level), 2)),
+            TooltipFormat.body("tooltip.limbusego.nebulizer.passive.allies", 5));
     }
 }

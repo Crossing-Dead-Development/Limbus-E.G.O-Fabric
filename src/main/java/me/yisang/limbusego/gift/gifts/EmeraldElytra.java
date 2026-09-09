@@ -7,6 +7,9 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
+import me.yisang.limbusego.tooltip.TooltipFormat;
+import net.minecraft.text.Text;
+import java.util.List;
 
 /** 綠色鞘翅：被動緩降；疾跑中攻擊獲得呼吸法 3·2。 */
 public class EmeraldElytra extends BaseGift {
@@ -26,5 +29,15 @@ public class EmeraldElytra extends BaseGift {
             applyScaled(attacker, StatusEffect.POISE, 3, 2, attacker, self);
         }
         return amount;
+    }
+
+    @Override
+    public List<Text> describe(int level) {
+        return List.of(
+            TooltipFormat.section("tooltip.limbusego.emerald_elytra.passive"),
+            TooltipFormat.body("tooltip.limbusego.emerald_elytra.passive.slowfall"),
+            TooltipFormat.section("tooltip.limbusego.emerald_elytra.attack"),
+            TooltipFormat.body("tooltip.limbusego.emerald_elytra.attack.poise",
+                    TooltipFormat.status(StatusEffect.POISE), TooltipFormat.potency(scaled(3, level), 2)));
     }
 }
