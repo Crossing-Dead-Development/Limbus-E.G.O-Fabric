@@ -5,6 +5,9 @@ import me.yisang.limbusego.status.StatusEffect;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
+import me.yisang.limbusego.tooltip.TooltipFormat;
+import net.minecraft.text.Text;
+import java.util.List;
 
 /** 冰封的哀號：受擊時對攻擊者施加沉淪 3·2。 */
 public class FrozenCries extends BaseGift {
@@ -19,5 +22,13 @@ public class FrozenCries extends BaseGift {
             applyScaled(attacker, StatusEffect.SINKING, 3, 2, victim, self);
         }
         return amount;
+    }
+
+    @Override
+    public List<Text> describe(int level) {
+        return List.of(
+            TooltipFormat.section("tooltip.limbusego.frozen_cries.damaged"),
+            TooltipFormat.body("tooltip.limbusego.frozen_cries.damaged.sinking",
+                    TooltipFormat.status(StatusEffect.SINKING), TooltipFormat.potency(scaled(3, level), 2)));
     }
 }

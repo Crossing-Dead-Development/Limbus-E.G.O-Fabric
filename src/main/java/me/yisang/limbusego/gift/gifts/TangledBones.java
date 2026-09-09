@@ -5,6 +5,9 @@ import me.yisang.limbusego.status.StatusEffect;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
+import me.yisang.limbusego.tooltip.TooltipFormat;
+import net.minecraft.text.Text;
+import java.util.List;
 
 /** 破碎的骨片：攻擊施加沉淪 2·2；攻擊抑鬱目標 +15% 傷害。 */
 public class TangledBones extends BaseGift {
@@ -21,5 +24,15 @@ public class TangledBones extends BaseGift {
         }
         applyScaled(target, StatusEffect.SINKING, 2, 2, attacker, self);
         return dmg;
+    }
+
+    @Override
+    public List<Text> describe(int level) {
+        return List.of(
+            TooltipFormat.section("tooltip.limbusego.tangled_bones.attack"),
+            TooltipFormat.body("tooltip.limbusego.tangled_bones.attack.sinking",
+                    TooltipFormat.status(StatusEffect.SINKING), TooltipFormat.potency(scaled(2, level), 2)),
+            TooltipFormat.section("tooltip.limbusego.tangled_bones.vs_depressed"),
+            TooltipFormat.body("tooltip.limbusego.tangled_bones.vs_depressed.bonus", 15));
     }
 }

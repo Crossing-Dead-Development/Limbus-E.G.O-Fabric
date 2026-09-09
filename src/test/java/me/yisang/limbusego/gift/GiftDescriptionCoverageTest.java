@@ -36,7 +36,10 @@ class GiftDescriptionCoverageTest {
             "glimpse_of_flames", "hot_n_juicy_drumstick", "pain_of_stifled_rage", "royal_jelly_perfume",
             // 流血 bleed（6）
             "crystallized_blood", "la_manchaland_all_day_pass", "la_manchaland_standard_pass",
-            "mask_of_the_parade", "millarca", "sanguine_blossom_bolus");
+            "mask_of_the_parade", "millarca", "sanguine_blossom_bolus",
+            // 沉淪 sinking（10）
+            "artistic_sense", "black_sheet_music", "broken_compass", "cold_illusion", "distant_star",
+            "frozen_cries", "mental_corruption_boosting_gas", "rags", "rest", "tangled_bones");
 
     private static final Path MOD_GIFTS =
             Path.of("src/main/java/me/yisang/limbusego/gift/ModGifts.java");
