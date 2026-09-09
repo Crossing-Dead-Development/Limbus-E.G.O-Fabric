@@ -61,37 +61,44 @@ public static boolean isPaired(boolean mainIsSolemn, boolean mainIsBlack,
 }
 ```
 
-### 3.3 擊發與選槍
+### 3.3 擊發與輪流
 
-`use()` 只在 `Hand.MAIN_HAND` 觸發，副手回傳 `PASS`，避免一次點擊打出兩發。
+**修正記錄（實作後）**：本節原本設計了一個 `pickHand` 選槍函式，前提是 `Item.use()` 會在
+主手冷卻時照樣被呼叫、由我們自己決定改打副手。**這個前提是錯的。**
 
-**選槍規則（無狀態）**：挑目前不在冷卻中的那把；兩把都可用時優先主手；兩把都在冷卻則不做任何事。
+實際的 vanilla 行為（`1.21.4` 位元組碼確認）：
 
-搭配每把各自 1.2 秒（24 tick）冷卻，連續點擊的自然結果是：
+- `ClientPlayerInteractionManager.interactItem` 在呼叫 `Item.use` **之前**先檢查
+  `ItemCooldownManager.isCoolingDown(stack)`，冷卻中直接回傳 `ActionResult.PASS`。
+- `MinecraftClient.doItemUse` 走訪 `Hand.values()`（主手、副手），只在結果
+  `isAccepted()` 時中斷；`PASS` 與 `FAIL` 都不算 accepted。
+
+因此**輪流是 vanilla 免費提供的**，不需要任何選槍邏輯：
+
+| 狀態 | vanilla 行為 | 結果 |
+|---|---|---|
+| 兩把都可用 | 主手 `use` 回 `SUCCESS`，迴圈中止 | 打主手（「優先主手」是免費的） |
+| 主手冷卻 | 主手被擋、回 `PASS` → 續試副手 | 打副手 |
+| 兩把都冷卻 | 兩手都回 `PASS` | 什麼都不做 |
+
+`SolemnLamentItem.use()` 因此只需處理「傳進來的這隻手」：確認配對 → 檢查彈藥 →
+擊發該手的槍 → 對該手的 stack 設冷卻。`SolemnLamentLogic` 只留 `isPaired`。
+
+每把各自 **1.2 秒（24 tick）** 冷卻，連點的結果：
 
 ```
-t=0.0s  主手（黑）發射，黑進入冷卻至 1.2s
-t=0.6s  黑仍在冷卻 → 副手（白）發射，白冷卻至 1.8s
+t=0.0s  主手（黑）發射，黑冷卻至 1.2s
+t=0.6s  黑仍在冷卻 → vanilla 自動落到副手（白）發射，白冷卻至 1.8s
 t=1.2s  黑冷卻結束 → 黑發射
-t=1.8s  白冷卻結束 → 白發射
 ```
 
 即穩定的 黑→白→黑→白、每 0.6 秒一發。
 
-**選擇無狀態規則而非儲存「輪到誰」的理由**：不需要跨登出持久化、不會與實際冷卻狀態不同步、不需要在玩家離線時清理。已知副作用：**停手超過 1.2 秒後，下一發永遠從主手那把開始**，而非接續上次順序。此行為可接受且可預測。
+已知副作用：**停手超過 1.2 秒後，下一發永遠從主手那把開始**，而非接續上次順序。
+此行為可接受且可預測。
 
-選槍規則同樣寫成純函式：
-
-```java
-/** 回傳應擊發的手；兩把都在冷卻時回傳 empty。 */
-public static Optional<Hand> pickHand(boolean mainReady, boolean offReady) {
-    if (mainReady) return Optional.of(Hand.MAIN_HAND);
-    if (offReady) return Optional.of(Hand.OFF_HAND);
-    return Optional.empty();
-}
-```
-
-冷卻透過 vanilla `ItemCooldownManager` 設在對應的 `ItemStack` 上，因此玩家能直接看到物品欄的灰色冷卻覆蓋。
+未配對時的提示只由主手送出，否則黑+黑之類的組合會在同一次點擊收到兩則訊息
+（`FAIL` 不中斷 vanilla 的手部迴圈）。
 
 ### 3.4 彈藥與音效
 
@@ -126,8 +133,8 @@ public static Optional<Hand> pickHand(boolean mainReady, boolean offReady) {
 
 | 元件 | 位置 | 變更 |
 |---|---|---|
-| `SolemnLamentItem` | `item/` | 改繼承 `Item`；`use()` 實作配對判定、選槍、擊發、冷卻、彈藥 |
-| `SolemnLamentLogic` | `item/` | **新增**。`isPaired` 與 `pickHand` 兩個純函式，供物品呼叫與單元測試 |
+| `SolemnLamentItem` | `item/` | 改繼承 `Item`；`use()` 實作配對判定、擊發、冷卻、彈藥（不含選槍，見 §3.3） |
+| `SolemnLamentLogic` | `item/` | **新增**。`isPaired` 純函式，供物品與 mixin 呼叫並單元測試（`pickHand` 於實作後移除，見 §3.3） |
 | `CrossbowItemMixin` | `mixin/` | **刪除** |
 | `PlayerEntityRendererMixin` | `mixin/client/` | 改為配對時雙手 `CROSSBOW_HOLD` |
 | `WeaponEvents.fireSolemnLament` | `event/` | 不變（彈道與命中效果沿用）；彈藥消耗改由 `SolemnLamentItem` 負責 |
@@ -136,39 +143,39 @@ public static Optional<Hand> pickHand(boolean mainReady, boolean offReady) {
 資料流：
 
 ```
-主手右鍵
-  → SolemnLamentLogic.isPaired(主手, 副手)
-      否 → 動作列提示，結束
-      是 → SolemnLamentLogic.pickHand(主手冷卻?, 副手冷卻?)
-              empty → 結束
-              hand  → 找彈藥
-                        無 → 結束
-                        有 → 消耗 1 枚
-                             WeaponEvents.fireSolemnLament(該手的 isBlack)
-                             該手 ItemStack 進 1.2 秒冷卻
-                             播擊發音 + 再上膛音
+右鍵
+  → vanilla doItemUse 依序試 MAIN_HAND、OFF_HAND
+      該手冷卻中 → vanilla 回 PASS，續試下一隻手（use 不會被呼叫）
+      該手可用   → SolemnLamentItem.use(hand)
+                     未配對 → 主手才送動作列提示，回 FAIL
+                     無彈藥 → 回 FAIL（不進冷卻）
+                     否則   → 消耗 1 枚生蝶亡蝶
+                              WeaponEvents.fireSolemnLament(該手的 isBlack)
+                              該手 ItemStack 進 1.2 秒冷卻
+                              播擊發音 + 再上膛音
+                              回 SUCCESS（isAccepted → vanilla 中止手部迴圈）
 ```
 
 ## 5. 錯誤處理
 
-- 副手為 `Hand.OFF_HAND` 的 `use()` 呼叫一律 `PASS`，確保一次點擊只打一發。
+- 一次點擊只打一發：擊發成功回傳 `SUCCESS`，`isAccepted()` 為真，vanilla 隨即中止手部迴圈，不會再試另一隻手。
+- 未配對時的提示只由 `Hand.MAIN_HAND` 送出：`FAIL` 不中斷手部迴圈，若兩手都提示，黑+黑會在同一次點擊收到兩則訊息。
 - 右鍵指向方塊或實體時，vanilla 可能先消耗該次互動而不呼叫 `use()`。此為既有武器共通行為，本 spec 不處理。
 - 背包無彈藥：不擊發、不進冷卻、不提示（與其他彈藥武器一致，避免洗版）。
 - **創造模式一律仍需彈藥**。這是明確決定而非沿襲：現行的弩基底在創造模式下的彈藥行為由 vanilla 決定、並不明確，改為普通 `Item` 後由我們自己負責，統一要求彈藥比較好推理。天退星刀目前是創造模式免彈藥（`TiantuiStarItem` 的 `!user.getAbilities().creativeMode`），兩者不一致是已知的，本 spec 不一併調整。
 
 ## 6. 測試
 
-沿用「純邏輯、不載入 Minecraft」慣例。`SolemnLamentLogic` 的兩個函式不接觸 `ItemStack` 或 registry，可直接測試。
+沿用「純邏輯、不載入 Minecraft」慣例。`SolemnLamentLogic.isPaired` 不接觸 `ItemStack` 或 registry，可直接測試。
 
 | 測試 | 斷言 |
 |---|---|
-| `SolemnLamentLogicTest.pairingRequiresOneOfEach` | 黑+白、白+黑成立；黑+黑、白+白、單持、非莊嚴哀悼皆不成立 |
-| `SolemnLamentLogicTest.pickHandPrefersMainWhenBothReady` | 兩把皆可用 → 主手 |
-| `SolemnLamentLogicTest.pickHandFallsBackToOffHand` | 主手冷卻中、副手可用 → 副手 |
-| `SolemnLamentLogicTest.pickHandReturnsEmptyWhenBothOnCooldown` | 兩把皆冷卻 → empty |
+| `SolemnLamentLogicTest.pairingRequiresOneBlackAndOneWhite` | 黑+白、白+黑成立 |
+| `SolemnLamentLogicTest.sameColourIsNotPaired` | 黑+黑、白+白不成立 |
+| `SolemnLamentLogicTest.singleWieldIsNotPaired` | 單持、任一手非莊嚴哀悼皆不成立 |
 | `WeaponTooltipsTest`（既有） | 改寫後的說明鍵仍在中英文 lang 中存在 |
 
-`pickHand` 回傳 `Hand`（Minecraft enum），但該 enum 為純常數、不需 bootstrap，測試可直接使用。
+**「輪流」沒有單元測試**：它是 vanilla 手部迴圈與冷卻閘門的副產品（§3.3），不是我們的程式碼，只能在遊戲內驗證。
 
 ## 7. 驗收
 

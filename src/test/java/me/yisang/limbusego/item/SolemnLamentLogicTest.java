@@ -1,12 +1,17 @@
 package me.yisang.limbusego.item;
 
-import net.minecraft.util.Hand;
 import org.junit.jupiter.api.Test;
-
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * 只測配對判定。
+ *
+ * <p>「輪流發射」沒有對應的測試，因為那不是我們的邏輯：vanilla 的
+ * {@code MinecraftClient.doItemUse} 依序試主手、副手並在 {@code isAccepted()} 時停止，
+ * 而 {@code interactItem} 在呼叫 {@code Item.use} 之前就會擋掉冷卻中的那隻手。
+ * 交替因此是 vanilla 行為的副產品，單元測試無從涵蓋——只能在遊戲內驗證。
+ */
 class SolemnLamentLogicTest {
 
     @Test
@@ -28,39 +33,5 @@ class SolemnLamentLogicTest {
         assertFalse(SolemnLamentLogic.isPaired(true, true, false, false), "副手非莊嚴哀悼");
         assertFalse(SolemnLamentLogic.isPaired(false, false, true, true), "主手非莊嚴哀悼");
         assertFalse(SolemnLamentLogic.isPaired(false, false, false, false), "兩手都不是");
-    }
-
-    @Test
-    void pickHandPrefersMainWhenBothReady() {
-        assertEquals(Optional.of(Hand.MAIN_HAND), SolemnLamentLogic.pickHand(true, true));
-    }
-
-    @Test
-    void pickHandFallsBackToOffHand() {
-        assertEquals(Optional.of(Hand.OFF_HAND), SolemnLamentLogic.pickHand(false, true));
-    }
-
-    @Test
-    void pickHandReturnsEmptyWhenBothOnCooldown() {
-        assertEquals(Optional.empty(), SolemnLamentLogic.pickHand(false, false));
-    }
-
-    @Test
-    void alternationEmergesFromCooldownAlone() {
-        // 模擬連點：每把冷卻 24 tick，每 12 tick 點一次，應交替
-        // readyAt[0]=主手可用的 tick，readyAt[1]=副手
-        int[] readyAt = {0, 0};
-        Hand[] fired = new Hand[4];
-        int now = 0;
-        for (int i = 0; i < 4; i++) {
-            Optional<Hand> pick = SolemnLamentLogic.pickHand(readyAt[0] <= now, readyAt[1] <= now);
-            fired[i] = pick.orElseThrow();
-            readyAt[fired[i] == Hand.MAIN_HAND ? 0 : 1] = now + 24;
-            now += 12;
-        }
-        assertArrayEquals(
-                new Hand[]{Hand.MAIN_HAND, Hand.OFF_HAND, Hand.MAIN_HAND, Hand.OFF_HAND},
-                fired,
-                "每 12 tick 點一次應穩定交替");
     }
 }
