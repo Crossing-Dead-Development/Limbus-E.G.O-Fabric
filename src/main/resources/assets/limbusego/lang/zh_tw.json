@@ -215,5 +215,9 @@
   "status.limbusego.haste": "迅捷",
   "status.limbusego.bind": "束縛",
   "status.limbusego.poise": "呼吸法",
-  "status.limbusego.charge": "充能"
+  "status.limbusego.charge": "充能",
+  "tooltip.limbusego.hint": "[Shift] 查看詳細資訊",
+  "tooltip.limbusego.tag.ego": "E.G.O",
+  "tooltip.limbusego.tag.gift": "E.G.O 飾品・階級 %s",
+  "tooltip.limbusego.potency": "威力%s・次數%s"
 }

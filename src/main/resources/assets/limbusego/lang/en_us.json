@@ -215,5 +215,9 @@
   "status.limbusego.haste": "Haste",
   "status.limbusego.bind": "Bind",
   "status.limbusego.poise": "Poise",
-  "status.limbusego.charge": "Charge"
+  "status.limbusego.charge": "Charge",
+  "tooltip.limbusego.hint": "[Shift] for details",
+  "tooltip.limbusego.tag.ego": "E.G.O",
+  "tooltip.limbusego.tag.gift": "E.G.O Gift · Tier %s",
+  "tooltip.limbusego.potency": "%s potency · %s count"
 }
