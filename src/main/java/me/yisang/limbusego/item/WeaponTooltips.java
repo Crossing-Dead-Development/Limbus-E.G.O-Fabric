@@ -23,10 +23,13 @@ public final class WeaponTooltips {
 
     private static final Map<String, List<Text>> TABLE = Map.ofEntries(
 
-        // 莊嚴哀悼（黑）：WeaponEvents.tickProjectiles isBlack 分支
+        // 莊嚴哀悼（黑）：SolemnLamentItem.use + WeaponEvents.tickProjectiles isBlack 分支
         Map.entry("solemn_lament_black", List.of(
-            TooltipFormat.section(P + "solemn_lament.fire"),
-            TooltipFormat.body(P + "solemn_lament.fire.load"),
+            TooltipFormat.section(P + "solemn_lament.dual"),
+            TooltipFormat.body(P + "solemn_lament.dual.shoot"),
+            TooltipFormat.body(P + "solemn_lament.dual.ammo"),
+            TooltipFormat.body(P + "solemn_lament.dual.cooldown", "1.2"),
+            TooltipFormat.section(P + "solemn_lament.hit"),
             TooltipFormat.body(P + "solemn_lament.fire.damage", 8),
             TooltipFormat.body(P + "solemn_lament.fire.wither", 4),
             TooltipFormat.body(P + "solemn_lament.fire.status",
@@ -36,8 +39,11 @@ public final class WeaponTooltips {
 
         // 莊嚴哀悼（白）：同上 else 分支
         Map.entry("solemn_lament_white", List.of(
-            TooltipFormat.section(P + "solemn_lament.fire"),
-            TooltipFormat.body(P + "solemn_lament.fire.load"),
+            TooltipFormat.section(P + "solemn_lament.dual"),
+            TooltipFormat.body(P + "solemn_lament.dual.shoot"),
+            TooltipFormat.body(P + "solemn_lament.dual.ammo"),
+            TooltipFormat.body(P + "solemn_lament.dual.cooldown", "1.2"),
+            TooltipFormat.section(P + "solemn_lament.hit"),
             TooltipFormat.body(P + "solemn_lament.fire.damage", 4),
             TooltipFormat.body(P + "solemn_lament.fire.blind", 3),
             TooltipFormat.body(P + "solemn_lament.fire.status",

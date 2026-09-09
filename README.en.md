@@ -26,7 +26,7 @@ Items live in the "E.G.O Weapons" custom creative tab. Textures are built in —
 
 | Weapon | Attributes | Mechanic |
 |---|---|---|
-| Solemn Lament (Black) | — | Right-click consumes a Butterfly Quartz to fire a projectile (1.2s cooldown); on hit 8 dmg + Wither II + Sinking 4p/3c |
+| Solemn Lament (Black) | — | **Requires dual-wielding black + white**; one right-click per shot, consumes Butterfly Quartz, 1.2s cooldown per gun; on hit 8 dmg + Wither II + Sinking 4p/3c |
 | Solemn Lament (White) | — | Same, on hit 4 dmg + Blindness + Sinking 3p/2c |
 | Solemn Shield | — | While held, every 5 ticks applies Slowness II + Bind in a 5-block radius, and grants self Protection (cap 3) |
 | Mimicry | +12 / −3.2 | 10% crit for +40~90 dmg, 25% lifesteal; crit grants self Power 3p/4c |

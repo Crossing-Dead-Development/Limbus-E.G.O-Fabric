@@ -141,14 +141,12 @@
   "tooltip.limbusego.butterfly_quartz.use": "Loaded into Solemn Lament",
   "tooltip.limbusego.tiger_mark.use": "Spent by Tiantui Star's Tiger Round dash",
   "tooltip.limbusego.savage_tiger_mark.use": "Spent by Tiantui Star's Savage Round dash",
-  "tooltip.limbusego.solemn_lament.fire": "Fire (hold right-click to draw, release to shoot)",
-  "tooltip.limbusego.solemn_lament.fire.load": "Drawing consumes one Living Butterfly, Dead Butterfly",
   "tooltip.limbusego.solemn_lament.fire.damage": "A hit deals %s damage",
   "tooltip.limbusego.solemn_lament.fire.wither": "Inflicts Wither II for %s seconds",
   "tooltip.limbusego.solemn_lament.fire.blind": "Inflicts Blindness for %s seconds",
   "tooltip.limbusego.solemn_lament.fire.status": "Applies %s %s",
   "tooltip.limbusego.solemn_lament.melee": "Melee (left-click)",
-  "tooltip.limbusego.solemn_lament.melee.note": "Swings like an ordinary weapon and consumes no ammunition",
+  "tooltip.limbusego.solemn_lament.melee.note": "Still swings like an ordinary weapon when unpaired, but cannot fire",
   "tooltip.limbusego.solemn_shield.aura": "While held (main or off hand, no activation needed)",
   "tooltip.limbusego.solemn_shield.aura.debuff": "Continuously inflicts Slowness II and %2$s %3$s on enemies within %1$s blocks",
   "tooltip.limbusego.solemn_shield.aura.self": "Continuously grants yourself %s, up to %s potency",
@@ -537,5 +535,10 @@
   "tooltip.limbusego.tranquil_lotus_bolus.passive": "Passive",
   "tooltip.limbusego.tranquil_lotus_bolus.passive.protection": "Grants %s %s every 5 seconds",
   "tooltip.limbusego.tranquil_lotus_bolus.passive.san": "Restores %2$s SAN every %1$s seconds",
-  "msg.limbusego.solemn_lament.need_pair": "Requires dual-wielding Solemn Lament (black and white)"
+  "msg.limbusego.solemn_lament.need_pair": "Requires dual-wielding Solemn Lament (black and white)",
+  "tooltip.limbusego.solemn_lament.dual": "Dual-wield fire (one black and one white, main hand and off hand)",
+  "tooltip.limbusego.solemn_lament.dual.shoot": "One right-click fires one shot; no drawing",
+  "tooltip.limbusego.solemn_lament.dual.ammo": "Each shot consumes one Living Butterfly, Dead Butterfly",
+  "tooltip.limbusego.solemn_lament.dual.cooldown": "Each gun has its own %s second cooldown; alternate to keep firing",
+  "tooltip.limbusego.solemn_lament.hit": "On hit"
 }

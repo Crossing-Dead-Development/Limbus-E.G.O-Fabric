@@ -141,14 +141,12 @@
   "tooltip.limbusego.butterfly_quartz.use": "供莊嚴哀悼上弦使用",
   "tooltip.limbusego.tiger_mark.use": "供天退星刀的虎標彈衝刺使用",
   "tooltip.limbusego.savage_tiger_mark.use": "供天退星刀的猛虎標彈衝刺使用",
-  "tooltip.limbusego.solemn_lament.fire": "射擊（長按右鍵上弦，放開射出）",
-  "tooltip.limbusego.solemn_lament.fire.load": "上弦時消耗一枚生蝶、亡蝶",
   "tooltip.limbusego.solemn_lament.fire.damage": "彈幕命中造成 %s 點傷害",
   "tooltip.limbusego.solemn_lament.fire.wither": "附加凋零 II，持續 %s 秒",
   "tooltip.limbusego.solemn_lament.fire.blind": "附加失明，持續 %s 秒",
   "tooltip.limbusego.solemn_lament.fire.status": "施加 %s %s",
   "tooltip.limbusego.solemn_lament.melee": "近戰（左鍵）",
-  "tooltip.limbusego.solemn_lament.melee.note": "可如一般武器揮擊，不消耗彈藥",
+  "tooltip.limbusego.solemn_lament.melee.note": "單持時仍可如一般武器揮擊，但無法射擊",
   "tooltip.limbusego.solemn_shield.aura": "持有時（主手或副手，無須主動使用）",
   "tooltip.limbusego.solemn_shield.aura.debuff": "持續對 %s 格內的敵人施加緩速 II 與 %s %s",
   "tooltip.limbusego.solemn_shield.aura.self": "自身持續獲得 %s，威力上限 %s",
@@ -537,5 +535,10 @@
   "tooltip.limbusego.tranquil_lotus_bolus.passive": "被動",
   "tooltip.limbusego.tranquil_lotus_bolus.passive.protection": "每 5 秒獲得 %s %s",
   "tooltip.limbusego.tranquil_lotus_bolus.passive.san": "每 %s 秒回復 %s 點 SAN",
-  "msg.limbusego.solemn_lament.need_pair": "需雙持莊嚴哀悼（黑與白）"
+  "msg.limbusego.solemn_lament.need_pair": "需雙持莊嚴哀悼（黑與白）",
+  "tooltip.limbusego.solemn_lament.dual": "雙持射擊（主手與副手各持黑、白一把）",
+  "tooltip.limbusego.solemn_lament.dual.shoot": "右鍵一下打出一發，無須上弦",
+  "tooltip.limbusego.solemn_lament.dual.ammo": "每發消耗一枚生蝶、亡蝶",
+  "tooltip.limbusego.solemn_lament.dual.cooldown": "兩把各自冷卻 %s 秒，輪流擊發可連續輸出",
+  "tooltip.limbusego.solemn_lament.hit": "命中時"
 }
