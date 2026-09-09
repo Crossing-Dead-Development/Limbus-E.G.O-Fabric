@@ -203,5 +203,17 @@
   "msg.limbusego.tiantui.charge_tiger": "Tiger Round ",
   "msg.limbusego.tiantui.charge_savage": "Savage Round ",
   "msg.limbusego.bladesinger.trigger": "Flesh Cut, Bone Cleave",
-  "msg.limbusego.bladesinger.cooldown": "Flesh Cut, Bone Cleave on cooldown… %ss"
+  "msg.limbusego.bladesinger.cooldown": "Flesh Cut, Bone Cleave on cooldown… %ss",
+  "status.limbusego.bleed": "Bleed",
+  "status.limbusego.burn": "Burn",
+  "status.limbusego.fragile": "Fragile",
+  "status.limbusego.power": "Power",
+  "status.limbusego.sinking": "Sinking",
+  "status.limbusego.rupture": "Rupture",
+  "status.limbusego.tremor": "Tremor",
+  "status.limbusego.protection": "Protection",
+  "status.limbusego.haste": "Haste",
+  "status.limbusego.bind": "Bind",
+  "status.limbusego.poise": "Poise",
+  "status.limbusego.charge": "Charge"
 }

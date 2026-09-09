@@ -203,5 +203,17 @@
   "msg.limbusego.tiantui.charge_tiger": "虎標彈 ",
   "msg.limbusego.tiantui.charge_savage": "猛虎標彈 ",
   "msg.limbusego.bladesinger.trigger": "肉斬骨斷",
-  "msg.limbusego.bladesinger.cooldown": "肉斬骨斷冷卻中…%ss"
+  "msg.limbusego.bladesinger.cooldown": "肉斬骨斷冷卻中…%ss",
+  "status.limbusego.bleed": "流血",
+  "status.limbusego.burn": "燒傷",
+  "status.limbusego.fragile": "易損",
+  "status.limbusego.power": "強壯",
+  "status.limbusego.sinking": "沉淪",
+  "status.limbusego.rupture": "破裂",
+  "status.limbusego.tremor": "震顫",
+  "status.limbusego.protection": "守護",
+  "status.limbusego.haste": "迅捷",
+  "status.limbusego.bind": "束縛",
+  "status.limbusego.poise": "呼吸法",
+  "status.limbusego.charge": "充能"
 }

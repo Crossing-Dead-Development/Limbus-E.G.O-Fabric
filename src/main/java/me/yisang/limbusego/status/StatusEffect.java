@@ -21,4 +21,9 @@ public enum StatusEffect {
         this.zh = zh;
         this.color = color;
     }
+
+    /** tooltip 用的翻譯鍵，例：status.limbusego.burn。 */
+    public String translationKey() {
+        return "status.limbusego." + name().toLowerCase(java.util.Locale.ROOT);
+    }
 }
