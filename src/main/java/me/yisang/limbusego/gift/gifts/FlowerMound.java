@@ -9,6 +9,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.Box;
+import me.yisang.limbusego.tooltip.TooltipFormat;
+import net.minecraft.text.Text;
+import java.util.List;
 
 /** 花塚：被動生命再生 I；擊殺時對附近敵人施加沉淪 2·2。 */
 public class FlowerMound extends BaseGift {
@@ -29,5 +32,15 @@ public class FlowerMound extends BaseGift {
                 le -> le != killer && !(le instanceof PlayerEntity) && le.isAlive())) {
             applyScaled(e, StatusEffect.SINKING, 2, 2, killer, self);
         }
+    }
+
+    @Override
+    public List<Text> describe(int level) {
+        return List.of(
+            TooltipFormat.section("tooltip.limbusego.flower_mound.passive"),
+            TooltipFormat.body("tooltip.limbusego.flower_mound.passive.regen"),
+            TooltipFormat.section("tooltip.limbusego.flower_mound.kill"),
+            TooltipFormat.body("tooltip.limbusego.flower_mound.kill.sinking", 5,
+                    TooltipFormat.status(StatusEffect.SINKING), TooltipFormat.potency(scaled(2, level), 2)));
     }
 }

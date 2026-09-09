@@ -8,6 +8,10 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.Box;
+import me.yisang.limbusego.tooltip.TooltipFormat;
+import net.minecraft.text.Text;
+import java.util.List;
+import me.yisang.limbusego.gift.GiftUpgradeLogic;
 
 /** 神諭：潛行時每 10 秒使周圍生物發光 3 秒。 */
 public class Oracle extends BaseGift {
@@ -25,5 +29,13 @@ public class Oracle extends BaseGift {
                 le -> le != player && !(le instanceof PlayerEntity) && le.isAlive())) {
             e.addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 60, 0, true, false));
         }
+    }
+
+    @Override
+    public List<Text> describe(int level) {
+        return List.of(
+            TooltipFormat.section("tooltip.limbusego.oracle.sneak"),
+            TooltipFormat.body("tooltip.limbusego.oracle.sneak.glow",
+                    TooltipFormat.num(12 * GiftUpgradeLogic.multiplier(level)), 3));
     }
 }

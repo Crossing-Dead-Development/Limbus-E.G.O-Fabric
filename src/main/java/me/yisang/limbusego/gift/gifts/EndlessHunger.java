@@ -8,6 +8,9 @@ import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
+import me.yisang.limbusego.tooltip.TooltipFormat;
+import net.minecraft.text.Text;
+import java.util.List;
 
 /** 無盡的飢餓：被動移除虛弱、免疫飢餓傷害；飽食度高時攻擊獲得強壯 2·1。 */
 public class EndlessHunger extends BaseGift {
@@ -33,5 +36,16 @@ public class EndlessHunger extends BaseGift {
     protected float onAnyDamage(LivingEntity attacker, ServerPlayerEntity victim, ItemStack self, float amount,
                                 DamageSource source) {
         return source.isOf(DamageTypes.STARVE) ? 0f : amount;
+    }
+
+    @Override
+    public List<Text> describe(int level) {
+        return List.of(
+            TooltipFormat.section("tooltip.limbusego.endless_hunger.passive"),
+            TooltipFormat.body("tooltip.limbusego.endless_hunger.passive.weakness"),
+            TooltipFormat.body("tooltip.limbusego.endless_hunger.passive.starve"),
+            TooltipFormat.section("tooltip.limbusego.endless_hunger.attack", 16),
+            TooltipFormat.body("tooltip.limbusego.endless_hunger.attack.power",
+                    TooltipFormat.status(StatusEffect.POWER), TooltipFormat.potency(scaled(2, level), 1)));
     }
 }

@@ -7,6 +7,10 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.Box;
+import me.yisang.limbusego.tooltip.TooltipFormat;
+import net.minecraft.text.Text;
+import java.util.List;
+import me.yisang.limbusego.gift.GiftUpgradeLogic;
 
 /**
  * 藍色Zippo牌打火機：攻擊 20% 機率施加燒傷 2·2；右鍵每 8 秒點燃附近目標。
@@ -37,5 +41,19 @@ public class BlueZippoLighter extends BaseGift {
             e.setFireTicks(100);
             return;
         }
+    }
+
+    @Override
+    public List<Text> describe(int level) {
+        double m = GiftUpgradeLogic.multiplier(level);
+        return List.of(
+            TooltipFormat.section("tooltip.limbusego.blue_zippo_lighter.attack"),
+            TooltipFormat.body("tooltip.limbusego.blue_zippo_lighter.attack.burn",
+                    TooltipFormat.num(Math.min(1.0, 0.20 * m) * 100),
+                    TooltipFormat.status(StatusEffect.BURN), TooltipFormat.potency(2, 2)),
+            TooltipFormat.section("tooltip.limbusego.blue_zippo_lighter.use"),
+            TooltipFormat.body("tooltip.limbusego.blue_zippo_lighter.use.ignite", 4, 5),
+            TooltipFormat.body("tooltip.limbusego.blue_zippo_lighter.use.cooldown",
+                    TooltipFormat.num(8.0 / m)));
     }
 }

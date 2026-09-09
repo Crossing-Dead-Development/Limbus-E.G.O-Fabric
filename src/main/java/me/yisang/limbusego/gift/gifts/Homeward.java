@@ -8,6 +8,10 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import me.yisang.limbusego.tooltip.TooltipFormat;
+import net.minecraft.text.Text;
+import java.util.List;
+import me.yisang.limbusego.gift.GiftUpgradeLogic;
 
 /** 歸途：脫戰 5 秒後每次脫戰回復最多 50% 最大生命（每次戰鬥限一次）。 */
 public class Homeward extends BaseGift {
@@ -52,5 +56,14 @@ public class Homeward extends BaseGift {
     protected void onQuit(UUID playerId) {
         lastCombat.remove(playerId);
         claimed.remove(playerId);
+    }
+
+    @Override
+    public List<Text> describe(int level) {
+        int pct = (int) Math.round(Math.min(0.5, 0.20 * GiftUpgradeLogic.multiplier(level)) * 100);
+        return List.of(
+            TooltipFormat.section("tooltip.limbusego.homeward.out_of_combat", 5),
+            TooltipFormat.body("tooltip.limbusego.homeward.out_of_combat.heal", pct),
+            TooltipFormat.body("tooltip.limbusego.homeward.out_of_combat.once"));
     }
 }

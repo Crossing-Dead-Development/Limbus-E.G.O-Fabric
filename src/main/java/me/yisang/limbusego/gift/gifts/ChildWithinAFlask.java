@@ -11,6 +11,9 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
+import me.yisang.limbusego.tooltip.TooltipFormat;
+import java.util.List;
+import me.yisang.limbusego.gift.GiftUpgradeLogic;
 
 /** 瓶中嬰孩：受致命傷時每 2 分鐘免死一次，回復 4 生命、獲得抗性並擊退附近敵人。 */
 public class ChildWithinAFlask extends BaseGift {
@@ -39,5 +42,16 @@ public class ChildWithinAFlask extends BaseGift {
         }
         victim.sendMessage(Text.literal("§7瓶中嬰孩護你一命！"), true);
         return 0f;
+    }
+
+    @Override
+    public List<Text> describe(int level) {
+        return List.of(
+            TooltipFormat.section("tooltip.limbusego.child_within_a_flask.lethal"),
+            TooltipFormat.body("tooltip.limbusego.child_within_a_flask.lethal.survive", 2),
+            TooltipFormat.body("tooltip.limbusego.child_within_a_flask.lethal.resistance", 3),
+            TooltipFormat.body("tooltip.limbusego.child_within_a_flask.lethal.knockback", 3),
+            TooltipFormat.body("tooltip.limbusego.child_within_a_flask.lethal.cooldown",
+                    TooltipFormat.num(120.0 / GiftUpgradeLogic.multiplier(level))));
     }
 }

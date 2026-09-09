@@ -8,6 +8,9 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import me.yisang.limbusego.tooltip.TooltipFormat;
+import net.minecraft.text.Text;
+import java.util.List;
 
 /** 靜蓮丸：被動每 5 秒獲得守護 2·2，每 10 秒回復 1 SAN。 */
 public class TranquilLotusBolus extends BaseGift {
@@ -34,5 +37,14 @@ public class TranquilLotusBolus extends BaseGift {
     @Override
     protected void onQuit(UUID playerId) {
         sanTicks.remove(playerId);
+    }
+
+    @Override
+    public List<Text> describe(int level) {
+        return List.of(
+            TooltipFormat.section("tooltip.limbusego.tranquil_lotus_bolus.passive"),
+            TooltipFormat.body("tooltip.limbusego.tranquil_lotus_bolus.passive.protection",
+                    TooltipFormat.status(StatusEffect.PROTECTION), TooltipFormat.potency(scaled(2, level), 2)),
+            TooltipFormat.body("tooltip.limbusego.tranquil_lotus_bolus.passive.san", 10, 1));
     }
 }

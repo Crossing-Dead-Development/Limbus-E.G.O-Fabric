@@ -7,6 +7,10 @@ import net.minecraft.entity.ItemEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.Box;
+import me.yisang.limbusego.tooltip.TooltipFormat;
+import net.minecraft.text.Text;
+import java.util.List;
+import me.yisang.limbusego.gift.GiftUpgradeLogic;
 
 /** 某人的裝置：被動吸引附近掉落物與經驗球。 */
 public class SomeonesDevice extends BaseGift {
@@ -23,5 +27,13 @@ public class SomeonesDevice extends BaseGift {
                 x -> x instanceof ItemEntity || x instanceof ExperienceOrbEntity)) {
             e.setPosition(player.getX(), player.getY(), player.getZ());
         }
+    }
+
+    @Override
+    public List<Text> describe(int level) {
+        return List.of(
+            TooltipFormat.section("tooltip.limbusego.someones_device.passive"),
+            TooltipFormat.body("tooltip.limbusego.someones_device.passive.magnet",
+                    TooltipFormat.num(6 * GiftUpgradeLogic.multiplier(level))));
     }
 }

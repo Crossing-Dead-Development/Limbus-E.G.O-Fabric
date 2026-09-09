@@ -7,6 +7,9 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
+import me.yisang.limbusego.tooltip.TooltipFormat;
+import net.minecraft.text.Text;
+import java.util.List;
 
 /** 破碎之夏的殘片：受火焰或熔岩傷害時獲得強壯 2·2。 */
 public class PieceOfATornSummer extends BaseGift {
@@ -23,5 +26,13 @@ public class PieceOfATornSummer extends BaseGift {
             applyScaled(victim, StatusEffect.POWER, 2, 2, victim, self);
         }
         return amount;
+    }
+
+    @Override
+    public List<Text> describe(int level) {
+        return List.of(
+            TooltipFormat.section("tooltip.limbusego.piece_of_a_torn_summer.burned"),
+            TooltipFormat.body("tooltip.limbusego.piece_of_a_torn_summer.burned.power",
+                    TooltipFormat.status(StatusEffect.POWER), TooltipFormat.potency(scaled(2, level), 2)));
     }
 }

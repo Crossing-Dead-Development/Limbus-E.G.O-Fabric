@@ -54,7 +54,14 @@ class GiftDescriptionCoverageTest {
             "bloody_gadget", "dreaming_electric_sheep", "dueling_manual_book_3", "illusory_hunt",
             "late_bloomers_tattoo", "hardship", "phantom_pain", "tenacity_bolus",
             "the_book_of_vengeance", "special_contract", "plume_of_proof", "spicebush_branch",
-            "carmilla", "e_type_dimensional_dagger", "trauma_shield");
+            "carmilla", "e_type_dimensional_dagger", "trauma_shield",
+            // 便利 qol（12）
+            "blue_zippo_lighter", "child_within_a_flask", "golden_urn", "homeward", "lithograph",
+            "oracle", "prejudice", "piece_of_relationship", "rusty_commemorative_coin",
+            "someones_device", "sunshower", "trial_plan_guide",
+            // 原創 original（5）
+            "endless_hunger", "flower_mound", "jin_gang_bolus", "piece_of_a_torn_summer",
+            "tranquil_lotus_bolus");
 
     private static final Path MOD_GIFTS =
             Path.of("src/main/java/me/yisang/limbusego/gift/ModGifts.java");
@@ -82,6 +89,13 @@ class GiftDescriptionCoverageTest {
                 translationKeys(gift.describe(level)).forEach(LangKeys::assertKeyExists);
             }
         });
+    }
+
+    @Test
+    void everyRegisteredGiftIsDone() {
+        var missing = new TreeSet<>(registered().keySet());
+        missing.removeAll(DONE);
+        assertTrue(missing.isEmpty(), "尚未撰寫說明的飾品：" + missing);
     }
 
     @Test
