@@ -5,6 +5,9 @@ import me.yisang.limbusego.status.StatusEffect;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
+import me.yisang.limbusego.tooltip.TooltipFormat;
+import net.minecraft.text.Text;
+import java.util.List;
 
 /** 塵歸塵：攻擊燒傷中目標時疊加燒傷 2·1。 */
 public class AshesToAshes extends BaseGift {
@@ -19,5 +22,13 @@ public class AshesToAshes extends BaseGift {
             applyScaled(target, StatusEffect.BURN, 2, 1, attacker, self);
         }
         return amount;
+    }
+
+    @Override
+    public List<Text> describe(int level) {
+        return List.of(
+            TooltipFormat.section("tooltip.limbusego.ashes_to_ashes.attack"),
+            TooltipFormat.body("tooltip.limbusego.ashes_to_ashes.attack.stack",
+                    TooltipFormat.status(StatusEffect.BURN), TooltipFormat.potency(scaled(2, level), 1)));
     }
 }

@@ -7,6 +7,9 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
+import me.yisang.limbusego.tooltip.TooltipFormat;
+import net.minecraft.text.Text;
+import java.util.List;
 
 /** 火熱多汁枇杷腿：被動飽食度不流失；攻擊燒傷中目標時延長燒傷持續 2 層。 */
 public class HotNJuicyDrumstick extends BaseGift {
@@ -26,5 +29,15 @@ public class HotNJuicyDrumstick extends BaseGift {
             status().refresh(target, StatusEffect.BURN, 2);
         }
         return amount;
+    }
+
+    @Override
+    public List<Text> describe(int level) {
+        return List.of(
+            TooltipFormat.section("tooltip.limbusego.hot_n_juicy_drumstick.passive"),
+            TooltipFormat.body("tooltip.limbusego.hot_n_juicy_drumstick.passive.saturation"),
+            TooltipFormat.section("tooltip.limbusego.hot_n_juicy_drumstick.attack"),
+            TooltipFormat.body("tooltip.limbusego.hot_n_juicy_drumstick.attack.extend",
+                    TooltipFormat.status(StatusEffect.BURN), 2));
     }
 }

@@ -7,6 +7,9 @@ import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.Box;
+import me.yisang.limbusego.tooltip.TooltipFormat;
+import net.minecraft.text.Text;
+import java.util.List;
 
 /**
  * 蜂王漿香水：被動使附近蜜蜂停止攻擊自己；
@@ -36,5 +39,17 @@ public class RoyalJellyPerfume extends BaseGift {
         }
         applyScaled(attacker, StatusEffect.BURN, 2, 2, victim, self);
         return dmg;
+    }
+
+    @Override
+    public List<Text> describe(int level) {
+        return List.of(
+            TooltipFormat.section("tooltip.limbusego.royal_jelly_perfume.passive"),
+            TooltipFormat.body("tooltip.limbusego.royal_jelly_perfume.passive.bees", 8),
+            TooltipFormat.section("tooltip.limbusego.royal_jelly_perfume.damaged"),
+            TooltipFormat.body("tooltip.limbusego.royal_jelly_perfume.damaged.burn",
+                    TooltipFormat.status(StatusEffect.BURN), TooltipFormat.potency(scaled(2, level), 2)),
+            TooltipFormat.body("tooltip.limbusego.royal_jelly_perfume.damaged.reduce", 15,
+                    TooltipFormat.status(StatusEffect.BURN)));
     }
 }

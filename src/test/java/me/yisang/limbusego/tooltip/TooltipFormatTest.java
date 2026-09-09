@@ -55,6 +55,16 @@ class TooltipFormatTest {
     }
 
     @Test
+    void numTrimsTrailingZeros() {
+        assertEquals("3", TooltipFormat.num(3.0));
+        assertEquals("3.75", TooltipFormat.num(3.75));
+        assertEquals("4.5", TooltipFormat.num(4.5));
+        assertEquals("6", TooltipFormat.num(3 * 2.0));
+        // 浮點誤差不該外洩到玩家眼前
+        assertEquals("3.75", TooltipFormat.num(3 * 1.2500000000000002));
+    }
+
+    @Test
     void sharedKeysExistInBothLanguages() {
         LangKeys.assertKeyExists("tooltip.limbusego.hint");
         LangKeys.assertKeyExists("tooltip.limbusego.tag.ego");

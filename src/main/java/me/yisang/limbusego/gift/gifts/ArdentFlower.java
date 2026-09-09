@@ -7,6 +7,9 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
+import me.yisang.limbusego.tooltip.TooltipFormat;
+import net.minecraft.text.Text;
+import java.util.List;
 
 /**
  * 火光花：被動免疫火焰傷害；攻擊施加燒傷 2·2；
@@ -33,5 +36,17 @@ public class ArdentFlower extends BaseGift {
             dmg *= 1.30f;
         }
         return dmg;
+    }
+
+    @Override
+    public List<Text> describe(int level) {
+        return List.of(
+            TooltipFormat.section("tooltip.limbusego.ardent_flower.passive"),
+            TooltipFormat.body("tooltip.limbusego.ardent_flower.passive.fireproof"),
+            TooltipFormat.section("tooltip.limbusego.ardent_flower.attack"),
+            TooltipFormat.body("tooltip.limbusego.ardent_flower.attack.burn",
+                    TooltipFormat.status(StatusEffect.BURN), TooltipFormat.potency(scaled(2, level), 2)),
+            TooltipFormat.section("tooltip.limbusego.ardent_flower.execute"),
+            TooltipFormat.body("tooltip.limbusego.ardent_flower.execute.bonus", 30));
     }
 }

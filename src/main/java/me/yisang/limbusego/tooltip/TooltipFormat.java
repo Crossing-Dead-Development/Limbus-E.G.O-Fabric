@@ -56,6 +56,18 @@ public final class TooltipFormat {
         return styled(Text.translatable("tooltip.limbusego.potency", potency, count), Formatting.WHITE.getColorValue(), false);
     }
 
+    /**
+     * 數值 → 顯示字串，最多兩位小數並去掉尾隨的零。
+     *
+     * <p>用於會隨升級縮放而出現小數的數值（如擴散半徑 3 → 3.75 → 4.5 → 6）。
+     * 直接把 double 當 translatable 參數會印出 {@code 3.7500000000000004} 之類的東西。
+     */
+    public static String num(double value) {
+        String s = String.format(java.util.Locale.ROOT, "%.2f", value);
+        s = s.replaceAll("0+$", "");
+        return s.endsWith(".") ? s.substring(0, s.length() - 1) : s;
+    }
+
     private static Text prefixed(String prefix, String key, int color, Object... args) {
         MutableText text = Text.literal(prefix).append(Text.translatable(key, args));
         return styled(text, color, false);

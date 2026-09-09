@@ -6,6 +6,10 @@ import me.yisang.limbusego.status.StatusState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
+import me.yisang.limbusego.tooltip.TooltipFormat;
+import net.minecraft.text.Text;
+import java.util.List;
+import me.yisang.limbusego.gift.GiftUpgradeLogic;
 
 /**
  * 炎鱗：攻擊燒傷中目標時，引爆燒傷造成真傷（potency × 消耗量 × 0.5）
@@ -29,5 +33,18 @@ public class GlimpseOfFlames extends BaseGift {
         status().hurtTrue(target, attacker, p * consumed * 0.5, StatusEffect.BURN);
         apply(target, StatusEffect.FRAGILE, 1, 2, attacker);
         return amount;
+    }
+
+    @Override
+    public List<Text> describe(int level) {
+        return List.of(
+            TooltipFormat.section("tooltip.limbusego.glimpse_of_flames.attack"),
+            TooltipFormat.body("tooltip.limbusego.glimpse_of_flames.attack.detonate",
+                    TooltipFormat.status(StatusEffect.BURN), 5),
+            TooltipFormat.body("tooltip.limbusego.glimpse_of_flames.attack.damage", "0.5"),
+            TooltipFormat.body("tooltip.limbusego.glimpse_of_flames.attack.fragile",
+                    TooltipFormat.status(StatusEffect.FRAGILE), TooltipFormat.potency(1, 2)),
+            TooltipFormat.body("tooltip.limbusego.glimpse_of_flames.attack.cooldown",
+                    TooltipFormat.num(8.0 / GiftUpgradeLogic.multiplier(level))));
     }
 }

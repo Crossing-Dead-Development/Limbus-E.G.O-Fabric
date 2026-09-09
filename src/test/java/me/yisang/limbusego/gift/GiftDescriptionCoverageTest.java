@@ -30,7 +30,10 @@ import static org.junit.jupiter.api.Assertions.*;
 class GiftDescriptionCoverageTest {
 
     /** 已完成 describe() 的飾品 id。每完成一組就把該組 id 加進來。 */
-    static final Set<String> DONE = Set.of();
+    static final Set<String> DONE = Set.of(
+            // 燒傷 burn（8）
+            "ardent_flower", "ashes_to_ashes", "bloodflame_sword", "dust_to_dust",
+            "glimpse_of_flames", "hot_n_juicy_drumstick", "pain_of_stifled_rage", "royal_jelly_perfume");
 
     private static final Path MOD_GIFTS =
             Path.of("src/main/java/me/yisang/limbusego/gift/ModGifts.java");
