@@ -142,7 +142,7 @@ Item.getName(stack)
 | `GiftStylesTest.tierColorsMatchPlugin` | 1~4 分別為 `0xAAAAAA`、`0x55FF55`、`0x55AAFF`、`0xFFD700` |
 | `GiftStylesTest.unknownTierFallsBackToGray` | 0 與 5 → `0xAAAAAA` |
 | `GiftStylesTest.everyFlavorColorIdIsARegisteredGift` | 46 筆顏色表的 id 全部在 `ModGifts.java` 的註冊清單中 |
-| `GiftStylesTest.flavorColorTableCoversEveryFlavouredGift` | 有風味台詞的 46 件都查得到顏色 |
+| `GiftStylesTest.flavorColorTableCoversEveryFlavoredGift` | 有風味台詞的 46 件都查得到顏色 |
 | `GiftStylesTest.flavorColorsAreOpaqueRgb` | 46 筆值皆落在 `0x000000`~`0xFFFFFF` |
 
 名稱在遊戲內實際的顯示顏色靠驗收。
