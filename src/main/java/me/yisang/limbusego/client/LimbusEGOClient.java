@@ -6,5 +6,7 @@ public class LimbusEGOClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         EgoTooltipHandler.register();
+        net.minecraft.client.gui.screen.ingame.HandledScreens.register(
+                me.yisang.limbusego.extractor.ModBlocks.EXTRACTOR_SCREEN_HANDLER, ExtractorScreen::new);
     }
 }
