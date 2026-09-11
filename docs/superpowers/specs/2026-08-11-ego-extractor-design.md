@@ -1,7 +1,7 @@
 # E.G.O 提取機設計
 
 日期：2026-08-11
-狀態：設計已通過，待寫實作計畫
+狀態：已實作（計畫：docs/superpowers/plans/2026-09-11-ego-extractor.md）
 
 ## 1. 目標
 

@@ -95,7 +95,7 @@
   - `static boolean ExtractionLogic.canStart(int tier, int enkephalin, boolean outputFree, int poolSize)`。
   - `static int ExtractionLogic.pick(int poolSize, double roll)` — `[0, poolSize)` 的索引，永不越界。
 
-- [ ] **Step 1: 寫失敗測試**
+- [x] **Step 1: 寫失敗測試**
 
 ```java
 package me.yisang.limbusego.extractor;
@@ -187,12 +187,12 @@ class ExtractionLogicTest {
 }
 ```
 
-- [ ] **Step 2: 跑測試確認失敗**
+- [x] **Step 2: 跑測試確認失敗**
 
 Run: `./gradlew.bat test --tests "me.yisang.limbusego.extractor.ExtractionLogicTest"`
 Expected: 編譯失敗，`ExtractionLogic` 不存在。
 
-- [ ] **Step 3: 寫最小實作**
+- [x] **Step 3: 寫最小實作**
 
 ```java
 package me.yisang.limbusego.extractor;
@@ -254,12 +254,12 @@ public final class ExtractionLogic {
 }
 ```
 
-- [ ] **Step 4: 跑測試確認通過**
+- [x] **Step 4: 跑測試確認通過**
 
 Run: `./gradlew.bat test --tests "me.yisang.limbusego.extractor.ExtractionLogicTest"`
 Expected: 11 tests PASS。
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add src/main/java/me/yisang/limbusego/extractor/ExtractionLogic.java src/test/java/me/yisang/limbusego/extractor/ExtractionLogicTest.java
@@ -285,7 +285,7 @@ git commit -m "feat: 提取機純決策函式 / Add ExtractionLogic with cost, d
   - `static void ExtractionPools.build()` — 在 `ModGifts.register()` 之後呼叫一次。
   - `static List<Item> ExtractionPools.of(int tier)` — 查無回空 `List`。
 
-- [ ] **Step 1: 註冊 Enkephalin**
+- [x] **Step 1: 註冊 Enkephalin**
 
 `ModItems.java` 欄位區加：
 
@@ -300,7 +300,7 @@ git commit -m "feat: 提取機純決策函式 / Add ExtractionLogic with cost, d
         ENKEPHALIN = reg("enkephalin", new Item(key("enkephalin").maxCount(64).rarity(Rarity.UNCOMMON)));
 ```
 
-- [ ] **Step 2: 物品資產**
+- [x] **Step 2: 物品資產**
 
 `src/main/resources/assets/limbusego/items/enkephalin.json`：
 
@@ -335,7 +335,7 @@ d.ellipse((5, 4, 8, 7), fill=(200, 255, 245, 255))
 im.save("src/main/resources/assets/limbusego/textures/item/enkephalin.png")
 ```
 
-- [ ] **Step 3: 翻譯鍵**
+- [x] **Step 3: 翻譯鍵**
 
 `zh_tw.json` 在 `"item.limbusego.brilliant_vestige"` 那行之後插入（注意逗號）：
 
@@ -349,7 +349,7 @@ im.save("src/main/resources/assets/limbusego/textures/item/enkephalin.png")
   "item.limbusego.enkephalin": "Enkephalin",
 ```
 
-- [ ] **Step 4: `ExtractionPools`**
+- [x] **Step 4: `ExtractionPools`**
 
 ```java
 package me.yisang.limbusego.extractor;
@@ -408,7 +408,7 @@ public final class ExtractionPools {
 Run: `grep -n "public String id()" src/main/java/me/yisang/limbusego/gift/BaseGift.java`
 Expected: 一行。
 
-- [ ] **Step 5: 初始化與頁籤**
+- [x] **Step 5: 初始化與頁籤**
 
 `LimbusEGOMod.onInitialize()` 在 `me.yisang.limbusego.gift.Vestiges.register();` 之後加：
 
@@ -423,12 +423,12 @@ Expected: 一行。
                             entries.add(ModItems.ENKEPHALIN);
 ```
 
-- [ ] **Step 6: 編譯並跑全部測試**
+- [x] **Step 6: 編譯並跑全部測試**
 
 Run: `./gradlew.bat build`
 Expected: BUILD SUCCESSFUL（`LangParityTest` 過代表兩檔鍵集一致）。
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add src/main/java/me/yisang/limbusego/item/ModItems.java src/main/java/me/yisang/limbusego/item/ModItemGroups.java src/main/java/me/yisang/limbusego/extractor/ExtractionPools.java src/main/java/me/yisang/limbusego/LimbusEGOMod.java src/main/resources/assets/limbusego/items/enkephalin.json src/main/resources/assets/limbusego/models/item/enkephalin.json src/main/resources/assets/limbusego/textures/item/enkephalin.png src/main/resources/assets/limbusego/lang/zh_tw.json src/main/resources/assets/limbusego/lang/en_us.json
@@ -455,7 +455,7 @@ git commit -m "feat: Enkephalin 物品與提取機抽獎池 / Add the Enkephalin
   - 常數 `SLOT_CATALYST = 0`、`SLOT_ENKEPHALIN = 1`、`SLOT_OUTPUT = 2`、`MACHINE_SLOTS = 3`。
   - `public static ScreenHandlerType<ExtractorScreenHandler> ModBlocks.EXTRACTOR_SCREEN_HANDLER`。
 
-- [ ] **Step 1: 寫 `ExtractorScreenHandler`**
+- [x] **Step 1: 寫 `ExtractorScreenHandler`**
 
 ```java
 package me.yisang.limbusego.extractor;
@@ -584,7 +584,7 @@ public class ExtractorScreenHandler extends ScreenHandler {
 }
 ```
 
-- [ ] **Step 2: `ModBlocks` 先放 ScreenHandlerType**
+- [x] **Step 2: `ModBlocks` 先放 ScreenHandlerType**
 
 ```java
 package me.yisang.limbusego.extractor;
@@ -610,7 +610,7 @@ public final class ModBlocks {
 }
 ```
 
-- [ ] **Step 3: 初始化**
+- [x] **Step 3: 初始化**
 
 `LimbusEGOMod.onInitialize()` 在 `ModItems.register();` **之後、`ModGifts.register()` 之前**加：
 
@@ -618,12 +618,12 @@ public final class ModBlocks {
         me.yisang.limbusego.extractor.ModBlocks.register();
 ```
 
-- [ ] **Step 4: 編譯**
+- [x] **Step 4: 編譯**
 
 Run: `./gradlew.bat build`
 Expected: BUILD SUCCESSFUL。若 `new ScreenHandlerType<>` 報「has private access」，代表 access widener 沒生效——確認 `build.gradle` 的 `fabric_version` 是 `0.119.4+1.21.4`，且未把 `fabric-api` 換成單一模組。
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add src/main/java/me/yisang/limbusego/extractor/ExtractorScreenHandler.java src/main/java/me/yisang/limbusego/extractor/ModBlocks.java src/main/java/me/yisang/limbusego/LimbusEGOMod.java
@@ -649,7 +649,7 @@ git commit -m "feat: 提取機容器與 ScreenHandlerType / Add ExtractorScreenH
   - `public static Block ModBlocks.EXTRACTOR`、`public static Item ModBlocks.EXTRACTOR_ITEM`、`public static BlockEntityType<ExtractorBlockEntity> ModBlocks.EXTRACTOR_BLOCK_ENTITY`。
   - `static void ExtractorBlockEntity.tick(World, BlockPos, BlockState, ExtractorBlockEntity)`。
 
-- [ ] **Step 1: `ExtractorBlockEntity`**
+- [x] **Step 1: `ExtractorBlockEntity`**
 
 ```java
 package me.yisang.limbusego.extractor;
@@ -805,7 +805,7 @@ public class ExtractorBlockEntity extends LockableContainerBlockEntity {
 }
 ```
 
-- [ ] **Step 2: `ExtractorBlock`**
+- [x] **Step 2: `ExtractorBlock`**
 
 ```java
 package me.yisang.limbusego.extractor;
@@ -887,7 +887,7 @@ public class ExtractorBlock extends BlockWithEntity {
 }
 ```
 
-- [ ] **Step 3: `ModBlocks` 補齊註冊**
+- [x] **Step 3: `ModBlocks` 補齊註冊**
 
 整個檔案改為：
 
@@ -942,7 +942,7 @@ public final class ModBlocks {
 }
 ```
 
-- [ ] **Step 4: 頁籤**
+- [x] **Step 4: 頁籤**
 
 `ModItemGroups` 飾品頁籤 `entries.add(ModItems.ENKEPHALIN);` 之後加：
 
@@ -950,7 +950,7 @@ public final class ModBlocks {
                             entries.add(me.yisang.limbusego.extractor.ModBlocks.EXTRACTOR_ITEM);
 ```
 
-- [ ] **Step 5: 方塊資產**
+- [x] **Step 5: 方塊資產**
 
 `assets/limbusego/blockstates/extractor.json`：
 
@@ -1015,7 +1015,7 @@ d.rectangle((5, 6, 10, 9), fill=(70, 220, 200, 255))
 im.save(base + "extractor_front.png")
 ```
 
-- [ ] **Step 6: 資料包：配方、掉落、標籤**
+- [x] **Step 6: 資料包：配方、掉落、標籤**
 
 `data/limbusego/recipe/extractor.json`（spec §3.5 的排列）：
 
@@ -1071,7 +1071,7 @@ im.save(base + "extractor_front.png")
 }
 ```
 
-- [ ] **Step 7: 翻譯鍵**
+- [x] **Step 7: 翻譯鍵**
 
 `zh_tw.json` 在 `"item.limbusego.enkephalin"` 之後插入：
 
@@ -1087,16 +1087,16 @@ im.save(base + "extractor_front.png")
   "container.limbusego.extractor": "E.G.O Extractor",
 ```
 
-- [ ] **Step 8: 編譯並跑全部測試**
+- [x] **Step 8: 編譯並跑全部測試**
 
 Run: `./gradlew.bat build`
 Expected: BUILD SUCCESSFUL。
 
-- [ ] **Step 9: 起遊戲冒煙測試**
+- [x] **Step 9: 起遊戲冒煙測試**
 
 Run: `./gradlew.bat runClient`（背景）。進單人世界開作弊，從「E.G.O 飾品」頁籤拿提取機放下：方塊有模型、朝向隨玩家、右鍵會開一個**沒有背景圖**的容器（Task 5 才畫）——只確認不 crash、三個槽位可放殘影與 Enkephalin。若右鍵 crash 且訊息含 `No screen registered`，那是預期的（Task 5 補），繼續。
 
-- [ ] **Step 10: Commit**
+- [x] **Step 10: Commit**
 
 ```bash
 git add src/main/java/me/yisang/limbusego/extractor src/main/java/me/yisang/limbusego/item/ModItemGroups.java src/main/resources/assets/limbusego/blockstates src/main/resources/assets/limbusego/models/block src/main/resources/assets/limbusego/items/extractor.json src/main/resources/assets/limbusego/textures/block src/main/resources/data/limbusego src/main/resources/data/minecraft src/main/resources/assets/limbusego/lang
@@ -1125,7 +1125,7 @@ GUI 圖版面（256×256 PNG，只用左上 176×166 當背景；進度條的「
 | 進度條（空） | (79, 35) 24×17，畫在背景圖裡 |
 | 進度條（滿，另存） | 圖內 (176, 0) 24×17，依進度裁寬度蓋上去 |
 
-- [ ] **Step 1: 產 GUI 占位圖**
+- [x] **Step 1: 產 GUI 占位圖**
 
 ```python
 from PIL import Image, ImageDraw
@@ -1156,7 +1156,7 @@ arrow(176, 0, (70, 220, 200, 255))
 im.save("src/main/resources/assets/limbusego/textures/gui/extractor.png")
 ```
 
-- [ ] **Step 2: `ExtractorScreen`**
+- [x] **Step 2: `ExtractorScreen`**
 
 ```java
 package me.yisang.limbusego.client;
@@ -1205,7 +1205,7 @@ public class ExtractorScreen extends HandledScreen<ExtractorScreenHandler> {
 }
 ```
 
-- [ ] **Step 3: 綁定 Screen**
+- [x] **Step 3: 綁定 Screen**
 
 `LimbusEGOClient.onInitializeClient()` 加：
 
@@ -1216,12 +1216,12 @@ public class ExtractorScreen extends HandledScreen<ExtractorScreenHandler> {
 
 （`HandledScreens.register` 由 transitive access widener 開放。）
 
-- [ ] **Step 4: 編譯**
+- [x] **Step 4: 編譯**
 
 Run: `./gradlew.bat build`
 Expected: BUILD SUCCESSFUL。
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add src/main/java/me/yisang/limbusego/client/ExtractorScreen.java src/main/java/me/yisang/limbusego/client/LimbusEGOClient.java src/main/resources/assets/limbusego/textures/gui/extractor.png
@@ -1240,7 +1240,7 @@ git commit -m "feat: 提取機 GUI 畫面 / Add the client Extractor screen with
 - Consumes: `ModItems.ENKEPHALIN`、`Vestiges.DARK/FAINT/TWINKLING/BRILLIANT_VESTIGE`。
 - Produces: `static void LootInjection.register()`。
 
-- [ ] **Step 1: 寫 `LootInjection`**
+- [x] **Step 1: 寫 `LootInjection`**
 
 ```java
 package me.yisang.limbusego.extractor;
@@ -1332,7 +1332,7 @@ public final class LootInjection {
 }
 ```
 
-- [ ] **Step 2: 初始化**
+- [x] **Step 2: 初始化**
 
 `LimbusEGOMod.onInitialize()` 在 `me.yisang.limbusego.extractor.ExtractionPools.build();` 之後加：
 
@@ -1340,12 +1340,12 @@ public final class LootInjection {
         me.yisang.limbusego.extractor.LootInjection.register();
 ```
 
-- [ ] **Step 3: 編譯**
+- [x] **Step 3: 編譯**
 
 Run: `./gradlew.bat build`
 Expected: BUILD SUCCESSFUL。若 `EntityType.BOGGED` 或 `BREEZE` 找不到，代表 Yarn 名稱不同——用 `grep -o "public static final .*EntityType<[^>]*> [A-Z_]*;"` 對 `javap` 輸出查正確欄位名，**不要**直接刪掉該項。
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add src/main/java/me/yisang/limbusego/extractor/LootInjection.java src/main/java/me/yisang/limbusego/LimbusEGOMod.java
@@ -1360,11 +1360,11 @@ git commit -m "feat: Enkephalin 與殘影掉落注入 / Inject Enkephalin and ve
 - Modify: `README.md`、`README.en.md`
 - Modify: `docs/superpowers/specs/2026-08-11-ego-extractor-design.md:4`
 
-- [ ] **Step 1: 啟動開發客戶端**
+- [x] **Step 1: 啟動開發客戶端**
 
 Run: `./gradlew.bat runClient`（背景）。啟動日誌應出現 `提取機抽獎池：I=… II=… III=… IV=…`，四數加總 **80**（spec §8 第 8 點）。
 
-- [ ] **Step 2: 依 spec §8 逐項驗收**
+- [x] **Step 2: 依 spec §8 逐項驗收**
 
 | # | 操作 | 預期 |
 |---|---|---|
@@ -1379,7 +1379,7 @@ Run: `./gradlew.bat runClient`（背景）。啟動日誌應出現 `提取機抽
 
 任一項不符：回到對應 task 修正，重跑 `./gradlew.bat build`，再驗。
 
-- [ ] **Step 3: README**
+- [x] **Step 3: README**
 
 `README.md` 的「E.G.O 飾品一覽」章節，**殘影鐵砧升級**那段：
 
@@ -1407,11 +1407,11 @@ Run: `./gradlew.bat runClient`（背景）。啟動日誌應出現 `提取機抽
 
 先用 `grep -n "殘影\|Vestige" README.md README.en.md` 找到確切位置再插。
 
-- [ ] **Step 4: 更新 spec 狀態列**
+- [x] **Step 4: 更新 spec 狀態列**
 
 `docs/superpowers/specs/2026-08-11-ego-extractor-design.md` 第 4 行 `狀態：設計已通過，待寫實作計畫` 改為 `狀態：已實作（計畫：docs/superpowers/plans/2026-09-11-ego-extractor.md）`。
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add README.md README.en.md docs/superpowers/specs/2026-08-11-ego-extractor-design.md

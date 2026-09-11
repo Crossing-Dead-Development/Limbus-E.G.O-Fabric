@@ -60,6 +60,8 @@ Hold **Shift** in game to expand a weapon's full mechanics, including how to tri
 
 **Vestige anvil upgrades**: use the four Vestige tiers (Dark / Faint / Twinkling / Brilliant → tiers 1-4) on an anvil to upgrade a same-tier gift; levels 1→3 progressively raise the effect multiplier (1.25 / 1.50 / 2.00).
 
+**E.G.O Extractor**: the in-game source of gifts and vestiges. Every mob has a 25% chance to drop **Enkephalin**; common hostiles drop Dark Vestiges (2%), Nether/illager mobs Faint (5%), Endermen/Wither Skeletons/Evokers Twinkling (8%), and the Ender Dragon/Wither/Warden always drop a Brilliant Vestige. Craft the Extractor (iron, redstone, quartz, anvil), insert one vestige plus 8/16/32/64 Enkephalin, and after 5–20 s it yields a random gift **of that tier**.
+
 Hold **Shift** in game to expand a gift's full mechanics, and **the numbers reflect its current Vestige upgrade level** — upgrade it and compare directly.
 
 ## The 12-Status System
