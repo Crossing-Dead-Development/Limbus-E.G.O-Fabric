@@ -93,6 +93,10 @@ Each entity tracks a `(potency, count)` pair per status, fully in-memory, cleare
 | `/limbusego weapon catalog` | Open the weapon catalog (read-only) | Everyone |
 | `/limbusego weapon admin` | Open the admin GUI (click to obtain) | Level 2 |
 | `/limbusego weapon <id>` | Give yourself one | Level 2 |
+| `/limbusego status <effect> <potency> [count]` | Apply a status to yourself (testing; count defaults to 3) | Level 2 |
+| `/limbusego status apply <player> <effect> <potency> [count]` | Apply a status to a player | Level 2 |
+| `/limbusego status show [player]` | List current status stacks | Level 2 |
+| `/limbusego status clear [player]` | Clear all statuses | Level 2 |
 
 ## Differences from the Paper plugin
 

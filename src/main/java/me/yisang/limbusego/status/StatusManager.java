@@ -130,6 +130,12 @@ public class StatusManager {
         return states.get(e.getUuid());
     }
 
+    /** 清掉該實體所有屬性（含沉淪移速 modifier）；鏡射效果由下一輪 {@link StatusMirror} 移除。 */
+    public void clear(LivingEntity e) {
+        states.remove(e.getUuid());
+        syncSinkingSpeed(e, null);
+    }
+
     /**
      * 續 count（延長現存效果持續時間），不改 potency。若該效果不在或 potency ≤ 0 則 no-op。
      * 用於 potency 已達上限時只要 refresh 生效時間的場景（例：W公司匕首持續攻擊維持充能）。

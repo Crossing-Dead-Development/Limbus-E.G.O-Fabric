@@ -4,11 +4,16 @@ import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import me.yisang.limbusego.gift.ModGifts;
 import me.yisang.limbusego.gui.GiftGui;
 import me.yisang.limbusego.gui.WeaponAdminGui;
 import me.yisang.limbusego.gui.WeaponCatalogGui;
 import me.yisang.limbusego.item.ModItems;
+import me.yisang.limbusego.status.StatusEffect;
+import me.yisang.limbusego.status.StatusManager;
+import me.yisang.limbusego.status.StatusState;
+import me.yisang.limbusego.tooltip.TooltipFormat;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.item.Item;
@@ -19,6 +24,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 
 import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -27,6 +33,10 @@ import java.util.Map;
  *   weapon catalog                   —— 所有人
  *   weapon admin                     —— 權限 2
  *   weapon <id>                      —— 權限 2，直接給自己
+ *   gift …                           —— 同上
+ *   status <效果> <威力> [次數]       —— 權限 2，給自己施加屬性（測試用）
+ *   status apply <玩家> <效果> <威力> [次數]
+ *   status show|clear [玩家]
  */
 public class LimbusCommand {
 
@@ -94,7 +104,94 @@ public class LimbusCommand {
                     }));
         }
 
-        return CommandManager.literal("limbusego").then(weapon).then(buildGift());
+        return CommandManager.literal("limbusego").then(weapon).then(buildGift()).then(buildStatus());
+    }
+
+    // ── status ──────────────────────────────────────────────────────
+
+    private static final int STATUS_DEFAULT_COUNT = 3;
+
+    private static LiteralArgumentBuilder<ServerCommandSource> buildStatus() {
+        var status = CommandManager.literal("status").requires(src -> src.hasPermissionLevel(2));
+
+        status.then(CommandManager.literal("apply")
+                .then(CommandManager.argument("target", EntityArgumentType.player())
+                        .then(statusEffectArg(ctx -> EntityArgumentType.getPlayer(ctx, "target")))));
+
+        status.then(CommandManager.literal("show")
+                .executes(ctx -> showStatus(ctx, ctx.getSource().getPlayerOrThrow()))
+                .then(CommandManager.argument("target", EntityArgumentType.player())
+                        .executes(ctx -> showStatus(ctx, EntityArgumentType.getPlayer(ctx, "target")))));
+
+        status.then(CommandManager.literal("clear")
+                .executes(ctx -> clearStatus(ctx, ctx.getSource().getPlayerOrThrow()))
+                .then(CommandManager.argument("target", EntityArgumentType.player())
+                        .executes(ctx -> clearStatus(ctx, EntityArgumentType.getPlayer(ctx, "target")))));
+
+        // status <effect> <potency> [count] —— 直接給自己
+        status.then(statusEffectArg(ctx -> ctx.getSource().getPlayerOrThrow()));
+        return status;
+    }
+
+    /** {@code <effect> <potency> [count]} 三段參數，target 由呼叫端決定。 */
+    private static com.mojang.brigadier.builder.RequiredArgumentBuilder<ServerCommandSource, String> statusEffectArg(
+            TargetResolver target) {
+        return CommandManager.argument("effect", StringArgumentType.word())
+                .suggests((ctx, b) -> {
+                    for (StatusEffect e : StatusEffect.values()) b.suggest(e.name().toLowerCase(Locale.ROOT));
+                    return b.buildFuture();
+                })
+                .then(CommandManager.argument("potency", IntegerArgumentType.integer(1, 99))
+                        .executes(ctx -> applyStatus(ctx, target.resolve(ctx), STATUS_DEFAULT_COUNT))
+                        .then(CommandManager.argument("count", IntegerArgumentType.integer(1, 999))
+                                .executes(ctx -> applyStatus(ctx, target.resolve(ctx), IntegerArgumentType.getInteger(ctx, "count")))));
+    }
+
+    @FunctionalInterface
+    private interface TargetResolver {
+        ServerPlayerEntity resolve(CommandContext<ServerCommandSource> ctx) throws CommandSyntaxException;
+    }
+
+    private static int applyStatus(CommandContext<ServerCommandSource> ctx, ServerPlayerEntity target, int count) {
+        String name = StringArgumentType.getString(ctx, "effect");
+        StatusEffect effect;
+        try {
+            effect = StatusEffect.valueOf(name.toUpperCase(Locale.ROOT));
+        } catch (IllegalArgumentException ex) {
+            ctx.getSource().sendError(Text.literal("未知屬性：" + name));
+            return 0;
+        }
+        int potency = IntegerArgumentType.getInteger(ctx, "potency");
+        StatusManager.get().apply(target, effect, potency, count);
+        ctx.getSource().sendFeedback(() -> Text.literal("§a已對 " + target.getName().getString() + " 施加 ")
+                .append(TooltipFormat.status(effect))
+                .append(Text.literal(" §f" + potency + " §7/ §f" + count)), true);
+        return 1;
+    }
+
+    private static int showStatus(CommandContext<ServerCommandSource> ctx, ServerPlayerEntity target) {
+        StatusState s = StatusManager.get().get(target);
+        var snapshot = s == null ? Map.<StatusEffect, int[]>of() : s.snapshot();
+        if (snapshot.isEmpty()) {
+            ctx.getSource().sendFeedback(() -> Text.literal("§7" + target.getName().getString() + " 身上沒有任何屬性"), false);
+            return 0;
+        }
+        var line = Text.literal("§f" + target.getName().getString() + "§7：");
+        boolean first = true;
+        for (var en : snapshot.entrySet()) {
+            if (!first) line.append(Text.literal("§7, "));
+            first = false;
+            line.append(TooltipFormat.status(en.getKey()))
+                    .append(Text.literal(" §f" + en.getValue()[0] + "§7/§f" + en.getValue()[1]));
+        }
+        ctx.getSource().sendFeedback(() -> line, false);
+        return snapshot.size();
+    }
+
+    private static int clearStatus(CommandContext<ServerCommandSource> ctx, ServerPlayerEntity target) {
+        StatusManager.get().clear(target);
+        ctx.getSource().sendFeedback(() -> Text.literal("§a已清除 " + target.getName().getString() + " 的所有屬性"), true);
+        return 1;
     }
 
     private static com.mojang.brigadier.builder.LiteralArgumentBuilder<ServerCommandSource> buildGift() {

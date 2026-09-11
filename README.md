@@ -93,6 +93,10 @@
 | `/limbusego weapon catalog` | 開啟武器圖鑑（唯讀） | 所有人 |
 | `/limbusego weapon admin` | 開啟武器管理員 GUI（點擊取得） | 權限 2 |
 | `/limbusego weapon <id>` | 直接給自己一把 | 權限 2 |
+| `/limbusego status <效果> <威力> [次數]` | 給自己施加屬性（測試用，次數預設 3） | 權限 2 |
+| `/limbusego status apply <玩家> <效果> <威力> [次數]` | 對玩家施加屬性 | 權限 2 |
+| `/limbusego status show [玩家]` | 列出目前屬性層數 | 權限 2 |
+| `/limbusego status clear [玩家]` | 清除所有屬性 | 權限 2 |
 
 ## 與 Paper 插件版的差異
 
