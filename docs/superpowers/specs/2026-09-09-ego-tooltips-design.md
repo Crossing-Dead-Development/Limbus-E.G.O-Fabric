@@ -19,7 +19,7 @@
 
 - 模組內建說明書 / guidebook（另開 spec）
 - 任何數值平衡調整（玩家對天退星刀蓄力速度的抱怨屬於偏好差異，不是需要 buff 的證據）
-- 飾品名稱顏色移植（插件每件飾品有專屬顏色，Fabric 版目前統一 `Rarity.EPIC`。屬於呈現層債，但與 tooltip 無關，另開一輪）
+- 飾品名稱與描述顏色（插件名稱一律白色、每件有專屬**描述**色；Fabric 版當時統一 `Rarity.EPIC` 與灰色描述。屬於呈現層債，已由 `2026-09-09-gift-styling-design.md` 處理）
 - E.G.O 提取機（見 `2026-08-11-ego-extractor-design.md`）
 
 ## 2. Repo 現況

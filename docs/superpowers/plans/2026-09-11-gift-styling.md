@@ -58,7 +58,7 @@
   - `static int GiftStyles.flavorColor(String id)` — 查無回傳 `0xAAAAAA`（原版 `Formatting.GRAY`）。
   - `static Set<String> GiftStyles.flavorIds()` — 46 筆風味表的 id（供測試與 `ModGifts`）。
 
-- [ ] **Step 1: 寫失敗測試**
+- [x] **Step 1: 寫失敗測試**
 
 ```java
 package me.yisang.limbusego.gift;
@@ -160,12 +160,12 @@ class GiftStylesTest {
 }
 ```
 
-- [ ] **Step 2: 跑測試確認失敗**
+- [x] **Step 2: 跑測試確認失敗**
 
 Run: `./gradlew.bat test --tests "me.yisang.limbusego.gift.GiftStylesTest"`
 Expected: 編譯失敗，`GiftStyles` 不存在。
 
-- [ ] **Step 3: 寫 `GiftStyles`**
+- [x] **Step 3: 寫 `GiftStyles`**
 
 46 筆顏色由以下指令從插件原始碼擷取（已執行，結果貼在下方；46 筆、40 種相異，與 spec §2 一致）：
 
@@ -346,12 +346,12 @@ public final class GiftStyles {
 }
 ```
 
-- [ ] **Step 4: 跑測試確認通過**
+- [x] **Step 4: 跑測試確認通過**
 
 Run: `./gradlew.bat test --tests "me.yisang.limbusego.gift.GiftStylesTest"`
 Expected: 8 tests PASS。
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add src/main/java/me/yisang/limbusego/gift/GiftStyles.java src/test/java/me/yisang/limbusego/gift/GiftStylesTest.java
@@ -369,7 +369,7 @@ git commit -m "feat: 飾品呈現資料 GiftStyles / Add GiftStyles with tier co
 - Consumes: `GiftStyles.flavorLines(String)`、`GiftStyles.flavorColor(String)`（Task 1）。
 - Produces: 無新介面；`ModGifts.register()` / `ordered()` / `byId()` 簽名不變。
 
-- [ ] **Step 1: 刪除 `ModGifts.FLAVOR_LINES`**
+- [x] **Step 1: 刪除 `ModGifts.FLAVOR_LINES`**
 
 整段刪除欄位（含其 javadoc 的三行註解），從
 
@@ -380,7 +380,7 @@ git commit -m "feat: 飾品呈現資料 GiftStyles / Add GiftStyles with tier co
 
 到該 `Map.ofEntries(...)` 的 `);` 為止。
 
-- [ ] **Step 2: `reg()` 改查 `GiftStyles`**
+- [x] **Step 2: `reg()` 改查 `GiftStyles`**
 
 把
 
@@ -412,23 +412,23 @@ git commit -m "feat: 飾品呈現資料 GiftStyles / Add GiftStyles with tier co
         }
 ```
 
-- [ ] **Step 3: 整理 import**
+- [x] **Step 3: 整理 import**
 
 - 刪除 `import net.minecraft.util.Formatting;`
 - 新增 `import net.minecraft.text.TextColor;`
 - `java.util.Map` 與 `java.util.LinkedHashMap` 仍被 `BY_ID` 使用，保留。
 
-- [ ] **Step 4: 確認沒有殘留**
+- [x] **Step 4: 確認沒有殘留**
 
 Run: `grep -n "FLAVOR_LINES\|Formatting" src/main/java/me/yisang/limbusego/gift/ModGifts.java`
 Expected: 無輸出。
 
-- [ ] **Step 5: 編譯並跑全部測試**
+- [x] **Step 5: 編譯並跑全部測試**
 
 Run: `./gradlew.bat build`
 Expected: BUILD SUCCESSFUL（`GiftFlavorTest`、`GiftDescriptionCoverageTest` 解析的是 `reg(...)` 呼叫，不受影響）。
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add src/main/java/me/yisang/limbusego/gift/ModGifts.java
@@ -445,7 +445,7 @@ git commit -m "refactor: 飾品 lore 顏色改查 GiftStyles / Look up gift lore
 **Interfaces:**
 - Consumes: `WeaponStyles.styledName(String)`（既有）、`GiftStyles.styledName(String)`（Task 1）。
 
-- [ ] **Step 1: 改為依序詢問**
+- [x] **Step 1: 改為依序詢問**
 
 把
 
@@ -482,12 +482,12 @@ git commit -m "refactor: 飾品 lore 顏色改查 GiftStyles / Look up gift lore
 
 方法名 `limbusego$styledWeaponName` 改為 `limbusego$styledName`。
 
-- [ ] **Step 2: 編譯並跑全部測試**
+- [x] **Step 2: 編譯並跑全部測試**
 
 Run: `./gradlew.bat build`
 Expected: BUILD SUCCESSFUL。
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add src/main/java/me/yisang/limbusego/mixin/ItemNameMixin.java
@@ -502,11 +502,11 @@ git commit -m "feat: 飾品名稱依階級上色 / Colour gift names by tier via
 - Modify: `docs/superpowers/specs/2026-09-09-ego-tooltips-design.md:22`
 - Modify: `docs/superpowers/specs/2026-09-09-gift-styling-design.md:4`
 
-- [ ] **Step 1: 啟動開發客戶端**
+- [x] **Step 1: 啟動開發客戶端**
 
 Run: `./gradlew.bat runClient`（背景執行，載入約 1–3 分鐘）。進入單人世界，開作弊。
 
-- [ ] **Step 2: 依 spec §7 逐項驗收**
+- [x] **Step 2: 依 spec §7 逐項驗收**
 
 | # | 操作 | 預期 |
 |---|---|---|
@@ -519,7 +519,7 @@ Run: `./gradlew.bat runClient`（背景執行，載入約 1–3 分鐘）。進�
 
 任一項不符：回到對應 task 修正，重跑 `./gradlew.bat build`，再驗。
 
-- [ ] **Step 3: 修正 tooltip spec 的錯誤描述**
+- [x] **Step 3: 修正 tooltip spec 的錯誤描述**
 
 `docs/superpowers/specs/2026-09-09-ego-tooltips-design.md` 第 22 行
 
@@ -533,11 +533,11 @@ Run: `./gradlew.bat runClient`（背景執行，載入約 1–3 分鐘）。進�
 - 飾品名稱與描述顏色（插件名稱一律白色、每件有專屬**描述**色；Fabric 版當時統一 `Rarity.EPIC` 與灰色描述。屬於呈現層債，已由 `2026-09-09-gift-styling-design.md` 處理）
 ```
 
-- [ ] **Step 4: 更新 spec 狀態列**
+- [x] **Step 4: 更新 spec 狀態列**
 
 把 `docs/superpowers/specs/2026-09-09-gift-styling-design.md` 第 4 行 `狀態：設計已通過，待寫實作計畫` 改為 `狀態：已實作（計畫：docs/superpowers/plans/2026-09-11-gift-styling.md）`。
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add docs/superpowers/specs/2026-09-09-ego-tooltips-design.md docs/superpowers/specs/2026-09-09-gift-styling-design.md
