@@ -69,7 +69,7 @@
   - `static Decision StatusDisplayLogic.decide(int potency, Integer currentAmplifier)` — `currentAmplifier == null` 表示玩家身上目前沒有該鏡射效果。
   - `static boolean StatusDisplayLogic.shouldSpawnParticles(Object source, Object target)`
 
-- [ ] **Step 1: 寫失敗測試**
+- [x] **Step 1: 寫失敗測試**
 
 ```java
 package me.yisang.limbusego.status;
@@ -129,12 +129,12 @@ class StatusDisplayLogicTest {
 }
 ```
 
-- [ ] **Step 2: 跑測試確認失敗**
+- [x] **Step 2: 跑測試確認失敗**
 
 Run: `./gradlew.bat test --tests "me.yisang.limbusego.status.StatusDisplayLogicTest"`
 Expected: 編譯失敗，`StatusDisplayLogic` 不存在。
 
-- [ ] **Step 3: 寫最小實作**
+- [x] **Step 3: 寫最小實作**
 
 ```java
 package me.yisang.limbusego.status;
@@ -177,12 +177,12 @@ public final class StatusDisplayLogic {
 }
 ```
 
-- [ ] **Step 4: 跑測試確認通過**
+- [x] **Step 4: 跑測試確認通過**
 
 Run: `./gradlew.bat test --tests "me.yisang.limbusego.status.StatusDisplayLogicTest"`
 Expected: 7 tests PASS。
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add src/main/java/me/yisang/limbusego/status/StatusDisplayLogic.java src/test/java/me/yisang/limbusego/status/StatusDisplayLogicTest.java
@@ -203,7 +203,7 @@ git commit -m "feat: 屬性顯示層決策函式 / Add StatusDisplayLogic for mi
 **Interfaces:**
 - Produces: `public final int StatusEffect.rgb` — 0xRRGGBB。
 
-- [ ] **Step 1: 寫失敗測試**
+- [x] **Step 1: 寫失敗測試**
 
 ```java
 package me.yisang.limbusego.status;
@@ -242,12 +242,12 @@ class StatusEffectColourTest {
 }
 ```
 
-- [ ] **Step 2: 跑測試確認失敗**
+- [x] **Step 2: 跑測試確認失敗**
 
 Run: `./gradlew.bat test --tests "me.yisang.limbusego.status.StatusEffectColourTest"`
 Expected: 編譯失敗，`rgb` 不存在。
 
-- [ ] **Step 3: enum 加 `rgb`**
+- [x] **Step 3: enum 加 `rgb`**
 
 色值直接取自原本 legacy 色碼在原版 `Formatting` 的 RGB，確保 tooltip 顏色不變：
 
@@ -286,7 +286,7 @@ public enum StatusEffect {
 }
 ```
 
-- [ ] **Step 4: `TooltipFormat.status` 改讀 `rgb`，刪 `legacyToRgb`**
+- [x] **Step 4: `TooltipFormat.status` 改讀 `rgb`，刪 `legacyToRgb`**
 
 把
 
@@ -308,12 +308,12 @@ public enum StatusEffect {
 
 並整段刪除檔尾的 `legacyToRgb` 方法（含其 javadoc）。`Formatting` import 仍被其他方法使用，保留。
 
-- [ ] **Step 5: 跑測試確認通過**
+- [x] **Step 5: 跑測試確認通過**
 
 Run: `./gradlew.bat test --tests "me.yisang.limbusego.status.StatusEffectColourTest" --tests "me.yisang.limbusego.tooltip.TooltipFormatTest"`
 Expected: 全部 PASS（`statusUsesItsOwnTranslationKeyAndColor` 仍過）。
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add src/main/java/me/yisang/limbusego/status/StatusEffect.java src/main/java/me/yisang/limbusego/tooltip/TooltipFormat.java src/test/java/me/yisang/limbusego/status/StatusEffectColourTest.java
@@ -333,13 +333,13 @@ git commit -m "refactor: 屬性顏色收斂為 RGB 欄位 / Give StatusEffect a 
 - Consumes: `StatusDisplayLogic.shouldSpawnParticles(Object, Object)`（Task 1）、`StatusEffect.rgb`（Task 2）。
 - Produces: `StatusManager.apply(...)` 對外簽名**不變**；`hurtTrue` / `scheduleTrueDamage` / `dealTrueDamage` 的 `label` 參數保留（57 個呼叫點，避免無謂改動），只是不再用來顯示。
 
-- [ ] **Step 1: `StatusManager.apply` 改噴粒子**
+- [x] **Step 1: `StatusManager.apply` 改噴粒子**
 
 把 `apply(LivingEntity, StatusEffect, int, int, ServerPlayerEntity)` 中兩處 `showEffectApplied(target, effect, potency, count, source);` 都改為 `spawnAppliedParticles(target, effect, source);`。
 
 方法 javadoc 由「並讓 source（施術者）看到 ActionBar 反饋」改為「若 source 不是 target 本人，在 target 身上噴該屬性顏色的粒子」。
 
-- [ ] **Step 2: 移除 `onDamage` 裡的兩處動作列送出**
+- [x] **Step 2: 移除 `onDamage` 裡的兩處動作列送出**
 
 刪除 POISE 爆擊的：
 
@@ -359,11 +359,11 @@ git commit -m "refactor: 屬性顏色收斂為 RGB 欄位 / Give StatusEffect a 
 
 刪掉後 `crit` 區域變數只在 `mult *= POISE_CRIT_MULT` 那段用到，把 `boolean crit = false;` 與 `crit = true;` 一併移除，保留乘算。
 
-- [ ] **Step 3: `dealTrueDamage` 不再呼叫 `showDamage`**
+- [x] **Step 3: `dealTrueDamage` 不再呼叫 `showDamage`**
 
 刪除 `dealTrueDamage` 末尾的 `showDamage(target, source, amount, label);`。javadoc「null label = 憂鬱傷害」保留（呼叫端語意不變）。
 
-- [ ] **Step 4: 替換顯示區段**
+- [x] **Step 4: 替換顯示區段**
 
 把 `// ── 顯示 ──` 區段裡的 `showEffectApplied`、`showDamage`、`sendActionBar` 三個方法整段刪除，換成：
 
@@ -386,16 +386,16 @@ git commit -m "refactor: 屬性顏色收斂為 RGB 欄位 / Give StatusEffect a 
 
 `syncSinkingSpeed` 保持原位不動。
 
-- [ ] **Step 5: 整理 import**
+- [x] **Step 5: 整理 import**
 
 - 刪除 `import me.yisang.limbusego.Messages;` 與 `import net.minecraft.text.Text;`。
 - 新增 `import net.minecraft.particle.DustParticleEffect;`。
 
-- [ ] **Step 6: `Messages` 刪六條 `status.*` 常數**
+- [x] **Step 6: `Messages` 刪六條 `status.*` 常數**
 
 刪除 `STATUS_APPLIED`、`STATUS_DAMAGE_TARGET`、`STATUS_DAMAGE_SOURCE`、`STATUS_POISE_CRIT`、`STATUS_TREMOR_BURST`、`STATUS_DEPRESSION`（最後一條只被 `showDamage` 用，一併成死碼）以及 `// status.*` 註解行。`sanity.*` 區段與 `fmt` 不動。
 
-- [ ] **Step 7: `StatusEffect` 刪 `zh` / `color`**
+- [x] **Step 7: `StatusEffect` 刪 `zh` / `color`**
 
 ```java
 package me.yisang.limbusego.status;
@@ -428,17 +428,17 @@ public enum StatusEffect {
 }
 ```
 
-- [ ] **Step 8: 確認沒有殘留引用**
+- [x] **Step 8: 確認沒有殘留引用**
 
 Run: `grep -rn "\.zh\b\|\.color\b\|STATUS_APPLIED\|STATUS_DAMAGE\|STATUS_POISE_CRIT\|STATUS_TREMOR_BURST\|STATUS_DEPRESSION\|sendActionBar" src/main/java/me/yisang/limbusego/status src/main/java/me/yisang/limbusego/Messages.java src/main/java/me/yisang/limbusego/tooltip`
 Expected: 無輸出。
 
-- [ ] **Step 9: 編譯並跑全部測試**
+- [x] **Step 9: 編譯並跑全部測試**
 
 Run: `./gradlew.bat build`
 Expected: BUILD SUCCESSFUL，所有測試通過。
 
-- [ ] **Step 10: Commit**
+- [x] **Step 10: Commit**
 
 ```bash
 git add src/main/java/me/yisang/limbusego/status/StatusManager.java src/main/java/me/yisang/limbusego/Messages.java src/main/java/me/yisang/limbusego/status/StatusEffect.java
@@ -465,7 +465,7 @@ git commit -m "feat: 屬性動作列文字改為目標粒子 / Replace status ac
   - `static void ModStatusEffects.register()`。
   - `static Map<String,String> LangKeys.zhTwValues()` / `enUsValues()`（測試用）。
 
-- [ ] **Step 1: 寫失敗測試——翻譯值一致**
+- [x] **Step 1: 寫失敗測試——翻譯值一致**
 
 `LangKeys.java` 新增值讀取（鍵集讀法不變）：
 
@@ -528,12 +528,12 @@ git commit -m "feat: 屬性動作列文字改為目標粒子 / Replace status ac
     }
 ```
 
-- [ ] **Step 2: 跑測試確認失敗**
+- [x] **Step 2: 跑測試確認失敗**
 
 Run: `./gradlew.bat test --tests "me.yisang.limbusego.LangParityTest"`
 Expected: 編譯失敗，`ModStatusEffects` 不存在。
 
-- [ ] **Step 3: `MirrorStatusEffect` 空殼**
+- [x] **Step 3: `MirrorStatusEffect` 空殼**
 
 ```java
 package me.yisang.limbusego.status;
@@ -553,7 +553,7 @@ public class MirrorStatusEffect extends net.minecraft.entity.effect.StatusEffect
 }
 ```
 
-- [ ] **Step 4: `ModStatusEffects` 註冊與對照**
+- [x] **Step 4: `ModStatusEffects` 註冊與對照**
 
 ```java
 package me.yisang.limbusego.status;
@@ -612,7 +612,7 @@ public final class ModStatusEffects {
 }
 ```
 
-- [ ] **Step 5: 在 `LimbusEGOMod.onInitialize` 呼叫註冊**
+- [x] **Step 5: 在 `LimbusEGOMod.onInitialize` 呼叫註冊**
 
 在 `ModSounds.register();` 之後、`ServerScheduler.init();` 之前加一行：
 
@@ -620,7 +620,7 @@ public final class ModStatusEffects {
         me.yisang.limbusego.status.ModStatusEffects.register();
 ```
 
-- [ ] **Step 6: 加翻譯鍵**
+- [x] **Step 6: 加翻譯鍵**
 
 `zh_tw.json` 在 `"status.limbusego.charge": "充能",` 之後插入：
 
@@ -654,17 +654,17 @@ public final class ModStatusEffects {
 
 注意插入點後面原本的下一行仍存在，逗號不要漏；若 `status.limbusego.charge` 原本是該區最後一行且無逗號，補上逗號。
 
-- [ ] **Step 7: 跑測試確認通過**
+- [x] **Step 7: 跑測試確認通過**
 
 Run: `./gradlew.bat test --tests "me.yisang.limbusego.LangParityTest"`
 Expected: 4 tests PASS（含既有 2 個）。
 
-- [ ] **Step 8: 編譯**
+- [x] **Step 8: 編譯**
 
 Run: `./gradlew.bat build`
 Expected: BUILD SUCCESSFUL。
 
-- [ ] **Step 9: Commit**
+- [x] **Step 9: Commit**
 
 ```bash
 git add src/main/java/me/yisang/limbusego/status/MirrorStatusEffect.java src/main/java/me/yisang/limbusego/status/ModStatusEffects.java src/main/java/me/yisang/limbusego/LimbusEGOMod.java src/main/resources/assets/limbusego/lang/zh_tw.json src/main/resources/assets/limbusego/lang/en_us.json src/test/java/me/yisang/limbusego/LangKeys.java src/test/java/me/yisang/limbusego/LangParityTest.java
@@ -683,7 +683,7 @@ git commit -m "feat: 註冊 10 個純顯示的屬性鏡射效果 / Register 10 d
 - Consumes: `StatusDisplayLogic.decide(int, Integer)`、`ModStatusEffects.MIRRORED` / `entry(StatusEffect)`、`StatusManager.get(LivingEntity)`。
 - Produces: `StatusMirror(StatusManager)`、`void StatusMirror.sync(Iterable<ServerPlayerEntity> players)`。
 
-- [ ] **Step 1: 寫 `StatusMirror`**
+- [x] **Step 1: 寫 `StatusMirror`**
 
 ```java
 package me.yisang.limbusego.status;
@@ -741,7 +741,7 @@ public final class StatusMirror {
 }
 ```
 
-- [ ] **Step 2: 掛到 `StatusManager` 既有的 10 tick 排程**
+- [x] **Step 2: 掛到 `StatusManager` 既有的 10 tick 排程**
 
 `StatusManager` 新增欄位：
 
@@ -765,12 +765,12 @@ public final class StatusMirror {
     }
 ```
 
-- [ ] **Step 3: 編譯並跑全部測試**
+- [x] **Step 3: 編譯並跑全部測試**
 
 Run: `./gradlew.bat build`
 Expected: BUILD SUCCESSFUL。
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add src/main/java/me/yisang/limbusego/status/StatusMirror.java src/main/java/me/yisang/limbusego/status/StatusManager.java
@@ -784,11 +784,11 @@ git commit -m "feat: 玩家屬性週期鏡射到 GUI 效果列 / Mirror player s
 **Files:**
 - Modify: `docs/superpowers/specs/2026-09-09-status-gui-display-design.md:4`（狀態列）
 
-- [ ] **Step 1: 啟動開發客戶端**
+- [x] **Step 1: 啟動開發客戶端**
 
 Run: `./gradlew.bat runClient`（背景執行，載入約 1–3 分鐘）。進入單人世界，開作弊。
 
-- [ ] **Step 2: 依 spec §7 逐項驗收**
+- [x] **Step 2: 依 spec §7 逐項驗收**
 
 | # | 操作 | 預期 |
 |---|---|---|
@@ -803,11 +803,11 @@ Run: `./gradlew.bat runClient`（背景執行，載入約 1–3 分鐘）。進�
 
 任一項不符：回到對應 task 修正，重跑 `./gradlew.bat build`，再驗。不要在驗收清單上打勾後才修。
 
-- [ ] **Step 3: 更新 spec 狀態列**
+- [x] **Step 3: 更新 spec 狀態列**
 
 把 spec 第 4 行 `狀態：設計已通過，待寫實作計畫` 改為 `狀態：已實作（計畫：docs/superpowers/plans/2026-09-11-status-gui-display.md）`。
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add docs/superpowers/specs/2026-09-09-status-gui-display-design.md
