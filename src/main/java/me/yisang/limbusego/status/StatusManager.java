@@ -78,6 +78,7 @@ public class StatusManager {
     /** 正在承受本系統真傷的實體，mixin 看到時直接放行避免遞迴。 */
     private final Set<UUID> inTrueDamage = ConcurrentHashMap.newKeySet();
     private int tickBucket = 0;
+    private final StatusMirror mirror = new StatusMirror(this);
 
     public StatusManager(SanityManager sanity) {
         this.sanity = sanity;
@@ -85,7 +86,10 @@ public class StatusManager {
     }
 
     public void start() {
-        ServerScheduler.every(BUCKET_INTERVAL_TICKS, server -> burnTick(server.getWorlds()));
+        ServerScheduler.every(BUCKET_INTERVAL_TICKS, server -> {
+            burnTick(server.getWorlds());
+            mirror.sync(server.getPlayerManager().getPlayerList());
+        });
         ServerLivingEntityEvents.AFTER_DEATH.register((entity, source) -> {
             // 清 SINKING 移速 modifier（玩家 attribute 會跨復活保留，要顯式移除）
             syncSinkingSpeed(entity, null);
