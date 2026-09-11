@@ -1,7 +1,6 @@
 package me.yisang.limbusego.status;
 
 import me.yisang.limbusego.LimbusEGOMod;
-import me.yisang.limbusego.Messages;
 import me.yisang.limbusego.ServerScheduler;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
@@ -125,15 +124,15 @@ public class SanityManager {
         // 只有「下降」才提示；每跨過一個 -10 區間才響一次
         boolean droppedByTen = v < old && Math.floorDiv(v, 10) < Math.floorDiv(old, 10);
         if (droppedByTen && v < WARN_THRESHOLD) {
-            p.sendMessage(Text.literal(Messages.fmt(Messages.SANITY_WARN_DROP, v, SAN_MAX)));
+            p.sendMessage(Text.translatable("limbusego.sanity.warn", v, SAN_MAX));
             p.getWorld().playSound(null, p.getX(), p.getY(), p.getZ(),
                     SoundEvents.ENTITY_WITHER_AMBIENT, SoundCategory.PLAYERS, 0.4f, 0.5f);
         }
         if (old > DEBUFF_THRESHOLD && v <= DEBUFF_THRESHOLD) {
-            p.sendMessage(Text.literal(Messages.SANITY_PANIC));
+            p.sendMessage(Text.translatable("limbusego.sanity.panic"));
         }
         if (old > SAN_MIN && v == SAN_MIN) {
-            p.sendMessage(Text.literal(Messages.SANITY_BOTTOM));
+            p.sendMessage(Text.translatable("limbusego.sanity.bottom"));
             p.getWorld().playSound(null, p.getX(), p.getY(), p.getZ(),
                     SoundEvents.ENTITY_WITHER_SPAWN, SoundCategory.PLAYERS, 0.5f, 0.5f);
         }
@@ -229,7 +228,7 @@ public class SanityManager {
     public void onJoin(ServerPlayerEntity p) {
         san.putIfAbsent(p.getUuid(), p.getAttachedOrElse(SanityAttachments.SAN, 0));
         ServerBossBar bar = new ServerBossBar(
-                Text.literal(Messages.fmt(Messages.SANITY_BAR_TITLE, "§b", 0, SAN_MAX)),
+                barTitle("§b", 0),
                 BossBar.Color.BLUE, BossBar.Style.NOTCHED_10);
         bar.setPercent(0.5f);
         bar.addPlayer(p);
@@ -257,13 +256,18 @@ public class SanityManager {
         bar.addPlayer(newPlayer);
     }
 
+    /** BossBar 標題走翻譯鍵，各客戶端依自己的語言顯示；§ 色碼留在 lang 值裡。 */
+    private static Text barTitle(String color, int cur) {
+        return Text.translatable("limbusego.sanity.bar", color, cur, SAN_MAX);
+    }
+
     private void updateBossBar(ServerPlayerEntity p, int cur) {
         ServerBossBar bar = bars.get(p.getUuid());
         if (bar == null) return;
         float prog = (cur + 45.0f) / 90.0f;
         bar.setPercent(Math.max(0.0f, Math.min(1.0f, prog)));
         String color = cur >= 0 ? "§b" : (cur < WARN_THRESHOLD ? "§5" : "§c");
-        bar.setName(Text.literal(Messages.fmt(Messages.SANITY_BAR_TITLE, color, cur, SAN_MAX)));
+        bar.setName(barTitle(color, cur));
         if (cur < WARN_THRESHOLD) bar.setColor(BossBar.Color.PURPLE);
         else if (cur < 0) bar.setColor(BossBar.Color.RED);
         else bar.setColor(BossBar.Color.BLUE);

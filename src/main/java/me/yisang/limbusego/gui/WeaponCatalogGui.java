@@ -41,6 +41,6 @@ public class WeaponCatalogGui {
                     return ItemStack.EMPTY;
                 }
             };
-        }, Text.literal("Limbus E.G.O — 武器圖鑑"));
+        }, Text.translatable("limbusego.gui.weapon_catalog"));
     }
 }

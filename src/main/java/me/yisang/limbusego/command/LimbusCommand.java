@@ -158,14 +158,13 @@ public class LimbusCommand {
         try {
             effect = StatusEffect.valueOf(name.toUpperCase(Locale.ROOT));
         } catch (IllegalArgumentException ex) {
-            ctx.getSource().sendError(Text.literal("未知屬性：" + name));
+            ctx.getSource().sendError(Text.translatable("limbusego.cmd.unknown_status", name));
             return 0;
         }
         int potency = IntegerArgumentType.getInteger(ctx, "potency");
         StatusManager.get().apply(target, effect, potency, count);
-        ctx.getSource().sendFeedback(() -> Text.literal("§a已對 " + target.getName().getString() + " 施加 ")
-                .append(TooltipFormat.status(effect))
-                .append(Text.literal(" §f" + potency + " §7/ §f" + count)), true);
+        ctx.getSource().sendFeedback(() -> Text.translatable("limbusego.cmd.status_applied",
+                target.getName(), TooltipFormat.status(effect), potency, count), true);
         return 1;
     }
 
@@ -173,24 +172,24 @@ public class LimbusCommand {
         StatusState s = StatusManager.get().get(target);
         var snapshot = s == null ? Map.<StatusEffect, int[]>of() : s.snapshot();
         if (snapshot.isEmpty()) {
-            ctx.getSource().sendFeedback(() -> Text.literal("§7" + target.getName().getString() + " 身上沒有任何屬性"), false);
+            ctx.getSource().sendFeedback(() -> Text.translatable("limbusego.cmd.status_none", target.getName()), false);
             return 0;
         }
-        var line = Text.literal("§f" + target.getName().getString() + "§7：");
+        var list = Text.empty();
         boolean first = true;
         for (var en : snapshot.entrySet()) {
-            if (!first) line.append(Text.literal("§7, "));
+            if (!first) list.append(Text.literal("§7, "));
             first = false;
-            line.append(TooltipFormat.status(en.getKey()))
+            list.append(TooltipFormat.status(en.getKey()))
                     .append(Text.literal(" §f" + en.getValue()[0] + "§7/§f" + en.getValue()[1]));
         }
-        ctx.getSource().sendFeedback(() -> line, false);
+        ctx.getSource().sendFeedback(() -> Text.translatable("limbusego.cmd.status_list", target.getName(), list), false);
         return snapshot.size();
     }
 
     private static int clearStatus(CommandContext<ServerCommandSource> ctx, ServerPlayerEntity target) {
         StatusManager.get().clear(target);
-        ctx.getSource().sendFeedback(() -> Text.literal("§a已清除 " + target.getName().getString() + " 的所有屬性"), true);
+        ctx.getSource().sendFeedback(() -> Text.translatable("limbusego.cmd.status_cleared", target.getName()), true);
         return 1;
     }
 
@@ -238,11 +237,11 @@ public class LimbusCommand {
         String id = StringArgumentType.getString(ctx, "id").toLowerCase();
         Item item = ModGifts.byId().get(id);
         if (item == null) {
-            ctx.getSource().sendError(Text.literal("未知飾品：" + id));
+            ctx.getSource().sendError(Text.translatable("limbusego.cmd.unknown_gift", id));
             return 0;
         }
         target.getInventory().offerOrDrop(new ItemStack(item, count));
-        ctx.getSource().sendFeedback(() -> Text.literal("§a已給予 " + target.getName().getString() + " × " + count + " " + id), true);
+        ctx.getSource().sendFeedback(() -> Text.translatable("limbusego.cmd.given", target.getName(), count, id), true);
         return 1;
     }
 
@@ -250,11 +249,11 @@ public class LimbusCommand {
         ServerPlayerEntity target = EntityArgumentType.getPlayer(ctx, "target");
         String id = StringArgumentType.getString(ctx, "id").toLowerCase();
         if (!WEAPONS.containsKey(id)) {
-            ctx.getSource().sendError(Text.literal("未知武器：" + id));
+            ctx.getSource().sendError(Text.translatable("limbusego.cmd.unknown_weapon", id));
             return 0;
         }
         give(target, id, count);
-        ctx.getSource().sendFeedback(() -> Text.literal("§a已給予 " + target.getName().getString() + " × " + count + " " + id), true);
+        ctx.getSource().sendFeedback(() -> Text.translatable("limbusego.cmd.given", target.getName(), count, id), true);
         return 1;
     }
 

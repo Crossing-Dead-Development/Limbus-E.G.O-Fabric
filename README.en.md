@@ -20,7 +20,7 @@ fully ported from the Paper plugin [Limbus-E.G.O](https://github.com/Crossing-De
 | Phase 2 (v0.2.x) | Accessories gift slots, Vestige anvil upgrades, 80 E.G.O gifts, `/limbusego gift` commands & gift catalog, tier-coloured gift names, Shift-expandable tooltips, status effect icons, ambient light × SAN, **E.G.O Extractor** (Enkephalin / vestige drops) | ✅ Done |
 | Phase 3 (v1.0.0) | Thread lottery chest / Shop chest, final Extractor textures | ⬜ Not started |
 
-UI text follows the client language (Traditional Chinese and English are built in).
+UI text follows the client language (Traditional Chinese, Simplified Chinese and English are built in).
 
 ## Weapons
 

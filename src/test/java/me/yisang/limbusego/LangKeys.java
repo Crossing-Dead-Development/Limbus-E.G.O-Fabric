@@ -21,9 +21,14 @@ public final class LangKeys {
 
     private static final Pattern ENTRY = Pattern.compile("^\\s*\"([^\"]+)\"\\s*:\\s*\"((?:[^\"\\\\]|\\\\.)*)\"");
 
+    /** 三個 lang 檔名，鍵集必須完全一致。 */
+    public static final java.util.List<String> FILES = java.util.List.of("zh_tw.json", "zh_cn.json", "en_us.json");
+
     private static Set<String> zh;
+    private static Set<String> cn;
     private static Set<String> en;
     private static Map<String, String> zhValues;
+    private static Map<String, String> cnValues;
     private static Map<String, String> enValues;
 
     private LangKeys() {}
@@ -31,6 +36,11 @@ public final class LangKeys {
     public static synchronized Set<String> zhTw() {
         if (zh == null) zh = read("zh_tw.json");
         return zh;
+    }
+
+    public static synchronized Set<String> zhCn() {
+        if (cn == null) cn = read("zh_cn.json");
+        return cn;
     }
 
     public static synchronized Set<String> enUs() {
@@ -43,15 +53,31 @@ public final class LangKeys {
         return zhValues;
     }
 
+    public static synchronized Map<String, String> zhCnValues() {
+        if (cnValues == null) cnValues = readValues("zh_cn.json");
+        return cnValues;
+    }
+
     public static synchronized Map<String, String> enUsValues() {
         if (enValues == null) enValues = readValues("en_us.json");
         return enValues;
     }
 
-    /** 斷言某個翻譯鍵在中英文 lang 檔都存在。 */
+    /** 斷言某個翻譯鍵在繁中、簡中、英文 lang 檔都存在。 */
     public static void assertKeyExists(String key) {
         assertTrue(zhTw().contains(key), "zh_tw.json 缺少翻譯鍵：" + key);
+        assertTrue(zhCn().contains(key), "zh_cn.json 缺少翻譯鍵：" + key);
         assertTrue(enUs().contains(key), "en_us.json 缺少翻譯鍵：" + key);
+    }
+
+    /** 依檔名取值表。 */
+    public static Map<String, String> values(String file) {
+        return switch (file) {
+            case "zh_tw.json" -> zhTwValues();
+            case "zh_cn.json" -> zhCnValues();
+            case "en_us.json" -> enUsValues();
+            default -> throw new IllegalArgumentException(file);
+        };
     }
 
     private static Set<String> read(String file) {

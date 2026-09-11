@@ -213,7 +213,7 @@ public class WeaponEvents {
         else sm.refresh(player, StatusEffect.CHARGE, 5);
         if (world.random.nextFloat() < 0.20f) {
             sm.apply(player, StatusEffect.CHARGE, 1, 1, src);
-            if (src != null) src.sendMessage(Text.literal("§9§l⚡ 過載"), true);
+            if (src != null) src.sendMessage(Text.translatable("limbusego.msg.overload"), true);
             world.spawnParticles(ParticleTypes.ELECTRIC_SPARK,
                     player.getX(), player.getY() + 1.2, player.getZ(), 8, 0.2, 0.3, 0.2, 0.05);
         }

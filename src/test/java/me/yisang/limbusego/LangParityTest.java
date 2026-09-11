@@ -9,17 +9,44 @@ import static org.junit.jupiter.api.Assertions.*;
 class LangParityTest {
 
     @Test
-    void bothLanguagesHaveIdenticalKeySets() {
+    void allLanguagesHaveIdenticalKeySets() {
         var zh = LangKeys.zhTw();
-        var en = LangKeys.enUs();
+        for (String file : LangKeys.FILES) {
+            var other = LangKeys.values(file).keySet();
+            var missing = new TreeSet<>(zh);
+            missing.removeAll(other);
+            var extra = new TreeSet<>(other);
+            extra.removeAll(zh);
+            assertTrue(missing.isEmpty(), file + " 缺少：" + missing);
+            assertTrue(extra.isEmpty(), file + " 多出：" + extra);
+        }
+    }
 
-        var missingInEn = new TreeSet<>(zh);
-        missingInEn.removeAll(en);
-        var missingInZh = new TreeSet<>(en);
-        missingInZh.removeAll(zh);
+    /** 簡中檔不得殘留繁體字（抽幾個高頻字檢查，避免整包直接複製繁中）。 */
+    @Test
+    void zhCnContainsNoTraditionalCharacters() {
+        String trad = "屬飾擊傷體點淪擁護獲餘";
+        for (var e : LangKeys.zhCnValues().entrySet()) {
+            for (char c : trad.toCharArray()) {
+                assertFalse(e.getValue().indexOf(c) >= 0, "zh_cn.json 殘留繁體字「" + c + "」：" + e.getKey());
+            }
+        }
+    }
 
-        assertTrue(missingInEn.isEmpty(), "en_us.json 缺少：" + missingInEn);
-        assertTrue(missingInZh.isEmpty(), "zh_tw.json 缺少：" + missingInZh);
+    /** 伺服端送出的訊息／GUI 標題全部走翻譯鍵，三語都要有。 */
+    @Test
+    void serverMessageKeysPresent() {
+        for (String key : new String[] {
+                "limbusego.sanity.bar", "limbusego.sanity.warn", "limbusego.sanity.panic", "limbusego.sanity.bottom",
+                "limbusego.gui.weapon_catalog", "limbusego.gui.weapon_admin",
+                "limbusego.gui.gift_catalog", "limbusego.gui.gift_admin",
+                "limbusego.gui.prev_page", "limbusego.gui.next_page", "limbusego.gui.page", "limbusego.gui.given",
+                "limbusego.msg.overload", "limbusego.msg.child_within_a_flask",
+                "limbusego.cmd.unknown_status", "limbusego.cmd.unknown_weapon", "limbusego.cmd.unknown_gift",
+                "limbusego.cmd.status_applied", "limbusego.cmd.status_none", "limbusego.cmd.status_list",
+                "limbusego.cmd.status_cleared", "limbusego.cmd.given"}) {
+            LangKeys.assertKeyExists(key);
+        }
     }
 
     @Test
@@ -38,6 +65,8 @@ class LangParityTest {
             LangKeys.assertKeyExists(effectKey);
             assertEquals(LangKeys.zhTwValues().get(s.translationKey()), LangKeys.zhTwValues().get(effectKey),
                     "zh_tw：" + effectKey + " 與 " + s.translationKey() + " 值不同");
+            assertEquals(LangKeys.zhCnValues().get(s.translationKey()), LangKeys.zhCnValues().get(effectKey),
+                    "zh_cn：" + effectKey + " 與 " + s.translationKey() + " 值不同");
             assertEquals(LangKeys.enUsValues().get(s.translationKey()), LangKeys.enUsValues().get(effectKey),
                     "en_us：" + effectKey + " 與 " + s.translationKey() + " 值不同");
         }

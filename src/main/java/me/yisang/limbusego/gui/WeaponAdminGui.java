@@ -39,7 +39,7 @@ public class WeaponAdminGui {
                         ItemStack clicked = this.getInventory().getStack(slotIndex);
                         if (!clicked.isEmpty()) {
                             player.getInventory().offerOrDrop(clicked.copy());
-                            player.sendMessage(Text.literal("§a已給予 ").append(clicked.getName()), false);
+                            player.sendMessage(Text.translatable("limbusego.gui.given", clicked.getName()), false);
                         }
                         return;
                     }
@@ -51,6 +51,6 @@ public class WeaponAdminGui {
                     return ItemStack.EMPTY;
                 }
             };
-        }, Text.literal("Limbus E.G.O — 武器管理員"));
+        }, Text.translatable("limbusego.gui.weapon_admin"));
     }
 }

@@ -40,7 +40,7 @@ public class ChildWithinAFlask extends BaseGift {
             le.setVelocity(push.x, 0.35, push.z);
             le.velocityModified = true;
         }
-        victim.sendMessage(Text.literal("§7瓶中嬰孩護你一命！"), true);
+        victim.sendMessage(Text.translatable("limbusego.msg.child_within_a_flask"), true);
         return 0f;
     }
 

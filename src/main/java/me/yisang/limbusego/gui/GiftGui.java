@@ -55,9 +55,9 @@ public final class GiftGui {
                     for (int k = 0; k < ITEMS_PER_PAGE && start + k < gifts.size(); k++) {
                         inv.setStack(k, new ItemStack(gifts.get(start + k)));
                     }
-                    if (page > 0) inv.setStack(PREV_SLOT, named(Items.ARROW, "§e← 上一頁"));
-                    if (page < maxPage) inv.setStack(NEXT_SLOT, named(Items.ARROW, "§e下一頁 →"));
-                    inv.setStack(INFO_SLOT, named(Items.PAPER, "§f第 " + (page + 1) + " / " + (maxPage + 1) + " 頁"));
+                    if (page > 0) inv.setStack(PREV_SLOT, named(Items.ARROW, Text.translatable("limbusego.gui.prev_page")));
+                    if (page < maxPage) inv.setStack(NEXT_SLOT, named(Items.ARROW, Text.translatable("limbusego.gui.next_page")));
+                    inv.setStack(INFO_SLOT, named(Items.PAPER, Text.translatable("limbusego.gui.page", page + 1, maxPage + 1)));
                     sendContentUpdates();
                 }
 
@@ -70,7 +70,7 @@ public final class GiftGui {
                             ItemStack clicked = inv.getStack(slotIndex);
                             if (!clicked.isEmpty()) {
                                 p.getInventory().offerOrDrop(clicked.copy());
-                                p.sendMessage(Text.literal("§a已給予 ").append(clicked.getName()), false);
+                                p.sendMessage(Text.translatable("limbusego.gui.given", clicked.getName()), false);
                             }
                         }
                         return; // 兩模式都禁止把 GUI 物品拖進背包
@@ -83,12 +83,12 @@ public final class GiftGui {
                     return ItemStack.EMPTY;
                 }
             };
-        }, Text.literal(admin ? "Limbus E.G.O — 飾品管理員" : "Limbus E.G.O — 飾品圖鑑"));
+        }, Text.translatable(admin ? "limbusego.gui.gift_admin" : "limbusego.gui.gift_catalog"));
     }
 
-    private static ItemStack named(Item item, String name) {
+    private static ItemStack named(Item item, Text name) {
         ItemStack st = new ItemStack(item);
-        st.set(DataComponentTypes.CUSTOM_NAME, Text.literal(name));
+        st.set(DataComponentTypes.CUSTOM_NAME, name);
         return st;
     }
 }
