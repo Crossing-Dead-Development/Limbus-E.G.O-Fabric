@@ -48,7 +48,7 @@ public final class TooltipFormat {
 
     /** 套用該屬性專屬顏色的名稱。 */
     public static Text status(StatusEffect effect) {
-        return styled(Text.translatable(effect.translationKey()), legacyToRgb(effect.color), false);
+        return styled(Text.translatable(effect.translationKey()), effect.rgb, false);
     }
 
     /** 威力／次數，例：威力2・次數1。 */
@@ -75,13 +75,5 @@ public final class TooltipFormat {
 
     private static MutableText styled(MutableText text, int rgb, boolean italic) {
         return text.setStyle(Style.EMPTY.withColor(TextColor.fromRgb(rgb)).withItalic(italic));
-    }
-
-    /** StatusEffect 的 §x legacy 色碼 → RGB。未知色碼回傳白色。 */
-    private static int legacyToRgb(String legacy) {
-        if (legacy == null || legacy.length() < 2) return Formatting.WHITE.getColorValue();
-        Formatting f = Formatting.byCode(legacy.charAt(1));
-        Integer rgb = f == null ? null : f.getColorValue();
-        return rgb == null ? Formatting.WHITE.getColorValue() : rgb;
     }
 }
