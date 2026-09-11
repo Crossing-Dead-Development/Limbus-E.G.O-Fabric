@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "top": "limbusego:block/extractor_top",
+    "front": "limbusego:block/extractor_front",
+    "side": "limbusego:block/extractor_side"
+  }
+}

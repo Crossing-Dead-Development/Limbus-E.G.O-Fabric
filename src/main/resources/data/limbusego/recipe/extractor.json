@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "IRI",
+    "QAQ",
+    "IQI"
+  ],
+  "key": {
+    "I": "minecraft:iron_ingot",
+    "R": "minecraft:redstone",
+    "Q": "minecraft:quartz",
+    "A": "minecraft:anvil"
+  },
+  "result": {
+    "id": "limbusego:extractor",
+    "count": 1
+  }
+}

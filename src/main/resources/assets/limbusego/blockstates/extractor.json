@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "limbusego:block/extractor"
+    },
+    "facing=east": {
+      "model": "limbusego:block/extractor",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "limbusego:block/extractor",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "limbusego:block/extractor",
+      "y": 270
+    }
+  }
+}
