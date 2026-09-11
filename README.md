@@ -5,7 +5,7 @@
 將邊獄公司（Limbus Company）的 E.G.O 武器與 E.G.O 飾品帶進 Minecraft 的 Fabric 模組，
 由 Paper 插件 [Limbus-E.G.O](https://github.com/Crossing-Dead-Development/Limbus-E.G.O) v1.3.0 完整移植而來。
 
-- **版本**：0.1.0（Phase 1）
+- **版本**：0.2.0（Phase 2）
 - **Minecraft 版本**：1.21.4
 - **Loader**：Fabric Loader 0.16.9+
 - **必備前置**：[Fabric API](https://modrinth.com/mod/fabric-api)、[Accessories](https://modrinth.com/mod/accessories)
@@ -16,9 +16,11 @@
 
 | 階段 | 內容 | 狀態 |
 |------|------|------|
-| Phase 1（v0.1.x） | 12 屬性體系、SAN 理智值、9 種 E.G.O 武器、`/limbusego weapon` 指令與圖鑑 | ✅ 完成 |
-| Phase 2（v0.2.x） | Accessories 飾品欄、殘影鐵砧升級、**80 件 E.G.O 飾品（全部完成）**；`/limbusego gift` 指令、真材質為收尾中 | 🚧 進行中 |
-| Phase 3（v1.0.0） | 提取箱／紡錘抽獎箱／購買商店箱、飾品圖鑑、語言切換 | ⬜ 未開始 |
+| Phase 1（v0.1.x） | 12 屬性體系、SAN 理智值、10 種 E.G.O 武器、`/limbusego weapon` 指令與圖鑑 | ✅ 完成 |
+| Phase 2（v0.2.x） | Accessories 飾品欄、殘影鐵砧升級、80 件 E.G.O 飾品、`/limbusego gift` 指令與飾品圖鑑、飾品階級配色、Shift 展開 tooltip、屬性 GUI 圖示、環境光照 × SAN、**E.G.O 提取機**（腦啡肽／殘影掉落） | ✅ 完成 |
+| Phase 3（v1.0.0） | 紡錘抽獎箱／購買商店箱、提取機正式材質 | ⬜ 未開始 |
+
+介面文字隨客戶端語言切換（內建繁體中文與英文）。
 
 ## 武器一覽
 
@@ -85,6 +87,10 @@
 
 **理智值 SAN**：每位玩家一條 BossBar（範圍 −45 ~ +45），命中／受擊／沉淪增減 SAN，脫戰後負值自動回升、進食可回 SAN，並微調攻擊力與移速；−30 以下恐慌、−45 理智觸底會疊加負面狀態效果。死亡重生後 SAN 歸零。
 
+**環境光照**：長時間待在黑暗處（亮度 ≤ 4，洞穴、夜間露天）約每 30 秒 −1 SAN；明亮處（亮度 ≥ 10，火把旁、白天）且脫戰時約每 30 秒 +1 SAN；中間亮度不影響，離開洞穴後累積的黑暗曝光會自然消散。
+
+**屬性顯示**：玩家身上的 Limbus 屬性會鏡射成狀態效果，附圖示顯示於物品欄與 HUD 效果列（層數 = potency）；對目標施加屬性時會在其身上噴出該屬性顏色的粒子。
+
 ## 指令
 
 `/limbusego`（別名 `/lego`）：
@@ -95,6 +101,10 @@
 | `/limbusego weapon catalog` | 開啟武器圖鑑（唯讀） | 所有人 |
 | `/limbusego weapon admin` | 開啟武器管理員 GUI（點擊取得） | 權限 2 |
 | `/limbusego weapon <id>` | 直接給自己一把 | 權限 2 |
+| `/limbusego gift give <玩家> <id> [數量]` | 給予飾品 | 權限 2 |
+| `/limbusego gift catalog` | 開啟飾品圖鑑（唯讀） | 所有人 |
+| `/limbusego gift admin` | 開啟飾品管理員 GUI（點擊取得） | 權限 2 |
+| `/limbusego gift <id>` | 直接給自己一件 | 權限 2 |
 | `/limbusego status <效果> <威力> [次數]` | 給自己施加屬性（測試用，次數預設 3） | 權限 2 |
 | `/limbusego status apply <玩家> <效果> <威力> [次數]` | 對玩家施加屬性 | 權限 2 |
 | `/limbusego status show [玩家]` | 列出目前屬性層數 | 權限 2 |
@@ -103,7 +113,9 @@
 ## 與 Paper 插件版的差異
 
 - 物品為原生模組物品，**不需要伺服器資源包**（材質內建）
-- 飾品佩戴改用 [Accessories](https://modrinth.com/mod/accessories) 欄位（5 格通用欄），不再是 `/accessories` 自製 GUI，**「飾品欄開啟工具」道具不再存在**（Phase 2）
+- 飾品佩戴改用 [Accessories](https://modrinth.com/mod/accessories) 欄位（5 格通用欄），不再是 `/accessories` 自製 GUI，**「飾品欄開啟工具」道具不再存在**
+- 飾品取得管道改為 **E.G.O 提取機**（腦啡肽＋殘影），取代插件版的提取箱
+- 新增插件版沒有的環境光照 × SAN 與屬性效果圖示
 - 物品收錄於兩個自訂創造模式頁籤（「E.G.O 武器」／「E.G.O 飾品」），不進原版頁籤
 - **不移植「插翅虎」與「終末鳥」組合包物品**
 - 兩邊存檔互不相通
@@ -114,6 +126,7 @@
 .\gradlew.bat build      # 編譯
 .\gradlew.bat runClient  # 啟動開發客戶端
 .\gradlew.bat runServer  # 啟動開發伺服器
+.\gradlew.bat test       # 純邏輯單元測試（不載入 Minecraft）
 ```
 
 ## 授權

@@ -5,7 +5,7 @@
 A Fabric mod that brings Limbus Company's E.G.O weapons and E.G.O gifts into Minecraft,
 fully ported from the Paper plugin [Limbus-E.G.O](https://github.com/Crossing-Dead-Development/Limbus-E.G.O) v1.3.0.
 
-- **Version**: 0.1.0 (Phase 1)
+- **Version**: 0.2.0 (Phase 2)
 - **Minecraft version**: 1.21.4
 - **Loader**: Fabric Loader 0.16.9+
 - **Required dependencies**: [Fabric API](https://modrinth.com/mod/fabric-api), [Accessories](https://modrinth.com/mod/accessories)
@@ -16,9 +16,11 @@ fully ported from the Paper plugin [Limbus-E.G.O](https://github.com/Crossing-De
 
 | Phase | Content | Status |
 |-------|---------|--------|
-| Phase 1 (v0.1.x) | 12-status system, Sanity (SAN), 9 E.G.O weapons, `/limbusego weapon` commands & catalog | ✅ Done |
-| Phase 2 (v0.2.x) | Accessories gift slots, Vestige anvil upgrades, **80 E.G.O gifts (all done)**; `/limbusego gift` commands & real textures in progress | 🚧 In progress |
-| Phase 3 (v1.0.0) | Gacha chest / Thread lottery chest / Shop chest, gift catalog, language switching | ⬜ Not started |
+| Phase 1 (v0.1.x) | 12-status system, Sanity (SAN), 10 E.G.O weapons, `/limbusego weapon` commands & catalog | ✅ Done |
+| Phase 2 (v0.2.x) | Accessories gift slots, Vestige anvil upgrades, 80 E.G.O gifts, `/limbusego gift` commands & gift catalog, tier-coloured gift names, Shift-expandable tooltips, status effect icons, ambient light × SAN, **E.G.O Extractor** (Enkephalin / vestige drops) | ✅ Done |
+| Phase 3 (v1.0.0) | Thread lottery chest / Shop chest, final Extractor textures | ⬜ Not started |
+
+UI text follows the client language (Traditional Chinese and English are built in).
 
 ## Weapons
 
@@ -85,6 +87,10 @@ Each entity tracks a `(potency, count)` pair per status, fully in-memory, cleare
 
 **Sanity (SAN)**: each player has a boss bar (range −45 to +45). Hitting/being hit/Sinking changes SAN; negative SAN recovers out of combat, eating restores SAN, and SAN tweaks attack damage and move speed. Below −30 causes Panic, −45 bottoms out and stacks debuffs. SAN resets to 0 on respawn.
 
+**Ambient light**: lingering in darkness (light level ≤ 4 — caves, open air at night) drains about 1 SAN every 30 s; bright areas (light level ≥ 10 — near torches, daylight) restore about 1 SAN every 30 s while out of combat. Middle light levels do nothing, and accumulated dark exposure fades naturally after leaving a cave.
+
+**Status display**: a player's Limbus statuses are mirrored as status effects with icons in the inventory and HUD effect list (amplifier = potency); applying a status to a target spawns particles in that status's colour on it.
+
 ## Commands
 
 `/limbusego` (alias `/lego`):
@@ -95,6 +101,10 @@ Each entity tracks a `(potency, count)` pair per status, fully in-memory, cleare
 | `/limbusego weapon catalog` | Open the weapon catalog (read-only) | Everyone |
 | `/limbusego weapon admin` | Open the admin GUI (click to obtain) | Level 2 |
 | `/limbusego weapon <id>` | Give yourself one | Level 2 |
+| `/limbusego gift give <player> <id> [count]` | Give a gift | Level 2 |
+| `/limbusego gift catalog` | Open the gift catalog (read-only) | Everyone |
+| `/limbusego gift admin` | Open the gift admin GUI (click to obtain) | Level 2 |
+| `/limbusego gift <id>` | Give yourself one | Level 2 |
 | `/limbusego status <effect> <potency> [count]` | Apply a status to yourself (testing; count defaults to 3) | Level 2 |
 | `/limbusego status apply <player> <effect> <potency> [count]` | Apply a status to a player | Level 2 |
 | `/limbusego status show [player]` | List current status stacks | Level 2 |
@@ -103,7 +113,9 @@ Each entity tracks a `(potency, count)` pair per status, fully in-memory, cleare
 ## Differences from the Paper plugin
 
 - Items are native mod items — **no server resource pack needed** (textures are built in)
-- Gifts are worn via [Accessories](https://modrinth.com/mod/accessories) slots (5 universal slots) instead of the custom `/accessories` GUI; **the gift menu opener item no longer exists** (Phase 2)
+- Gifts are worn via [Accessories](https://modrinth.com/mod/accessories) slots (5 universal slots) instead of the custom `/accessories` GUI; **the gift menu opener item no longer exists**
+- Gifts are obtained through the **E.G.O Extractor** (Enkephalin + vestiges), replacing the plugin's gacha chest
+- Ambient light × SAN and status effect icons are new to the Fabric version
 - Items live in two custom creative tabs ("E.G.O Weapons" / "E.G.O Gifts") instead of vanilla tabs
 - **The Chatuhu and Apocalypse Bird bundle items are not ported**
 - Save data is not interchangeable between the two platforms
@@ -114,6 +126,7 @@ Each entity tracks a `(potency, count)` pair per status, fully in-memory, cleare
 .\gradlew.bat build      # Build
 .\gradlew.bat runClient  # Launch dev client
 .\gradlew.bat runServer  # Launch dev server
+.\gradlew.bat test       # Pure-logic unit tests (no Minecraft loaded)
 ```
 
 ## License
