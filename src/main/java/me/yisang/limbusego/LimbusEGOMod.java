@@ -33,6 +33,7 @@ public class LimbusEGOMod implements ModInitializer {
     public void onInitialize() {
         me.yisang.limbusego.gift.ModComponents.register();
         ModItems.register();
+        me.yisang.limbusego.extractor.ModBlocks.register();
         me.yisang.limbusego.gift.ModGifts.register();
         me.yisang.limbusego.gift.Vestiges.register();
         me.yisang.limbusego.extractor.ExtractionPools.build();
