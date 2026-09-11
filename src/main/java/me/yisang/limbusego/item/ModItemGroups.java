@@ -57,6 +57,8 @@ public class ModItemGroups {
                             entries.add(me.yisang.limbusego.gift.Vestiges.FAINT_VESTIGE);
                             entries.add(me.yisang.limbusego.gift.Vestiges.TWINKLING_VESTIGE);
                             entries.add(me.yisang.limbusego.gift.Vestiges.BRILLIANT_VESTIGE);
+                            // 提取機材料
+                            entries.add(ModItems.ENKEPHALIN);
                         })
                         .build());
     }

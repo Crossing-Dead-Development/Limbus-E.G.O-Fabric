@@ -35,6 +35,7 @@ public class LimbusEGOMod implements ModInitializer {
         ModItems.register();
         me.yisang.limbusego.gift.ModGifts.register();
         me.yisang.limbusego.gift.Vestiges.register();
+        me.yisang.limbusego.extractor.ExtractionPools.build();
         ModItemGroups.register();
         ModSounds.register();
         me.yisang.limbusego.status.ModStatusEffects.register();

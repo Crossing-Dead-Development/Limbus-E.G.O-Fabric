@@ -20,6 +20,8 @@ import net.minecraft.util.Rarity;
 public class ModItems {
 
     public static Item MOD_ICON;
+    /** 提取機通用貨幣（腦啡肽）。 */
+    public static Item ENKEPHALIN;
     public static Item BUTTERFLY_QUARTZ;
     public static Item TIGER_MARK;
     public static Item SAVAGE_TIGER_MARK;
@@ -37,6 +39,7 @@ public class ModItems {
 
     public static void register() {
         MOD_ICON = reg("mod_icon", new Item(key("mod_icon")));
+        ENKEPHALIN = reg("enkephalin", new Item(key("enkephalin").maxCount(64).rarity(Rarity.UNCOMMON)));
 
         BUTTERFLY_QUARTZ = reg("butterfly_quartz",
                 new Item(WeaponStyles.apply(key("butterfly_quartz"), "butterfly_quartz")
