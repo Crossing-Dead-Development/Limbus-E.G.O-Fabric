@@ -7,14 +7,6 @@ package me.yisang.limbusego;
 public final class Messages {
     private Messages() {}
 
-    // status.*
-    public static final String STATUS_APPLIED = "{0}▲ {1} §f{2} §7/ §f{3}";
-    public static final String STATUS_DAMAGE_TARGET = "§c-{0} {1}";
-    public static final String STATUS_DAMAGE_SOURCE = "{0} §7» §f{1}";
-    public static final String STATUS_POISE_CRIT = "§3§l✦ 呼吸法爆擊 §7» §f×{0}";
-    public static final String STATUS_TREMOR_BURST = "§b§l⚡ 震顫爆發 §f{0} §7→ §6灼熱派生";
-    public static final String STATUS_DEPRESSION = "憂鬱";
-
     // sanity.*
     public static final String SANITY_BAR_TITLE = "§f理智值 {0}{1} §7/ §f{2}";
     public static final String SANITY_WARN_DROP = "§5§l⚠ 理智值 §7» §d{0} §8/ §7{1}";

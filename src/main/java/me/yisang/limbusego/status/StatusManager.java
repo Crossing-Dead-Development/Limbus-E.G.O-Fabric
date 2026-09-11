@@ -1,7 +1,6 @@
 package me.yisang.limbusego.status;
 
 import me.yisang.limbusego.LimbusEGOMod;
-import me.yisang.limbusego.Messages;
 import me.yisang.limbusego.ServerScheduler;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.minecraft.entity.Entity;
@@ -12,9 +11,9 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
@@ -99,21 +98,21 @@ public class StatusManager {
         apply(target, effect, potency, count, null);
     }
 
-    /** 對外 API：施加屬性，並讓 source（施術者）看到 ActionBar 反饋。 */
+    /** 對外 API：施加屬性；若 source 不是 target 本人，在 target 身上噴該屬性顏色的粒子。 */
     public void apply(LivingEntity target, StatusEffect effect, int potency, int count, ServerPlayerEntity source) {
         if (target == null || !target.isAlive() || potency <= 0 || count <= 0) return;
 
         // HASTE / BIND 是 potion wrapper，不進 states map
         if (effect == StatusEffect.HASTE || effect == StatusEffect.BIND) {
             applyPotionWrapper(target, effect, potency, count);
-            showEffectApplied(target, effect, potency, count, source);
+            spawnAppliedParticles(target, effect, source);
             return;
         }
 
         StatusState s = states.computeIfAbsent(target.getUuid(), k -> new StatusState());
         s.add(effect, potency, count);
         if (effect == StatusEffect.SINKING) syncSinkingSpeed(target, s);
-        showEffectApplied(target, effect, potency, count, source);
+        spawnAppliedParticles(target, effect, source);
     }
 
     private void applyPotionWrapper(LivingEntity target, StatusEffect effect, int potency, int count) {
@@ -217,18 +216,13 @@ public class StatusManager {
             double mult = 1.0;
             if (power > 0) mult *= (1.0 + power * POWER_PER_POTENCY);
             if (charge > 0) mult *= (1.0 + charge * CHARGE_PER_POTENCY);
-            boolean crit = false;
             if (poise > 0) {
                 double chance = Math.min(POISE_CRIT_MAX, poise * POISE_CRIT_PER_POTENCY);
                 if (Math.random() < chance) {
-                    crit = true;
                     mult *= POISE_CRIT_MULT;
                 }
             }
             if (mult != 1.0) dmg *= mult;
-            if (crit && attacker instanceof ServerPlayerEntity pa) {
-                sendActionBar(pa, Messages.fmt(Messages.STATUS_POISE_CRIT, POISE_CRIT_MULT));
-            }
             // 每次出手消耗 1 count（Limbus buff 語意：每回合自然衰減）
             if (power > 0) atkS.consume(StatusEffect.POWER, 1);
             if (charge > 0) atkS.consume(StatusEffect.CHARGE, 1);
@@ -296,9 +290,6 @@ public class StatusManager {
                 if (victim.isAlive()) {
                     apply(victim, StatusEffect.BURN, TREMOR_DERIV_BURN_POTENCY, TREMOR_DERIV_BURN_COUNT);
                 }
-                if (src != null) {
-                    sendActionBar(src, Messages.fmt(Messages.STATUS_TREMOR_BURST, tremorPotency));
-                }
             }
         }
 
@@ -332,15 +323,21 @@ public class StatusManager {
         } finally {
             inTrueDamage.remove(target.getUuid());
         }
-        showDamage(target, source, amount, label);
     }
 
     // ── 顯示 ────────────────────────────────────────────────────────
 
-    private void showEffectApplied(LivingEntity target, StatusEffect e, int potency, int count, ServerPlayerEntity source) {
-        String txt = Messages.fmt(Messages.STATUS_APPLIED, e.color, e.zh, potency, count);
-        if (target instanceof ServerPlayerEntity p) sendActionBar(p, txt);
-        if (source != null && !source.equals(target)) sendActionBar(source, txt);
+    /**
+     * 屬性「打出去」時在目標身上噴該屬性顏色的粒子。
+     * 自身屬性靠 {@link StatusMirror} 的 GUI 鏡射回饋，不重複；
+     * source 為 null 的系統派生（環境、DoT 結算）也不冒。
+     */
+    private void spawnAppliedParticles(LivingEntity target, StatusEffect effect, ServerPlayerEntity source) {
+        if (!StatusDisplayLogic.shouldSpawnParticles(source, target)) return;
+        if (!(target.getWorld() instanceof ServerWorld world)) return;
+        world.spawnParticles(new DustParticleEffect(effect.rgb, 1.2f),
+                target.getX(), target.getY() + target.getHeight() * 0.5, target.getZ(),
+                12, 0.3, 0.4, 0.3, 0);
     }
 
     /**
@@ -356,18 +353,5 @@ public class StatusManager {
         double amount = -Math.min(SINKING_SPEED_MAX, p * SINKING_SPEED_PER_POTENCY);
         inst.addPersistentModifier(new EntityAttributeModifier(
                 sinkingSpeedKey, amount, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
-    }
-
-    private void showDamage(LivingEntity target, ServerPlayerEntity source, double amount, StatusEffect label) {
-        String tag = label == null
-                ? "§4" + Messages.STATUS_DEPRESSION
-                : (label.color + label.zh);
-        String amt = String.format("%.1f", amount);
-        if (target instanceof ServerPlayerEntity p) sendActionBar(p, Messages.fmt(Messages.STATUS_DAMAGE_TARGET, amt, tag));
-        if (source != null) sendActionBar(source, Messages.fmt(Messages.STATUS_DAMAGE_SOURCE, tag, amt));
-    }
-
-    private void sendActionBar(ServerPlayerEntity p, String msg) {
-        p.sendMessage(Text.literal(msg), true);
     }
 }
