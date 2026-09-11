@@ -34,9 +34,9 @@ Items live in the "E.G.O Weapons" custom creative tab. Textures are built in —
 | Mimicry | +12 / −3.2 | 10% crit for +40~90 dmg, 25% lifesteal; crit grants self Power 3p/4c |
 | DaCapo | +7 / −2.4 | Replaces normal attack with a combo: normal 5×1.5, special 3×5.0, AoE 3.5 blocks, each hit applies Sinking 1p/1c |
 | Ring Brush | +7 / −2.4 | Right-click for 3.5 dmg + random debuff + Limbus status 1p/3c; double-hit within 1.5s does ×2, single-hit lunges forward |
-| W Corp. Knife | +4 / −1.6 | Hits stack Charge (cap 10p, 1p/5c each, refresh count at cap), 20% overload for +1p/1c |
+| W Corp. Knife | +8 / −1.6 | Hits stack Charge (cap 10p, 1p/5c each, refresh count at cap), 20% overload for +1p/1c |
 | Tiantui Star Blade | +8 / −2.4 | Right-click charge 1s dash (8 dmg + burn 3s + Tremor 5p/6c + Burn 4p/3c); sneak charge 3s savage (18 dmg + Wither II + Tremor 8p/6c + Burn 6p/4c) |
-| Twilight | +9 / −2.4 + reach 1.5 | Low-HP damage scaling (→×2.5) + 30% true damage; sneak charge 1.5s Twilight Slash (fan + Wither + Rupture 5p/2c) |
+| Twilight | +12 / −2.4 + reach 1.5 | Low-HP damage scaling (→×2.5) + 30% true damage; sneak charge 1.5s Twilight Slash (fan + Wither + Rupture 5p/2c) |
 | Tibia | +10 / −2.8 + reach 1.0 | Stacks Bleed 3p/2c + Melody bonus (+3% per 3 potency, cap 30%); sneak charge 2s Anatomize (+12p/6c Bleed and force-trigger 3 times) |
 | Shadow-Vested Bladesinger | +9 / −2.6 | Stacks Poise to raise crit chance; at 50% health or below, sneak-right-click a target → 5-slash |
 

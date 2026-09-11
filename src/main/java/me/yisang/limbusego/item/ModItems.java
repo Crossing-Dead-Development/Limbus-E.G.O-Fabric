@@ -81,7 +81,7 @@ public class ModItems {
         W_CORP_KNIFE = reg("w_corp_knife",
                 new WCorpKnifeItem(WeaponStyles.apply(key("w_corp_knife"), "w_corp_knife").maxCount(1).rarity(Rarity.RARE)
                         .component(DataComponentTypes.ATTRIBUTE_MODIFIERS,
-                                weaponModifiers("w_corp_knife", 4.0, -1.6))));
+                                weaponModifiers("w_corp_knife", 8.0, -1.6))));
 
         TIANTUI_STAR = reg("tiantui_star",
                 new TiantuiStarItem(WeaponStyles.apply(key("tiantui_star"), "tiantui_star").maxCount(1).rarity(Rarity.EPIC)
@@ -106,7 +106,7 @@ public class ModItems {
 
     /** 薄暝：攻擊/攻速 + 互動距離 +1.5。 */
     private static AttributeModifiersComponent twilightModifiers() {
-        return reachModifiers("twilight", 9.0, -2.4, 1.5);
+        return reachModifiers("twilight", 12.0, -2.4, 1.5);
     }
 
     /** 近戰武器 + 互動距離 modifier。 */
