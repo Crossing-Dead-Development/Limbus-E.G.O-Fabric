@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -17,8 +19,12 @@ public final class LangKeys {
     private static final Path DIR = Path.of("src/main/resources/assets/limbusego/lang");
     private static final Pattern KEY = Pattern.compile("^\\s*\"([^\"]+)\"\\s*:");
 
+    private static final Pattern ENTRY = Pattern.compile("^\\s*\"([^\"]+)\"\\s*:\\s*\"((?:[^\"\\\\]|\\\\.)*)\"");
+
     private static Set<String> zh;
     private static Set<String> en;
+    private static Map<String, String> zhValues;
+    private static Map<String, String> enValues;
 
     private LangKeys() {}
 
@@ -30,6 +36,16 @@ public final class LangKeys {
     public static synchronized Set<String> enUs() {
         if (en == null) en = read("en_us.json");
         return en;
+    }
+
+    public static synchronized Map<String, String> zhTwValues() {
+        if (zhValues == null) zhValues = readValues("zh_tw.json");
+        return zhValues;
+    }
+
+    public static synchronized Map<String, String> enUsValues() {
+        if (enValues == null) enValues = readValues("en_us.json");
+        return enValues;
     }
 
     /** 斷言某個翻譯鍵在中英文 lang 檔都存在。 */
@@ -47,6 +63,20 @@ public final class LangKeys {
             }
             if (keys.isEmpty()) throw new IllegalStateException("讀不到任何翻譯鍵：" + file);
             return keys;
+        } catch (IOException e) {
+            throw new IllegalStateException("讀取 lang 檔失敗：" + file, e);
+        }
+    }
+
+    private static Map<String, String> readValues(String file) {
+        try {
+            Map<String, String> out = new LinkedHashMap<>();
+            for (String line : Files.readAllLines(DIR.resolve(file), StandardCharsets.UTF_8)) {
+                Matcher m = ENTRY.matcher(line);
+                if (m.find()) out.put(m.group(1), m.group(2));
+            }
+            if (out.isEmpty()) throw new IllegalStateException("讀不到任何翻譯值：" + file);
+            return out;
         } catch (IOException e) {
             throw new IllegalStateException("讀取 lang 檔失敗：" + file, e);
         }
